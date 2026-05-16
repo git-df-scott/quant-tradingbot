@@ -118,16 +118,20 @@ def run(
     risk_manager: RiskManager | None = None,
     initial_capital: float = config.INITIAL_CAPITAL,
     commission: float = config.COMMISSION,
+    pre_window_bars: dict[str, int] | None = None,
 ) -> BacktestResult:
     """
     Execute bar-by-bar backtest.
 
     Args:
-        price_data : {ticker: OHLCV DataFrame}
-        signals_df : output of signals.momentum.generate_signals()
-        risk_manager : RiskManager instance (created with defaults if None)
+        price_data      : {ticker: OHLCV DataFrame} — may be a date-filtered window
+        signals_df      : output of signals.momentum.generate_signals()
+        risk_manager    : RiskManager instance (created with defaults if None)
         initial_capital : starting cash
-        commission : fractional cost per trade (both sides)
+        commission      : fractional cost per trade (both sides)
+        pre_window_bars : {ticker: int} bars available in FULL history before this window.
+                          Used to correctly enforce MIN_BARS_BEFORE_ENTRY when price_data
+                          is a trimmed window (e.g. date-range backtests).
 
     Returns:
         BacktestResult with equity curve, trades, and metrics.
@@ -261,11 +265,13 @@ def run(
                         if pd.isna(fill_px) or fill_px <= 0:
                             continue
 
-                        # 60-bar minimum: enough history for reliable signals
-                        bars_before = sum(
+                        # 60-bar minimum: enough history for reliable signals.
+                        # pre_window_bars accounts for history before a trimmed window.
+                        in_window = sum(
                             1 for t in ticker_bar_counts.get(ticker, []) if t < date
                         )
-                        if bars_before < config.MIN_BARS_BEFORE_ENTRY:
+                        pre_window = (pre_window_bars or {}).get(ticker, 0)
+                        if in_window + pre_window < config.MIN_BARS_BEFORE_ENTRY:
                             continue
 
                         # Recompute portfolio value for correct sizing

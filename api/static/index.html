@@ -579,10 +579,23 @@ async function poll() {
   }
 }
 
+function resetStats() {
+  ['mv-return','mv-spy-delta','mv-annual','mv-dd','mv-sharpe',
+   'mv-wr','mv-pf','mv-trades','mv-hold','mv-alpha'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.textContent = '—'; el.className = 'metric-value'; }
+  });
+  clearAnalysis();
+  document.getElementById('trade-count').textContent = '—';
+  if (document.getElementById('trades-tbody'))
+    document.getElementById('trades-tbody').innerHTML = '';
+}
+
 async function triggerRun() {
   const btn = document.getElementById('btn-run');
   btn.disabled = true;
   btn.textContent = 'RUNNING...';
+  resetStats();
   document.getElementById('loading').classList.remove('hidden');
   const startDate = document.getElementById('date-start').value || null;
   const endDate   = document.getElementById('date-end').value   || null;
@@ -609,8 +622,22 @@ function render(d) {
   renderSignalsChart(d.signal_stats);
   renderTradeLog(d.trades);
   updatePeriod(d.period);
-  if (d.analysis && d.analysis.n_wins !== undefined) renderAnalysis(d.analysis);
+  const hasAnalysis = d.analysis && d.analysis.n_wins !== undefined;
+  if (hasAnalysis) {
+    renderAnalysis(d.analysis);
+  } else {
+    clearAnalysis();
+  }
   animateIn();
+}
+
+function clearAnalysis() {
+  document.getElementById('analysis-section').style.display = 'none';
+  ['wl-tbody', 'dist-tbody', 'tickers-tbody'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = '';
+  });
+  if (_charts.quarterly) { _charts.quarterly.destroy(); _charts.quarterly = null; }
 }
 
 function renderMetrics(m, d) {

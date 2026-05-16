@@ -38,24 +38,41 @@ def _run_and_cache(start_date: Optional[str] = None, end_date: Optional[str] = N
         from signals.momentum import generate_signals
         signals_df = generate_signals(price_data)
 
+        # ── Log actual data coverage ────────────────────────────────────────────
+        all_dates = sorted(set(
+            d for df in price_data.values() for d in df.index.normalize()
+        ))
+        data_start = all_dates[0].date() if all_dates else "?"
+        data_end   = all_dates[-1].date() if all_dates else "?"
+        print(f"[data] coverage: {data_start} to {data_end} ({len(all_dates)} trading days)")
+
         # ── Trim price_data and signals to the requested window ─────────────────
+        pre_window_bars: dict = {}
         if start_date or end_date:
-            # Normalize to midnight, timezone-naive for safe comparison
             ts_start = pd.Timestamp(start_date).normalize() if start_date else None
             ts_end   = pd.Timestamp(end_date).normalize()   if end_date   else None
 
             filtered_prices: dict = {}
             for ticker, df in price_data.items():
                 idx = df.index.normalize()
+                # Count bars BEFORE the window start — used by engine for 60-bar check
+                if ts_start is not None:
+                    pre_window_bars[ticker] = int((idx < ts_start).sum())
+                else:
+                    pre_window_bars[ticker] = 0
+
                 mask = pd.Series(True, index=df.index)
                 if ts_start is not None:
                     mask &= idx >= ts_start
                 if ts_end is not None:
                     mask &= idx <= ts_end
                 d = df[mask.values]
-                if len(d) >= 20:          # need enough bars for MA calculation
+                if len(d) >= 5:
                     filtered_prices[ticker] = d
+                    print(f"[data] {ticker}: {len(d)} bars in window "
+                          f"(+{pre_window_bars.get(ticker,0)} pre-window bars)")
             price_data = filtered_prices
+            print(f"[data] {len(price_data)} tickers have data in the requested window")
 
             if not signals_df.empty:
                 sig_dates = pd.to_datetime(signals_df["date"]).dt.normalize()
@@ -65,10 +82,11 @@ def _run_and_cache(start_date: Optional[str] = None, end_date: Optional[str] = N
                 if ts_end is not None:
                     smask &= sig_dates <= ts_end
                 signals_df = signals_df[smask.values]
+            print(f"[data] {len(signals_df)} signals in window")
 
         _status["msg"] = f"Running backtest ({date_label})..."
         from backtest.engine import run as run_engine
-        result = run_engine(price_data, signals_df)
+        result = run_engine(price_data, signals_df, pre_window_bars=pre_window_bars or None)
 
         _status["msg"] = "Fetching SPY benchmark..."
         equity = result.equity_curve
