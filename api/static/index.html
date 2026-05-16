@@ -657,13 +657,15 @@ function fmt(v, suffix = '') {
 function fmtSigned(v, suffix = '') { return (v > 0 ? '+' : '') + v.toFixed(2) + suffix; }
 function colorClass(v) { return v > 0 ? 'positive' : v < 0 ? 'negative' : 'neutral'; }
 
+let _datesPrefilled = false;
 function updatePeriod(p) {
   document.getElementById('period-badge').textContent =
     `${p.start} / ${p.end} — ${p.trading_days} days`;
-  const si = document.getElementById('date-start');
-  const ei = document.getElementById('date-end');
-  if (!si.value) si.value = p.start;
-  if (!ei.value) ei.value = p.end;
+  if (!_datesPrefilled) {
+    document.getElementById('date-start').value = p.start;
+    document.getElementById('date-end').value   = p.end;
+    _datesPrefilled = true;
+  }
 }
 
 /* ── Equity chart ────────────────────────────────────────────────────────────── */
@@ -1035,6 +1037,22 @@ function animateIn() {
     stagger: 0.06,
   });
 }
+
+/* ── Date range auto-run ──────────────────────────────────────────────────────── */
+(function () {
+  let _debounce = null;
+
+  function onDateChange() {
+    const start = document.getElementById('date-start').value;
+    const end   = document.getElementById('date-end').value;
+    if (!start || !end || end <= start) return;
+    clearTimeout(_debounce);
+    _debounce = setTimeout(triggerRun, 700);
+  }
+
+  document.getElementById('date-start').addEventListener('change', onDateChange);
+  document.getElementById('date-end').addEventListener('change',   onDateChange);
+}());
 
 init();
 </script>

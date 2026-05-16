@@ -38,23 +38,36 @@ def _run_and_cache(start_date: Optional[str] = None, end_date: Optional[str] = N
         from data.fetch import fetch_all
         price_data = fetch_all()
 
-        # Filter each ticker's DataFrame to the requested date range
-        if start_date or end_date:
-            label = f"{start_date or 'start'} -> {end_date or 'now'}"
-            _status["msg"] = f"Filtering to {label}..."
-            filtered = {}
-            for ticker, df in price_data.items():
-                if start_date:
-                    df = df[df.index >= pd.Timestamp(start_date)]
-                if end_date:
-                    df = df[df.index <= pd.Timestamp(end_date)]
-                if len(df) > 30:
-                    filtered[ticker] = df
-            price_data = filtered
-
+        # Generate signals on the FULL history so momentum has its full lookback.
+        # Filtering before this would give NaN signals for the first MOMENTUM_WINDOW bars.
         _status["msg"] = "Generating signals..."
         from signals.momentum import generate_signals
         signals_df = generate_signals(price_data)
+
+        # Now trim both price_data and signals to the requested window.
+        if start_date or end_date:
+            ts_start = pd.Timestamp(start_date) if start_date else None
+            ts_end   = pd.Timestamp(end_date)   if end_date   else None
+
+            filtered = {}
+            for ticker, df in price_data.items():
+                d = df.copy()
+                if ts_start is not None:
+                    d = d[d.index >= ts_start]
+                if ts_end is not None:
+                    d = d[d.index <= ts_end]
+                if len(d) > 30:
+                    filtered[ticker] = d
+            price_data = filtered
+
+            if not signals_df.empty:
+                dates = pd.to_datetime(signals_df["date"])
+                mask  = pd.Series(True, index=signals_df.index)
+                if ts_start is not None:
+                    mask &= dates >= ts_start
+                if ts_end is not None:
+                    mask &= dates <= ts_end
+                signals_df = signals_df[mask]
 
         _status["msg"] = "Running backtest engine..."
         from backtest.engine import run as run_engine
