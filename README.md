@@ -1,10 +1,10 @@
 ---
 title: Quant Bot V1
 emoji: 📈
-colorFrom: cyan
-colorTo: blue
+colorFrom: blue
+colorTo: green
 sdk: docker
-pinned: true
+pinned: false
 app_port: 7860
 ---
 
