@@ -1,0 +1,303 @@
+"""
+Bar-by-bar backtesting engine.
+
+Invariants:
+  - Signals generated at close of bar t
+  - Fills execute at open of bar t+1 (next open)
+  - Stop-loss checked at close of each bar
+  - Take-profit (close > 20-day MA) checked at close of each bar
+  - No look-ahead bias: strategy only sees data[0:t+1] at bar t
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+
+import numpy as np
+import pandas as pd
+from rich.console import Console
+from rich.progress import Progress, SpinnerColumn, TimeElapsedColumn
+
+import config
+from risk.manager import RiskManager
+
+console = Console()
+
+
+@dataclass
+class BacktestResult:
+    equity_curve: pd.Series          # DatetimeIndex → portfolio value
+    trades: pd.DataFrame             # one row per closed trade
+    metrics: dict                    # performance statistics
+    open_df: pd.DataFrame            # open prices (wide)
+    close_df: pd.DataFrame           # close prices (wide)
+    ma20_df: pd.DataFrame            # 20-day MA (wide)
+
+
+def _build_wide(price_data: dict[str, pd.DataFrame]) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    closes = {t: df["Close"] for t, df in price_data.items()}
+    opens  = {t: df["Open"]  for t, df in price_data.items()}
+
+    close_df = pd.DataFrame(closes).sort_index()
+    open_df  = pd.DataFrame(opens).sort_index()
+
+    idx = close_df.index.intersection(open_df.index)
+    close_df = close_df.loc[idx]
+    open_df  = open_df.loc[idx]
+
+    ma20_df = close_df.rolling(config.EXIT_MA_WINDOW, min_periods=config.EXIT_MA_WINDOW).mean()
+
+    return open_df, close_df, ma20_df
+
+
+def _compute_metrics(
+    equity: pd.Series,
+    trades: pd.DataFrame,
+    initial_capital: float,
+    rf_rate: float = config.RISK_FREE_RATE,
+) -> dict:
+    if len(equity) < 2:
+        return {}
+
+    total_return = (equity.iloc[-1] / equity.iloc[0]) - 1
+    n_years = len(equity) / 252
+    annual_return = (1 + total_return) ** (1 / max(n_years, 1e-9)) - 1
+
+    daily_ret = equity.pct_change().dropna()
+    excess    = daily_ret - rf_rate / 252
+    sharpe    = (excess.mean() / excess.std()) * np.sqrt(252) if excess.std() > 0 else 0.0
+
+    rolling_max = equity.cummax()
+    drawdown    = (equity - rolling_max) / rolling_max
+    max_dd      = drawdown.min()
+
+    if trades.empty:
+        return {
+            "total_return_pct":     round(total_return * 100, 2),
+            "annualized_return_pct": round(annual_return * 100, 2),
+            "max_drawdown_pct":     round(max_dd * 100, 2),
+            "sharpe_ratio":         round(sharpe, 3),
+            "win_rate_pct":         0.0,
+            "avg_win_pct":          0.0,
+            "avg_loss_pct":         0.0,
+            "profit_factor":        0.0,
+            "total_trades":         0,
+            "avg_holding_days":     0.0,
+        }
+
+    wins   = trades[trades["pnl_pct"] > 0]
+    losses = trades[trades["pnl_pct"] <= 0]
+
+    win_rate   = len(wins) / len(trades)
+    avg_win    = wins["pnl_pct"].mean()    if len(wins)   > 0 else 0.0
+    avg_loss   = losses["pnl_pct"].mean()  if len(losses) > 0 else 0.0
+
+    gross_profit = wins["pnl_pct"].sum()
+    gross_loss   = abs(losses["pnl_pct"].sum())
+    profit_factor = gross_profit / gross_loss if gross_loss > 0 else float("inf")
+
+    avg_holding = trades["holding_days"].mean() if "holding_days" in trades.columns else 0.0
+
+    return {
+        "total_return_pct":      round(total_return * 100, 2),
+        "annualized_return_pct": round(annual_return * 100, 2),
+        "max_drawdown_pct":      round(max_dd * 100, 2),
+        "sharpe_ratio":          round(sharpe, 3),
+        "win_rate_pct":          round(win_rate * 100, 2),
+        "avg_win_pct":           round(avg_win * 100, 2),
+        "avg_loss_pct":          round(avg_loss * 100, 2),
+        "profit_factor":         round(profit_factor, 3),
+        "total_trades":          len(trades),
+        "avg_holding_days":      round(avg_holding, 1),
+    }
+
+
+def run(
+    price_data: dict[str, pd.DataFrame],
+    signals_df: pd.DataFrame,
+    risk_manager: RiskManager | None = None,
+    initial_capital: float = config.INITIAL_CAPITAL,
+    commission: float = config.COMMISSION,
+) -> BacktestResult:
+    """
+    Execute bar-by-bar backtest.
+
+    Args:
+        price_data : {ticker: OHLCV DataFrame}
+        signals_df : output of signals.momentum.generate_signals()
+        risk_manager : RiskManager instance (created with defaults if None)
+        initial_capital : starting cash
+        commission : fractional cost per trade (both sides)
+
+    Returns:
+        BacktestResult with equity curve, trades, and metrics.
+    """
+    if risk_manager is None:
+        risk_manager = RiskManager(initial_capital=initial_capital)
+
+    open_df, close_df, ma20_df = _build_wide(price_data)
+    dates  = list(close_df.index)
+    tickers = list(close_df.columns)
+
+    # Index signals by date for fast lookup
+    sig_by_date: dict[pd.Timestamp, pd.DataFrame] = {}
+    if not signals_df.empty:
+        for date, grp in signals_df.groupby("date"):
+            sig_by_date[pd.Timestamp(date)] = grp[grp["signal"] == 1].copy()
+
+    cash: float = initial_capital
+    open_positions: dict[str, dict] = {}
+    equity_curve: list[tuple] = []
+    all_trades: list[dict] = []
+
+    with Progress(SpinnerColumn(), "[progress.description]{task.description}", TimeElapsedColumn(), console=console) as progress:
+        task = progress.add_task("[cyan]Running backtest...", total=len(dates))
+
+        for i, date in enumerate(dates):
+            progress.advance(task)
+
+            # ── Mark-to-market: portfolio value at today's close ──────────────
+            position_value = 0.0
+            for ticker, pos in open_positions.items():
+                if ticker in close_df.columns:
+                    cp = close_df.loc[date, ticker]
+                    if not pd.isna(cp):
+                        pos["current_price"] = cp
+                        position_value += pos["shares"] * cp
+
+            portfolio_value = cash + position_value
+            equity_curve.append((date, portfolio_value))
+
+            # ── Check exits for all open positions ────────────────────────────
+            to_exit: list[str] = []
+            for ticker, pos in open_positions.items():
+                if ticker not in close_df.columns:
+                    continue
+
+                close_px = close_df.loc[date, ticker]
+                if pd.isna(close_px):
+                    continue
+
+                ma20_val = ma20_df.loc[date, ticker] if ticker in ma20_df.columns else np.nan
+                entry_px = pos["entry_price"]
+
+                stop_triggered  = risk_manager.check_stop(entry_px, close_px)
+                exit_triggered  = (not pd.isna(ma20_val)) and risk_manager.check_exit(entry_px, close_px, ma20_val)
+
+                if stop_triggered:
+                    pos["exit_reason"] = "stop_loss"
+                    pos["exit_price"]  = max(close_px, risk_manager.stop_price(entry_px))
+                    to_exit.append(ticker)
+                elif exit_triggered:
+                    pos["exit_reason"] = "take_profit"
+                    pos["exit_price"]  = close_px
+                    to_exit.append(ticker)
+
+            for ticker in to_exit:
+                pos = open_positions.pop(ticker)
+                exit_px  = pos["exit_price"]
+                proceeds = pos["shares"] * exit_px * (1 - commission)
+                cash += proceeds
+
+                pnl_pct = (exit_px - pos["entry_price"]) / pos["entry_price"]
+                holding = (date - pos["entry_date"]).days
+
+                all_trades.append({
+                    "ticker":       ticker,
+                    "entry_date":   pos["entry_date"],
+                    "entry_price":  pos["entry_price"],
+                    "exit_date":    date,
+                    "exit_price":   exit_px,
+                    "exit_reason":  pos["exit_reason"],
+                    "shares":       pos["shares"],
+                    "pnl_pct":      pnl_pct,
+                    "pnl_dollar":   (exit_px - pos["entry_price"]) * pos["shares"],
+                    "holding_days": holding,
+                })
+
+            # ── Process entries from yesterday's signals (fill at today's open) ──
+            if i > 0:
+                prev_date = dates[i - 1]
+                day_signals = sig_by_date.get(pd.Timestamp(prev_date), pd.DataFrame())
+
+                if not day_signals.empty:
+                    available_slots = config.MAX_POSITIONS - len(open_positions)
+
+                    # Sort by momentum rank descending; take top available slots
+                    candidates = day_signals.sort_values("momentum_rank", ascending=False).head(available_slots)
+
+                    for _, row in candidates.iterrows():
+                        ticker = row["ticker"]
+
+                        if ticker in open_positions:
+                            continue
+                        if ticker not in open_df.columns:
+                            continue
+
+                        fill_px = open_df.loc[date, ticker] if date in open_df.index else np.nan
+                        if pd.isna(fill_px) or fill_px <= 0:
+                            continue
+
+                        # Recompute portfolio value for correct sizing
+                        pos_val = sum(
+                            p["shares"] * p.get("current_price", p["entry_price"])
+                            for p in open_positions.values()
+                        )
+                        pv = cash + pos_val
+
+                        dollar_size = risk_manager.size_position(pv, len(open_positions))
+                        if dollar_size <= 0:
+                            continue
+
+                        shares = dollar_size / fill_px
+                        cost   = shares * fill_px * (1 + commission)
+
+                        if cash < cost:
+                            continue
+
+                        cash -= cost
+                        open_positions[ticker] = {
+                            "entry_price":   fill_px,
+                            "shares":        shares,
+                            "entry_date":    date,
+                            "current_price": fill_px,
+                        }
+
+    # ── Close remaining positions at last close ───────────────────────────────
+    last_date = dates[-1]
+    for ticker, pos in open_positions.items():
+        if ticker in close_df.columns:
+            last_px  = close_df.loc[last_date, ticker]
+            proceeds = pos["shares"] * last_px * (1 - commission)
+            cash += proceeds
+            pnl_pct = (last_px - pos["entry_price"]) / pos["entry_price"]
+            all_trades.append({
+                "ticker":       ticker,
+                "entry_date":   pos["entry_date"],
+                "entry_price":  pos["entry_price"],
+                "exit_date":    last_date,
+                "exit_price":   last_px,
+                "exit_reason":  "end_of_backtest",
+                "shares":       pos["shares"],
+                "pnl_pct":      pnl_pct,
+                "pnl_dollar":   (last_px - pos["entry_price"]) * pos["shares"],
+                "holding_days": (last_date - pos["entry_date"]).days,
+            })
+
+    equity_series = pd.Series(
+        [v for _, v in equity_curve],
+        index=pd.DatetimeIndex([d for d, _ in equity_curve]),
+        name="portfolio_value",
+    )
+
+    trades_df = pd.DataFrame(all_trades)
+    metrics   = _compute_metrics(equity_series, trades_df, initial_capital)
+
+    return BacktestResult(
+        equity_curve=equity_series,
+        trades=trades_df,
+        metrics=metrics,
+        open_df=open_df,
+        close_df=close_df,
+        ma20_df=ma20_df,
+    )
