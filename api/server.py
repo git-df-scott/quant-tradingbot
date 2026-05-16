@@ -4,6 +4,7 @@ Runs the backtest on startup (background thread) and caches results as JSON.
 """
 
 import json
+import math
 import threading
 from pathlib import Path
 from typing import Optional
@@ -21,6 +22,17 @@ CACHE_FILE = Path("results/backtest_cache.json")
 STATIC_DIR = Path(__file__).parent / "static"
 
 _status: dict = {"state": "idle", "msg": ""}
+
+
+def _clean_json(obj):
+    """Recursively replace inf/nan floats with None so JSONResponse won't 500."""
+    if isinstance(obj, float) and (math.isnan(obj) or math.isinf(obj)):
+        return None
+    if isinstance(obj, dict):
+        return {k: _clean_json(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_clean_json(v) for v in obj]
+    return obj
 
 
 # ── Backtest runner ───────────────────────────────────────────────────────────
@@ -187,7 +199,7 @@ def _run_and_cache(start_date: Optional[str] = None, end_date: Optional[str] = N
         }
 
         Path("results").mkdir(exist_ok=True)
-        CACHE_FILE.write_text(json.dumps(cache, default=str), encoding="utf-8")
+        CACHE_FILE.write_text(json.dumps(_clean_json(cache), default=str), encoding="utf-8")
         _status = {"state": "complete", "msg": f"Done — {date_label}"}
 
     except Exception as exc:
@@ -234,7 +246,12 @@ def results():
             {"error": "backtest_pending", "status": _status},
             status_code=202,
         )
-    return JSONResponse(json.loads(CACHE_FILE.read_text(encoding="utf-8")))
+    try:
+        return JSONResponse(json.loads(CACHE_FILE.read_text(encoding="utf-8")))
+    except Exception as exc:
+        import traceback
+        print(f"[error] /api/results failed:\n{traceback.format_exc()}")
+        return JSONResponse({"error": f"cache_read_error: {exc}"}, status_code=500)
 
 
 @app.post("/api/run")

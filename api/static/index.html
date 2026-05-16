@@ -586,6 +586,7 @@ function resetStats() {
     if (el) { el.textContent = '—'; el.className = 'metric-value'; }
   });
   clearAnalysis();
+  document.getElementById('period-badge').textContent = '—';
   document.getElementById('trade-count').textContent = '—';
   if (document.getElementById('trades-tbody'))
     document.getElementById('trades-tbody').innerHTML = '';
