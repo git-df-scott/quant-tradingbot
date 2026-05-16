@@ -216,7 +216,8 @@ body::before {
   margin-bottom: 20px;
 }
 
-.chart-panel canvas { display: block; width: 100% !important; }
+.chart-wrap { position: relative; width: 100%; }
+.chart-panel canvas, .chart-panel-sm canvas { display: block; }
 
 /* ── Bottom grid: donut + signals ────────────────────────────────────────────── */
 .bottom-grid {
@@ -386,7 +387,7 @@ tbody td {
         <div class="legend-item"><div class="legend-dot" style="background:var(--gold); opacity:0.7"></div>SPY</div>
       </div>
     </div>
-    <canvas id="equity-chart" height="240"></canvas>
+    <div class="chart-wrap" style="height:240px"><canvas id="equity-chart"></canvas></div>
   </div>
 
   <!-- Drawdown -->
@@ -394,7 +395,7 @@ tbody td {
     <div class="section-head">
       <span class="section-title">Drawdown</span>
     </div>
-    <canvas id="dd-chart" height="100"></canvas>
+    <div class="chart-wrap" style="height:100px"><canvas id="dd-chart"></canvas></div>
   </div>
 
   <!-- Bottom: donut + signals bar -->
@@ -409,7 +410,7 @@ tbody td {
       <div class="section-head">
         <span class="section-title">Trades by Ticker</span>
       </div>
-      <canvas id="signals-chart" height="200"></canvas>
+      <div class="chart-wrap" style="height:200px"><canvas id="signals-chart"></canvas></div>
     </div>
   </div>
 
