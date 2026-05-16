@@ -586,12 +586,13 @@ async function triggerRun() {
   document.getElementById('loading').classList.remove('hidden');
   const startDate = document.getElementById('date-start').value || null;
   const endDate   = document.getElementById('date-end').value   || null;
+  const params    = new URLSearchParams();
+  if (startDate) params.set('start_date', startDate);
+  if (endDate)   params.set('end_date',   endDate);
+  const rangeLabel = (startDate || 'start') + ' → ' + (endDate || 'now');
+  document.getElementById('loader-status').textContent = 'Running: ' + rangeLabel;
   try {
-    await fetch('/api/run', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ start_date: startDate, end_date: endDate }),
-    });
+    await fetch('/api/run?' + params.toString(), { method: 'POST' });
     await poll();
   } finally {
     btn.disabled = false;
@@ -659,8 +660,12 @@ function colorClass(v) { return v > 0 ? 'positive' : v < 0 ? 'negative' : 'neutr
 
 let _datesPrefilled = false;
 function updatePeriod(p) {
-  document.getElementById('period-badge').textContent =
-    `${p.start} / ${p.end} — ${p.trading_days} days`;
+  const userStart = document.getElementById('date-start').value;
+  const userEnd   = document.getElementById('date-end').value;
+  // Show actual traded range; note if it differs from what was requested
+  let label = `${p.start} → ${p.end} — ${p.trading_days} days`;
+  if (userStart && userStart !== p.start) label = `Req: ${userStart} | Actual: ${p.start} → ${p.end}`;
+  document.getElementById('period-badge').textContent = label;
   if (!_datesPrefilled) {
     document.getElementById('date-start').value = p.start;
     document.getElementById('date-end').value   = p.end;

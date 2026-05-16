@@ -4,7 +4,7 @@
 UNIVERSE_SIZE = 25
 
 # ── Data ──────────────────────────────────────────────────────────────────────
-LOOKBACK_DAYS = 730          # 2 calendar years of daily data
+LOOKBACK_DAYS = 1200         # ~3.3 years so date-range backtests cover 2023+
 DATA_CACHE_DIR = "data/cache"
 CACHE_TTL_HOURS = 24
 

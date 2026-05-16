@@ -10,9 +10,8 @@ from typing import Optional
 
 import pandas as pd
 import yfinance as yf
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from fastapi.responses import HTMLResponse, JSONResponse
-from pydantic import BaseModel
 
 import config
 
@@ -24,52 +23,50 @@ STATIC_DIR = Path(__file__).parent / "static"
 _status: dict = {"state": "idle", "msg": ""}
 
 
-class RunRequest(BaseModel):
-    start_date: Optional[str] = None
-    end_date: Optional[str] = None
-
-
 # ── Backtest runner ───────────────────────────────────────────────────────────
 
 def _run_and_cache(start_date: Optional[str] = None, end_date: Optional[str] = None) -> None:
     global _status
+    date_label = f"{start_date or 'start'} → {end_date or 'now'}"
     try:
-        _status = {"state": "running", "msg": "Fetching market data..."}
+        _status = {"state": "running", "msg": f"Fetching data ({date_label})..."}
         from data.fetch import fetch_all
         price_data = fetch_all()
 
-        # Generate signals on the FULL history so momentum has its full lookback.
-        # Filtering before this would give NaN signals for the first MOMENTUM_WINDOW bars.
-        _status["msg"] = "Generating signals..."
+        # ── Signal generation on FULL history (momentum needs full lookback) ────
+        _status["msg"] = f"Generating signals ({date_label})..."
         from signals.momentum import generate_signals
         signals_df = generate_signals(price_data)
 
-        # Now trim both price_data and signals to the requested window.
+        # ── Trim price_data and signals to the requested window ─────────────────
         if start_date or end_date:
-            ts_start = pd.Timestamp(start_date) if start_date else None
-            ts_end   = pd.Timestamp(end_date)   if end_date   else None
+            # Normalize to midnight, timezone-naive for safe comparison
+            ts_start = pd.Timestamp(start_date).normalize() if start_date else None
+            ts_end   = pd.Timestamp(end_date).normalize()   if end_date   else None
 
-            filtered = {}
+            filtered_prices: dict = {}
             for ticker, df in price_data.items():
-                d = df.copy()
+                idx = df.index.normalize()
+                mask = pd.Series(True, index=df.index)
                 if ts_start is not None:
-                    d = d[d.index >= ts_start]
+                    mask &= idx >= ts_start
                 if ts_end is not None:
-                    d = d[d.index <= ts_end]
-                if len(d) > 30:
-                    filtered[ticker] = d
-            price_data = filtered
+                    mask &= idx <= ts_end
+                d = df[mask.values]
+                if len(d) >= 20:          # need enough bars for MA calculation
+                    filtered_prices[ticker] = d
+            price_data = filtered_prices
 
             if not signals_df.empty:
-                dates = pd.to_datetime(signals_df["date"])
-                mask  = pd.Series(True, index=signals_df.index)
+                sig_dates = pd.to_datetime(signals_df["date"]).dt.normalize()
+                smask = pd.Series(True, index=signals_df.index)
                 if ts_start is not None:
-                    mask &= dates >= ts_start
+                    smask &= sig_dates >= ts_start
                 if ts_end is not None:
-                    mask &= dates <= ts_end
-                signals_df = signals_df[mask]
+                    smask &= sig_dates <= ts_end
+                signals_df = signals_df[smask.values]
 
-        _status["msg"] = "Running backtest engine..."
+        _status["msg"] = f"Running backtest ({date_label})..."
         from backtest.engine import run as run_engine
         result = run_engine(price_data, signals_df)
 
@@ -145,7 +142,7 @@ def _run_and_cache(start_date: Optional[str] = None, end_date: Optional[str] = N
 
         Path("results").mkdir(exist_ok=True)
         CACHE_FILE.write_text(json.dumps(cache, default=str), encoding="utf-8")
-        _status = {"state": "complete", "msg": "Ready"}
+        _status = {"state": "complete", "msg": f"Done — {date_label}"}
 
     except Exception as exc:
         _status = {"state": "error", "msg": str(exc)}
@@ -192,14 +189,17 @@ def results():
 
 
 @app.post("/api/run")
-def run(req: RunRequest = RunRequest()):
+def run(
+    start_date: Optional[str] = Query(default=None),
+    end_date:   Optional[str] = Query(default=None),
+):
     if _status.get("state") == "running":
         return {"status": "already_running"}
     CACHE_FILE.unlink(missing_ok=True)
     t = threading.Thread(
         target=_run_and_cache,
-        kwargs={"start_date": req.start_date, "end_date": req.end_date},
+        kwargs={"start_date": start_date, "end_date": end_date},
         daemon=True,
     )
     t.start()
-    return {"status": "started"}
+    return {"status": "started", "start_date": start_date, "end_date": end_date}
