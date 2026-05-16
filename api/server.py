@@ -27,7 +27,7 @@ _status: dict = {"state": "idle", "msg": ""}
 
 def _run_and_cache(start_date: Optional[str] = None, end_date: Optional[str] = None) -> None:
     global _status
-    date_label = f"{start_date or 'start'} → {end_date or 'now'}"
+    date_label = f"{start_date or 'start'} to {end_date or 'now'}"
     try:
         _status = {"state": "running", "msg": f"Fetching data ({date_label})..."}
         from data.fetch import fetch_all

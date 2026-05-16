@@ -149,6 +149,14 @@ def run(
     open_positions: dict[str, dict] = {}
     equity_curve: list[tuple] = []
     all_trades: list[dict] = []
+    # cooldown_until[ticker] = bar index after which the ticker may be re-entered
+    cooldown_until: dict[str, int] = {}
+
+    # Pre-compute per-ticker bar counts for the 60-bar minimum check
+    ticker_bar_counts: dict[str, list[pd.Timestamp]] = {
+        t: list(close_df[t].dropna().index)
+        for t in close_df.columns
+    }
 
     with Progress(SpinnerColumn(), "[progress.description]{task.description}", TimeElapsedColumn(), console=console) as progress:
         task = progress.add_task("[cyan]Running backtest...", total=len(dates))
@@ -163,6 +171,7 @@ def run(
                     cp = close_df.loc[date, ticker]
                     if not pd.isna(cp):
                         pos["current_price"] = cp
+                        pos["peak_price"] = max(pos["peak_price"], cp)
                         position_value += pos["shares"] * cp
 
             portfolio_value = cash + position_value
@@ -178,17 +187,24 @@ def run(
                 if pd.isna(close_px):
                     continue
 
-                ma20_val = ma20_df.loc[date, ticker] if ticker in ma20_df.columns else np.nan
-                entry_px = pos["entry_price"]
+                entry_px  = pos["entry_price"]
+                peak_px   = pos["peak_price"]
+                shares    = pos["shares"]
 
-                stop_triggered  = risk_manager.check_stop(entry_px, close_px)
-                exit_triggered  = (not pd.isna(ma20_val)) and risk_manager.check_exit(entry_px, close_px, ma20_val)
+                stop_hit     = risk_manager.check_stop(entry_px, close_px)
+                dollar_hit   = risk_manager.check_hard_dollar_stop(entry_px, close_px, shares)
+                trail_hit    = risk_manager.check_trailing_stop(entry_px, peak_px, close_px)
+                tp_hit       = risk_manager.check_take_profit(entry_px, close_px)
 
-                if stop_triggered:
-                    pos["exit_reason"] = "stop_loss"
+                if stop_hit or dollar_hit:
+                    pos["exit_reason"] = "stop_loss" if stop_hit else "hard_dollar_stop"
                     pos["exit_price"]  = max(close_px, risk_manager.stop_price(entry_px))
                     to_exit.append(ticker)
-                elif exit_triggered:
+                elif trail_hit:
+                    pos["exit_reason"] = "trailing_stop"
+                    pos["exit_price"]  = close_px
+                    to_exit.append(ticker)
+                elif tp_hit:
                     pos["exit_reason"] = "take_profit"
                     pos["exit_price"]  = close_px
                     to_exit.append(ticker)
@@ -215,6 +231,10 @@ def run(
                     "holding_days": holding,
                 })
 
+                # Cooldown: ban re-entry after any stop-type exit
+                if pos["exit_reason"] in ("stop_loss", "hard_dollar_stop"):
+                    cooldown_until[ticker] = i + config.COOLDOWN_BARS + 1
+
             # ── Process entries from yesterday's signals (fill at today's open) ──
             if i > 0:
                 prev_date = dates[i - 1]
@@ -223,7 +243,6 @@ def run(
                 if not day_signals.empty:
                     available_slots = config.MAX_POSITIONS - len(open_positions)
 
-                    # Sort by momentum rank descending; take top available slots
                     candidates = day_signals.sort_values("momentum_rank", ascending=False).head(available_slots)
 
                     for _, row in candidates.iterrows():
@@ -234,8 +253,19 @@ def run(
                         if ticker not in open_df.columns:
                             continue
 
+                        # Cooldown check
+                        if cooldown_until.get(ticker, 0) > i:
+                            continue
+
                         fill_px = open_df.loc[date, ticker] if date in open_df.index else np.nan
                         if pd.isna(fill_px) or fill_px <= 0:
+                            continue
+
+                        # 60-bar minimum: enough history for reliable signals
+                        bars_before = sum(
+                            1 for t in ticker_bar_counts.get(ticker, []) if t < date
+                        )
+                        if bars_before < config.MIN_BARS_BEFORE_ENTRY:
                             continue
 
                         # Recompute portfolio value for correct sizing
@@ -258,6 +288,7 @@ def run(
                         cash -= cost
                         open_positions[ticker] = {
                             "entry_price":   fill_px,
+                            "peak_price":    fill_px,
                             "shares":        shares,
                             "entry_date":    date,
                             "current_price": fill_px,

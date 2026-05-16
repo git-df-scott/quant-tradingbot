@@ -129,7 +129,7 @@ def signal_summary(signals_df: pd.DataFrame) -> None:
     fired = signals_df[signals_df["signal"] == 1]
     daily_counts = fired.groupby("date").size()
 
-    console.print("\n[bold cyan]── Signal Summary ──────────────────────────────[/bold cyan]")
+    console.print("\n[bold cyan]-- Signal Summary -----------------------------------------------[/bold cyan]")
     console.print(f"  Date range : {signals_df['date'].min().date()} to {signals_df['date'].max().date()}")
     console.print(f"  Total bars : {signals_df['date'].nunique()}")
     console.print(f"  Total fires: {len(fired)}")
@@ -148,5 +148,5 @@ def signal_summary(signals_df: pd.DataFrame) -> None:
     console.print("\n[bold]Signals-per-day distribution:[/bold]")
     for n in range(int(daily_counts.max()) + 1):
         count = (daily_counts == n).sum()
-        bar = "█" * min(count, 50)
+        bar = "#" * min(count, 50)
         console.print(f"  {n:2d} signal(s): {bar} {count}")

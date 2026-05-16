@@ -111,9 +111,9 @@ def generate_report(result: BacktestResult) -> None:
 
     # Warnings
     if m.get("sharpe_ratio", 1) < 0.5:
-        console.print("[yellow]⚠ Warning: Sharpe ratio < 0.5 — strategy may not be robust.[/yellow]")
+        console.print("[yellow]! Warning: Sharpe ratio < 0.5 — strategy may not be robust.[/yellow]")
     if abs(m.get("max_drawdown_pct", 0)) > 40:
-        console.print("[red]⚠ Warning: Max drawdown > 40% — high risk profile.[/red]")
+        console.print("[red]! Warning: Max drawdown > 40% — high risk profile.[/red]")
 
     # ── 2. Equity curve chart ─────────────────────────────────────────────────
     fig, axes = plt.subplots(2, 1, figsize=(14, 8), gridspec_kw={"height_ratios": [3, 1]})
@@ -154,13 +154,13 @@ def generate_report(result: BacktestResult) -> None:
     chart_path = RESULTS_DIR / "equity_curve.png"
     plt.savefig(chart_path, dpi=150, bbox_inches="tight", facecolor="#0d1117")
     plt.close()
-    console.print(f"[green]Chart saved → {chart_path}[/green]")
+    console.print(f"[green]Chart saved -> {chart_path}[/green]")
 
     # ── 3. Trade log CSV ──────────────────────────────────────────────────────
     if not result.trades.empty:
         csv_path = RESULTS_DIR / "trades.csv"
         result.trades.to_csv(csv_path, index=False)
-        console.print(f"[green]Trades saved → {csv_path}[/green]")
+        console.print(f"[green]Trades saved -> {csv_path}[/green]")
 
     # ── 4. Summary text ───────────────────────────────────────────────────────
     lines = ["BACKTEST SUMMARY — Small-Cap Momentum + Mean-Reversion Exit\n"]
@@ -186,4 +186,4 @@ def generate_report(result: BacktestResult) -> None:
 
     txt_path = RESULTS_DIR / "summary.txt"
     txt_path.write_text("".join(lines), encoding="utf-8")
-    console.print(f"[green]Summary saved → {txt_path}[/green]")
+    console.print(f"[green]Summary saved -> {txt_path}[/green]")

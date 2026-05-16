@@ -16,11 +16,17 @@ VOLUME_MULTIPLIER = 1.2      # volume must exceed this × 20-day avg
 MOMENTUM_PERCENTILE = 0.70   # top 30% of universe by momentum
 
 # ── Risk & execution ──────────────────────────────────────────────────────────
-STOP_LOSS_PCT = -0.08        # -8% hard stop from entry price
-MAX_POSITIONS = 10           # maximum concurrent open positions
-POSITION_SIZE_PCT = 0.10     # 10% of portfolio equity per position
-INITIAL_CAPITAL = 100_000    # paper portfolio starting value (USD)
-COMMISSION = 0.001           # 0.1% per side (realistic for small-cap)
+STOP_LOSS_PCT = -0.06            # -6% hard stop (was -8%)
+TAKE_PROFIT_PCT = 0.15           # +15% hard take profit; replaces MA20 exit
+TRAILING_STOP_ACTIVATE_PCT = 0.08  # activate trailing stop once up 8%
+TRAILING_STOP_TRAIL_PCT = 0.04   # trail 4% below running peak
+HARD_STOP_DOLLAR = 1_000.0       # hard per-trade dollar loss cap
+COOLDOWN_BARS = 10               # bars a ticker is banned after a stop-loss exit
+MIN_BARS_BEFORE_ENTRY = 60       # skip entry if ticker has < 60 bars of history
+MAX_POSITIONS = 10               # maximum concurrent open positions
+POSITION_SIZE_PCT = 0.10         # 10% of portfolio equity per position
+INITIAL_CAPITAL = 100_000        # paper portfolio starting value (USD)
+COMMISSION = 0.001               # 0.1% per side (realistic for small-cap)
 
 # ── Reporting ─────────────────────────────────────────────────────────────────
 RISK_FREE_RATE = 0.04        # annualised, for Sharpe calculation
