@@ -155,6 +155,15 @@ def run(
             ma20_df=ma20_df,
         )
 
+    # Regime diagnostics
+    if spy_regime is None:
+        print("[regime-engine] spy_regime=None — all days default to bull")
+    elif spy_regime.empty:
+        print("[regime-engine] spy_regime is EMPTY — all days default to bull (SPY fetch may have failed)")
+    else:
+        counts = spy_regime.value_counts().to_dict()
+        print(f"[regime-engine] spy_regime OK: {counts}")
+
     # Index signals by date for fast lookup
     sig_by_date: dict[pd.Timestamp, pd.DataFrame] = {}
     if not signals_df.empty:
@@ -167,6 +176,7 @@ def run(
     all_trades: list[dict] = []
     # cooldown_until[ticker] = bar index after which the ticker may be re-entered
     cooldown_until: dict[str, int] = {}
+    _bear_blocks: int = 0
 
     # Pre-compute per-ticker bar counts for the 60-bar minimum check
     ticker_bar_counts: dict[str, list[pd.Timestamp]] = {
@@ -264,7 +274,8 @@ def run(
 
                 # Death cross: no new entries at all
                 if regime == "bear":
-                    pass
+                    day_sigs = sig_by_date.get(pd.Timestamp(prev_date), pd.DataFrame())
+                    _bear_blocks += len(day_sigs)
 
                 else:
                     day_signals = sig_by_date.get(pd.Timestamp(prev_date), pd.DataFrame())
@@ -332,6 +343,8 @@ def run(
                                 "entry_date":    date,
                                 "current_price": fill_px,
                             }
+
+    print(f"[regime-engine] bear-blocked entry attempts: {_bear_blocks}")
 
     # ── Close remaining positions at last close ───────────────────────────────
     last_date = dates[-1]
