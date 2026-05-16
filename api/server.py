@@ -6,11 +6,13 @@ Runs the backtest on startup (background thread) and caches results as JSON.
 import json
 import threading
 from pathlib import Path
+from typing import Optional
 
 import pandas as pd
 import yfinance as yf
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, JSONResponse
+from pydantic import BaseModel
 
 import config
 
@@ -22,14 +24,33 @@ STATIC_DIR = Path(__file__).parent / "static"
 _status: dict = {"state": "idle", "msg": ""}
 
 
+class RunRequest(BaseModel):
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
+
+
 # ── Backtest runner ───────────────────────────────────────────────────────────
 
-def _run_and_cache() -> None:
+def _run_and_cache(start_date: Optional[str] = None, end_date: Optional[str] = None) -> None:
     global _status
     try:
         _status = {"state": "running", "msg": "Fetching market data..."}
         from data.fetch import fetch_all
         price_data = fetch_all()
+
+        # Filter each ticker's DataFrame to the requested date range
+        if start_date or end_date:
+            label = f"{start_date or 'start'} -> {end_date or 'now'}"
+            _status["msg"] = f"Filtering to {label}..."
+            filtered = {}
+            for ticker, df in price_data.items():
+                if start_date:
+                    df = df[df.index >= pd.Timestamp(start_date)]
+                if end_date:
+                    df = df[df.index <= pd.Timestamp(end_date)]
+                if len(df) > 30:
+                    filtered[ticker] = df
+            price_data = filtered
 
         _status["msg"] = "Generating signals..."
         from signals.momentum import generate_signals
@@ -57,7 +78,6 @@ def _run_and_cache() -> None:
             spy_close.index = spy_close.index.tz_convert(None)
         spy_norm = spy_close / spy_close.iloc[0] * config.INITIAL_CAPITAL
 
-        # Align spy to equity dates
         spy_aligned = spy_norm.reindex(equity.index, method="ffill").dropna()
 
         def _series_to_list(s: pd.Series) -> list[dict]:
@@ -87,11 +107,17 @@ def _run_and_cache() -> None:
             for ticker, cnt in result.trades["ticker"].value_counts().items():
                 signal_stats[str(ticker)] = int(cnt)
 
+        # Trade analytics
+        _status["msg"] = "Computing trade analytics..."
+        from reporting.analysis import analyze_trades, print_analysis
+        analysis = analyze_trades(result.trades) if not result.trades.empty else {}
+        print_analysis(analysis)
+
         cache = {
-            "metrics":      result.metrics,
-            "equity_curve": _series_to_list(equity),
-            "spy_curve":    _series_to_list(spy_aligned),
-            "trades":       trades_list,
+            "metrics":        result.metrics,
+            "equity_curve":   _series_to_list(equity),
+            "spy_curve":      _series_to_list(spy_aligned),
+            "trades":         trades_list,
             "period": {
                 "start":        equity.index[0].strftime("%Y-%m-%d"),
                 "end":          equity.index[-1].strftime("%Y-%m-%d"),
@@ -100,6 +126,8 @@ def _run_and_cache() -> None:
             "signal_stats":   signal_stats,
             "universe_size":  config.UNIVERSE_SIZE,
             "initial_capital": config.INITIAL_CAPITAL,
+            "analysis":       analysis,
+            "date_range":     {"start": start_date, "end": end_date},
         }
 
         Path("results").mkdir(exist_ok=True)
@@ -151,10 +179,14 @@ def results():
 
 
 @app.post("/api/run")
-def run():
+def run(req: RunRequest = RunRequest()):
     if _status.get("state") == "running":
         return {"status": "already_running"}
     CACHE_FILE.unlink(missing_ok=True)
-    t = threading.Thread(target=_run_and_cache, daemon=True)
+    t = threading.Thread(
+        target=_run_and_cache,
+        kwargs={"start_date": req.start_date, "end_date": req.end_date},
+        daemon=True,
+    )
     t.start()
     return {"status": "started"}

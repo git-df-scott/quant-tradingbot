@@ -178,11 +178,12 @@ body::before {
 /* Second row: smaller cards */
 .metrics-row2 {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 16px;
   margin-bottom: 32px;
 }
-@media (max-width: 900px) { .metrics-row2 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 1100px) { .metrics-row2 { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 700px)  { .metrics-row2 { grid-template-columns: repeat(2, 1fr); } }
 
 .metric-card-sm {
   background: var(--glass);
@@ -307,6 +308,51 @@ tbody td {
   font-family: var(--ff-mono); font-size: 11px; color: var(--red);
   display: none; margin-bottom: 20px;
 }
+
+/* ── Date range inputs ───────────────────────────────────────────────────────── */
+.date-range { display: flex; align-items: center; gap: 6px; }
+.date-input {
+  background: var(--bg-2); border: 1px solid var(--dim); border-radius: 4px;
+  color: var(--text); font-family: var(--ff-mono); font-size: 11px;
+  padding: 5px 8px; outline: none; width: 116px;
+  color-scheme: dark;
+}
+.date-input:focus { border-color: var(--border-hi); }
+.date-sep { color: var(--dim); font-family: var(--ff-mono); font-size: 12px; }
+
+/* ── Analysis section ────────────────────────────────────────────────────────── */
+.analysis-section { margin-top: 24px; }
+.analysis-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+@media (max-width: 860px) { .analysis-grid { grid-template-columns: 1fr; } }
+
+.analysis-panel {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+}
+.analysis-title {
+  font-family: var(--ff-mono); font-size: 9.5px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 14px;
+}
+.analysis-table { width: 100%; border-collapse: collapse; font-family: var(--ff-mono); font-size: 11px; }
+.analysis-table thead th {
+  background: none; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--dim); padding: 0 0 8px; text-align: left; border-bottom: 1px solid var(--dim);
+}
+.atd-label { color: var(--muted); padding: 5px 8px 5px 0; white-space: nowrap; }
+.atd-value { text-align: right; padding: 5px 0; color: var(--text); }
+.atd-ticker { color: var(--cyan); font-weight: 500; padding: 5px 8px 5px 0; }
+.atd-value.positive { color: var(--green); }
+.atd-value.negative { color: var(--red); }
+.atd-value.neutral  { color: var(--gold); }
+.atd-value.cyan     { color: var(--cyan); }
 </style>
 </head>
 <body>
@@ -328,6 +374,11 @@ tbody td {
     </div>
     <div class="topbar-right">
       <div class="period-badge" id="period-badge">—</div>
+      <div class="date-range">
+        <input type="date" id="date-start" class="date-input" title="Backtest start date">
+        <span class="date-sep">—</span>
+        <input type="date" id="date-end" class="date-input" title="Backtest end date">
+      </div>
       <button class="btn-run" id="btn-run" onclick="triggerRun()">RE-RUN</button>
     </div>
   </nav>
@@ -375,6 +426,10 @@ tbody td {
     <div class="metric-card-sm">
       <span class="metric-label">Avg Hold</span>
       <span class="metric-value cyan" id="mv-hold">—</span>
+    </div>
+    <div class="metric-card-sm">
+      <span class="metric-label">Alpha vs SPY</span>
+      <span class="metric-value" id="mv-alpha">—</span>
     </div>
   </div>
 
@@ -446,6 +501,36 @@ tbody td {
       </div>
     </div>
   </div>
+
+  <!-- Trade Analysis -->
+  <div class="analysis-section" id="analysis-section" style="display:none">
+    <div class="section-head" style="margin-bottom:16px;margin-top:4px">
+      <span class="section-title">Trade Analysis</span>
+    </div>
+    <div class="analysis-grid">
+      <div class="analysis-panel">
+        <div class="analysis-title">Win / Loss Breakdown</div>
+        <table class="analysis-table"><tbody id="wl-tbody"></tbody></table>
+      </div>
+      <div class="analysis-panel">
+        <div class="analysis-title">Loss Distribution</div>
+        <table class="analysis-table"><tbody id="dist-tbody"></tbody></table>
+      </div>
+      <div class="analysis-panel">
+        <div class="analysis-title">Worst Tickers by Avg Loss</div>
+        <table class="analysis-table">
+          <thead><tr><th>Ticker</th><th style="text-align:right">Avg Loss</th><th style="text-align:right">Count</th></tr></thead>
+          <tbody id="tickers-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="chart-panel" id="quarterly-panel">
+      <div class="section-head">
+        <span class="section-title">Avg PnL % by Quarter</span>
+      </div>
+      <div class="chart-wrap" style="height:160px"><canvas id="quarterly-chart"></canvas></div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -499,8 +584,14 @@ async function triggerRun() {
   btn.disabled = true;
   btn.textContent = 'RUNNING...';
   document.getElementById('loading').classList.remove('hidden');
+  const startDate = document.getElementById('date-start').value || null;
+  const endDate   = document.getElementById('date-end').value   || null;
   try {
-    await fetch('/api/run', { method: 'POST' });
+    await fetch('/api/run', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ start_date: startDate, end_date: endDate }),
+    });
     await poll();
   } finally {
     btn.disabled = false;
@@ -517,6 +608,7 @@ function render(d) {
   renderSignalsChart(d.signal_stats);
   renderTradeLog(d.trades);
   updatePeriod(d.period);
+  if (d.analysis && d.analysis.n_wins !== undefined) renderAnalysis(d.analysis);
   animateIn();
 }
 
@@ -546,6 +638,7 @@ function renderMetrics(m, d) {
   set('mv-pf',        pf.toFixed(3), pf > 1.5 ? 'positive' : pf > 1 ? 'neutral' : 'negative');
   set('mv-trades',    trades.toString(), 'cyan');
   set('mv-hold',      `${hold.toFixed(1)}d`, 'cyan');
+  set('mv-alpha',     fmtSigned(alpha, '%'), colorClass(alpha));
 }
 
 function set(id, text, cls) {
@@ -567,6 +660,10 @@ function colorClass(v) { return v > 0 ? 'positive' : v < 0 ? 'negative' : 'neutr
 function updatePeriod(p) {
   document.getElementById('period-badge').textContent =
     `${p.start} / ${p.end} — ${p.trading_days} days`;
+  const si = document.getElementById('date-start');
+  const ei = document.getElementById('date-end');
+  if (!si.value) si.value = p.start;
+  if (!ei.value) ei.value = p.end;
 }
 
 /* ── Equity chart ────────────────────────────────────────────────────────────── */
@@ -827,6 +924,90 @@ function showError(msg) {
 
 function hideLoading() {
   document.getElementById('loading').classList.add('hidden');
+}
+
+/* ── Trade analysis ─────────────────────────────────────────────────────────── */
+function renderAnalysis(a) {
+  document.getElementById('analysis-section').style.display = 'block';
+
+  // Win/Loss table
+  const wl = document.getElementById('wl-tbody');
+  const outlierRow = a.outlier_count > 0
+    ? `<tr><td class="atd-label">Outliers (${a.outlier_count})</td><td class="atd-value negative">${a.outlier_impact_pct.toFixed(2)}% drag</td></tr>`
+    : '';
+  wl.innerHTML = `
+    <tr><td class="atd-label">Avg Win</td><td class="atd-value positive">+${a.avg_win_pct.toFixed(2)}%</td></tr>
+    <tr><td class="atd-label">Avg Loss</td><td class="atd-value negative">${a.avg_loss_pct.toFixed(2)}%</td></tr>
+    <tr><td class="atd-label">Win / Loss Ratio</td><td class="atd-value cyan">${a.win_loss_ratio.toFixed(3)}&times;</td></tr>
+    <tr><td class="atd-label">Wins</td><td class="atd-value">${a.n_wins}</td></tr>
+    <tr><td class="atd-label">Losses</td><td class="atd-value">${a.n_losses}</td></tr>
+    ${outlierRow}
+  `;
+
+  // Loss distribution table
+  const d = a.loss_distribution || {};
+  document.getElementById('dist-tbody').innerHTML = `
+    <tr><td class="atd-label">Worst single</td><td class="atd-value negative">${(d.worst||0).toFixed(2)}%</td></tr>
+    <tr><td class="atd-label">Bottom 10%</td><td class="atd-value negative">${(d.p10||0).toFixed(2)}%</td></tr>
+    <tr><td class="atd-label">Bottom 25%</td><td class="atd-value negative">${(d.p25||0).toFixed(2)}%</td></tr>
+    <tr><td class="atd-label">Median loss</td><td class="atd-value neutral">${(d.median||0).toFixed(2)}%</td></tr>
+    <tr><td class="atd-label">Mild (p75)</td><td class="atd-value neutral">${(d.p75||0).toFixed(2)}%</td></tr>
+  `;
+
+  // Worst tickers table
+  document.getElementById('tickers-tbody').innerHTML = (a.worst_tickers || []).map(t =>
+    `<tr>
+      <td class="atd-ticker">${t.ticker}</td>
+      <td class="atd-value negative" style="text-align:right">${Number(t.avg_loss_pct).toFixed(2)}%</td>
+      <td class="atd-value" style="text-align:right">${t.count}</td>
+    </tr>`
+  ).join('');
+
+  // Quarterly chart
+  if (a.quarterly && a.quarterly.length) renderQuarterlyChart(a.quarterly);
+}
+
+function renderQuarterlyChart(quarterly) {
+  if (_charts.quarterly) _charts.quarterly.destroy();
+  const ctx = document.getElementById('quarterly-chart').getContext('2d');
+  const avgPnl = quarterly.map(q => q.avg_pnl);
+  _charts.quarterly = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: quarterly.map(q => q.quarter),
+      datasets: [{
+        label: 'Avg PnL %',
+        data: avgPnl,
+        backgroundColor: avgPnl.map(v => v >= 0 ? 'rgba(0,232,122,0.65)' : 'rgba(255,64,96,0.65)'),
+        borderColor:     avgPnl.map(v => v >= 0 ? '#00e87a' : '#ff4060'),
+        borderWidth: 1,
+        borderRadius: 3,
+      }],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#0d1220', borderColor: 'rgba(0,200,255,0.2)', borderWidth: 1,
+          bodyFont: { family: "'JetBrains Mono'" }, bodyColor: '#e2e8f4',
+          callbacks: {
+            label: ctx => {
+              const q = quarterly[ctx.dataIndex];
+              return [
+                ` Avg PnL: ${ctx.parsed.y > 0 ? '+' : ''}${ctx.parsed.y.toFixed(2)}%`,
+                ` Loss rate: ${q.loss_rate}%  (${q.losses}/${q.total} trades)`,
+              ];
+            },
+          },
+        },
+      },
+      scales: {
+        x: darkAxis({ ticks: { font: { size: 10 } } }),
+        y: darkAxis({ ticks: { callback: v => (v > 0 ? '+' : '') + v.toFixed(1) + '%', maxTicksLimit: 5 } }),
+      },
+    },
+  });
 }
 
 /* ── GSAP entrance ───────────────────────────────────────────────────────────── */
