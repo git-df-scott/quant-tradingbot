@@ -143,6 +143,17 @@ def run(
     dates  = list(close_df.index)
     tickers = list(close_df.columns)
 
+    if not dates:
+        empty = pd.Series([], dtype=float, name="portfolio_value")
+        return BacktestResult(
+            equity_curve=empty,
+            trades=pd.DataFrame(),
+            metrics={},
+            open_df=open_df,
+            close_df=close_df,
+            ma20_df=ma20_df,
+        )
+
     # Index signals by date for fast lookup
     sig_by_date: dict[pd.Timestamp, pd.DataFrame] = {}
     if not signals_df.empty:
@@ -162,7 +173,7 @@ def run(
         for t in close_df.columns
     }
 
-    with Progress(SpinnerColumn(), "[progress.description]{task.description}", TimeElapsedColumn(), console=console) as progress:
+    with Progress(SpinnerColumn(spinner_name="line"), "[progress.description]{task.description}", TimeElapsedColumn(), console=console) as progress:
         task = progress.add_task("[cyan]Running backtest...", total=len(dates))
 
         for i, date in enumerate(dates):

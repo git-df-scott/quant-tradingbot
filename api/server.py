@@ -91,22 +91,35 @@ def _run_and_cache(start_date: Optional[str] = None, end_date: Optional[str] = N
         _status["msg"] = "Fetching SPY benchmark..."
         equity = result.equity_curve
 
-        spy_data = yf.download(
-            config.BENCHMARK_TICKER,
-            start=equity.index[0].strftime("%Y-%m-%d"),
-            end=equity.index[-1].strftime("%Y-%m-%d"),
-            auto_adjust=True,
-            progress=False,
-        )
-        if isinstance(spy_data.columns, pd.MultiIndex):
-            spy_data.columns = spy_data.columns.get_level_values(0)
+        if equity.empty:
+            print("[warn] equity curve is empty — no data in requested window")
+            _status = {"state": "error", "msg": "No price data in the selected date range. Try a wider window."}
+            return
 
-        spy_close = spy_data["Close"].copy()
-        if hasattr(spy_close.index, "tz") and spy_close.index.tz:
-            spy_close.index = spy_close.index.tz_convert(None)
-        spy_norm = spy_close / spy_close.iloc[0] * config.INITIAL_CAPITAL
+        spy_aligned = pd.Series(dtype=float)
+        try:
+            # Add one day to end so yfinance includes the last trading day
+            spy_end = (equity.index[-1] + pd.Timedelta(days=1)).strftime("%Y-%m-%d")
+            spy_data = yf.download(
+                config.BENCHMARK_TICKER,
+                start=equity.index[0].strftime("%Y-%m-%d"),
+                end=spy_end,
+                auto_adjust=True,
+                progress=False,
+            )
+            if isinstance(spy_data.columns, pd.MultiIndex):
+                spy_data.columns = spy_data.columns.get_level_values(0)
 
-        spy_aligned = spy_norm.reindex(equity.index, method="ffill").dropna()
+            if not spy_data.empty:
+                spy_close = spy_data["Close"].copy()
+                if hasattr(spy_close.index, "tz") and spy_close.index.tz:
+                    spy_close.index = spy_close.index.tz_convert(None)
+                spy_norm = spy_close / spy_close.iloc[0] * config.INITIAL_CAPITAL
+                spy_aligned = spy_norm.reindex(equity.index, method="ffill").dropna()
+            else:
+                print(f"[warn] SPY download returned no data for this window")
+        except Exception as spy_exc:
+            print(f"[warn] SPY fetch failed: {spy_exc}")
 
         def _series_to_list(s: pd.Series) -> list[dict]:
             return [
@@ -163,6 +176,9 @@ def _run_and_cache(start_date: Optional[str] = None, end_date: Optional[str] = N
         _status = {"state": "complete", "msg": f"Done — {date_label}"}
 
     except Exception as exc:
+        import traceback
+        tb = traceback.format_exc()
+        print(f"[error] _run_and_cache failed:\n{tb}")
         _status = {"state": "error", "msg": str(exc)}
 
 
