@@ -32,5 +32,11 @@ COMMISSION = 0.001               # 0.1% per side (realistic for small-cap)
 RISK_FREE_RATE = 0.04        # annualised, for Sharpe calculation
 BENCHMARK_TICKER = "SPY"
 
+# ── Market regime filter (SPY SMA-based) ──────────────────────────────────────
+REGIME_SMA_FAST = 50          # SMA period for death-cross detection
+REGIME_SMA_SLOW = 200         # Primary trend SMA; price below = caution
+REGIME_CAUTION_SIZE_MULT = 0.5       # position $ multiplier in caution mode
+REGIME_CAUTION_MAX_POSITIONS = 5     # max concurrent positions in caution mode
+
 # ── Alpaca paper trading ───────────────────────────────────────────────────────
 ALPACA_BASE_URL = "https://paper-api.alpaca.markets"

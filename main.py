@@ -40,7 +40,13 @@ def run_backtest() -> None:
     signal_summary(signals_df)
 
     console.print("[bold]Step 3/4[/bold] Running backtest engine...")
-    result = run_engine(price_data, signals_df)
+    from risk.regime import compute_spy_regime
+    import pandas as pd
+    all_dates = sorted(set(d for df in price_data.values() for d in df.index.normalize()))
+    spy_regime = compute_spy_regime(all_dates[0], all_dates[-1]) if all_dates else None
+    if spy_regime is not None and not spy_regime.empty:
+        console.print(f"  Regime: {spy_regime.value_counts().to_dict()}")
+    result = run_engine(price_data, signals_df, spy_regime=spy_regime)
 
     console.print("[bold]Step 4/4[/bold] Generating report...")
     generate_report(result)

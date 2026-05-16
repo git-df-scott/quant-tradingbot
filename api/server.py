@@ -84,9 +84,24 @@ def _run_and_cache(start_date: Optional[str] = None, end_date: Optional[str] = N
                 signals_df = signals_df[smask.values]
             print(f"[data] {len(signals_df)} signals in window")
 
+        _status["msg"] = f"Computing market regime ({date_label})..."
+        from risk.regime import compute_spy_regime
+        regime_dates = sorted(set(
+            d for df in price_data.values() for d in df.index.normalize()
+        ))
+        if regime_dates:
+            spy_regime = compute_spy_regime(regime_dates[0], regime_dates[-1])
+            print(f"[regime] {spy_regime.value_counts().to_dict()}")
+        else:
+            spy_regime = None
+
         _status["msg"] = f"Running backtest ({date_label})..."
         from backtest.engine import run as run_engine
-        result = run_engine(price_data, signals_df, pre_window_bars=pre_window_bars or None)
+        result = run_engine(
+            price_data, signals_df,
+            pre_window_bars=pre_window_bars or None,
+            spy_regime=spy_regime,
+        )
 
         _status["msg"] = "Fetching SPY benchmark..."
         equity = result.equity_curve
