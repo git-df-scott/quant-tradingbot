@@ -140,8 +140,6 @@ body::before {
   position: relative;
   overflow: hidden;
   transition: border-color 0.2s, box-shadow 0.2s;
-  opacity: 0; /* animated in */
-  transform: translateY(16px);
 }
 .metric-card::before {
   content: '';
@@ -192,7 +190,6 @@ body::before {
   border-radius: 8px;
   padding: 14px 20px;
   display: flex; align-items: center; justify-content: space-between;
-  opacity: 0; transform: translateY(16px);
 }
 .metric-card-sm .metric-label { margin-bottom: 0; }
 .metric-card-sm .metric-value { font-size: 20px; }
@@ -217,7 +214,6 @@ body::before {
   border-radius: 8px;
   padding: 24px;
   margin-bottom: 20px;
-  opacity: 0; transform: translateY(16px);
 }
 
 .chart-panel canvas { display: block; width: 100% !important; }
@@ -236,7 +232,6 @@ body::before {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 24px;
-  opacity: 0; transform: translateY(16px);
 }
 .donut-wrap { display: flex; align-items: center; justify-content: center; height: 220px; }
 
@@ -246,7 +241,6 @@ body::before {
   border: 1px solid var(--border);
   border-radius: 8px;
   overflow: hidden;
-  opacity: 0; transform: translateY(16px);
 }
 
 .trades-table-wrap { overflow-x: auto; }
@@ -846,6 +840,11 @@ function animateIn() {
     document.getElementById('trades-panel'),
   ].filter(Boolean);
 
+  if (typeof gsap === 'undefined') {
+    targets.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
+    return;
+  }
+  gsap.set(targets, { opacity: 0, y: 16 });
   gsap.to(targets, {
     opacity: 1,
     y: 0,

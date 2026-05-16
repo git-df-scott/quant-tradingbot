@@ -11,7 +11,6 @@ import pandas as pd
 import yfinance as yf
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, JSONResponse
-from fastapi.staticfiles import StaticFiles
 
 import config
 
