@@ -588,6 +588,8 @@ function resetStats() {
   clearAnalysis();
   document.getElementById('period-badge').textContent = '—';
   document.getElementById('trade-count').textContent = '—';
+  const eb = document.getElementById('error-banner');
+  if (eb) { eb.textContent = ''; eb.style.display = 'none'; }
   if (document.getElementById('trades-tbody'))
     document.getElementById('trades-tbody').innerHTML = '';
 }
@@ -647,7 +649,7 @@ function renderMetrics(m, d) {
   const maxDD    = m.max_drawdown_pct || 0;
   const sharpe   = m.sharpe_ratio || 0;
   const wr       = m.win_rate_pct || 0;
-  const pf       = m.profit_factor || 0;
+  const pf       = m.profit_factor;
   const trades   = m.total_trades || 0;
   const hold     = m.avg_holding_days || 0;
 
@@ -664,7 +666,7 @@ function renderMetrics(m, d) {
   set('mv-dd',        `${maxDD.toFixed(2)}%`, 'negative');
   set('mv-sharpe',    sharpe.toFixed(3), sharpe > 1 ? 'positive' : sharpe > 0 ? 'neutral' : 'negative');
   set('mv-wr',        `${wr.toFixed(1)}%`, wr > 55 ? 'positive' : wr > 45 ? 'neutral' : 'negative');
-  set('mv-pf',        pf.toFixed(3), pf > 1.5 ? 'positive' : pf > 1 ? 'neutral' : 'negative');
+  set('mv-pf',        pf != null ? pf.toFixed(3) : '∞', pf == null || pf > 1.5 ? 'positive' : pf > 1 ? 'neutral' : 'negative');
   set('mv-trades',    trades.toString(), 'cyan');
   set('mv-hold',      `${hold.toFixed(1)}d`, 'cyan');
   set('mv-alpha',     fmtSigned(alpha, '%'), colorClass(alpha));
@@ -680,10 +682,14 @@ function set(id, text, cls) {
 }
 
 function fmt(v, suffix = '') {
+  if (v == null || !isFinite(v)) return '—';
   const sign = v > 0 ? '+' : '';
   return `${sign}${v.toFixed(2)}${suffix}`;
 }
-function fmtSigned(v, suffix = '') { return (v > 0 ? '+' : '') + v.toFixed(2) + suffix; }
+function fmtSigned(v, suffix = '') {
+  if (v == null || !isFinite(v)) return '—';
+  return (v > 0 ? '+' : '') + v.toFixed(2) + suffix;
+}
 function colorClass(v) { return v > 0 ? 'positive' : v < 0 ? 'negative' : 'neutral'; }
 
 let _datesPrefilled = false;
@@ -973,7 +979,7 @@ function renderAnalysis(a) {
   wl.innerHTML = `
     <tr><td class="atd-label">Avg Win</td><td class="atd-value positive">+${a.avg_win_pct.toFixed(2)}%</td></tr>
     <tr><td class="atd-label">Avg Loss</td><td class="atd-value negative">${a.avg_loss_pct.toFixed(2)}%</td></tr>
-    <tr><td class="atd-label">Win / Loss Ratio</td><td class="atd-value cyan">${a.win_loss_ratio.toFixed(3)}&times;</td></tr>
+    <tr><td class="atd-label">Win / Loss Ratio</td><td class="atd-value cyan">${a.win_loss_ratio != null ? a.win_loss_ratio.toFixed(3) + '×' : '∞'}</td></tr>
     <tr><td class="atd-label">Wins</td><td class="atd-value">${a.n_wins}</td></tr>
     <tr><td class="atd-label">Losses</td><td class="atd-value">${a.n_losses}</td></tr>
     ${outlierRow}

@@ -94,7 +94,7 @@ def _compute_metrics(
 
     gross_profit = wins["pnl_pct"].sum()
     gross_loss   = abs(losses["pnl_pct"].sum())
-    profit_factor = gross_profit / gross_loss if gross_loss > 0 else float("inf")
+    profit_factor = gross_profit / gross_loss if gross_loss > 0 else None  # None → null (no losses)
 
     avg_holding = trades["holding_days"].mean() if "holding_days" in trades.columns else 0.0
 
@@ -106,7 +106,7 @@ def _compute_metrics(
         "win_rate_pct":          round(win_rate * 100, 2),
         "avg_win_pct":           round(avg_win * 100, 2),
         "avg_loss_pct":          round(avg_loss * 100, 2),
-        "profit_factor":         round(profit_factor, 3),
+        "profit_factor":         round(profit_factor, 3) if profit_factor is not None else None,
         "total_trades":          len(trades),
         "avg_holding_days":      round(avg_holding, 1),
     }

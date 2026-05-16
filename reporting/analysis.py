@@ -23,7 +23,7 @@ def analyze_trades(trades_df: pd.DataFrame) -> dict:
 
     avg_win  = float(wins["pnl_pct"].mean()   * 100) if len(wins)   else 0.0
     avg_loss = float(losses["pnl_pct"].mean() * 100) if len(losses) else 0.0
-    wl_ratio = abs(avg_win / avg_loss) if avg_loss else float("inf")
+    wl_ratio = abs(avg_win / avg_loss) if avg_loss else None  # None → null (no losses)
 
     # Loss distribution (all values are percentages)
     loss_dist: dict = {}
@@ -76,7 +76,7 @@ def analyze_trades(trades_df: pd.DataFrame) -> dict:
     return {
         "avg_win_pct":        round(avg_win,  2),
         "avg_loss_pct":       round(avg_loss, 2),
-        "win_loss_ratio":     round(wl_ratio, 3),
+        "win_loss_ratio":     round(wl_ratio, 3) if wl_ratio is not None else None,
         "n_wins":             int(len(wins)),
         "n_losses":           int(len(losses)),
         "loss_distribution":  loss_dist,
