@@ -32,12 +32,14 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cp -r logs /tmp/sim-logs
           git fetch origin main
+          git reset --hard origin/main
+          cp -r /tmp/sim-logs/. logs/
           git add -f logs/
           if git diff --staged --quiet; then
             echo "No changes"
             exit 0
           fi
           git commit -m "sim: daily run $(date +%Y-%m-%d)"
-          git rebase origin/main
           git push origin main
