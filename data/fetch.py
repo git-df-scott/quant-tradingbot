@@ -63,7 +63,6 @@ def _download_ticker(ticker: str, start: str, end: str) -> tuple[pd.DataFrame | 
         if raw is None or raw.empty:
             raise ValueError("empty result from Ticker.history()")
 
-        # Ticker.history() returns: Open, High, Low, Close, Volume
         if isinstance(raw.columns, pd.MultiIndex):
             raw.columns = raw.columns.get_level_values(0)
 
@@ -123,10 +122,15 @@ def fetch_all(
     tickers: list[str] = TICKERS,
     lookback_days: int = config.LOOKBACK_DAYS,
     force_refresh: bool = False,
+    min_start_date: str | None = None,
 ) -> dict[str, pd.DataFrame]:
     """
     Download OHLCV for all tickers. Returns only tickers with clean data.
     Caches to CSV; skips download if cache is fresh (<24h) unless force_refresh.
+
+    min_start_date: if set, cached data whose first bar is after this date is
+    treated as stale and re-downloaded, ensuring enough pre-window history for
+    historical backtests.
     """
     end_date = datetime.today().strftime("%Y-%m-%d")
     start_date = (datetime.today() - timedelta(days=lookback_days)).strftime("%Y-%m-%d")
@@ -138,7 +142,15 @@ def fetch_all(
         path = _cache_path(ticker)
         warning = ""
 
-        if not force_refresh and _is_cache_fresh(path):
+        use_cache = not force_refresh and _is_cache_fresh(path)
+        if use_cache and min_start_date:
+            cached_peek = _load_from_cache(ticker)
+            if cached_peek is None or cached_peek.empty:
+                use_cache = False
+            elif cached_peek.index[0].normalize() > pd.Timestamp(min_start_date):
+                use_cache = False
+
+        if use_cache:
             df = _load_from_cache(ticker)
             source = "cache"
             if df is None:
