@@ -2,8 +2,8 @@ name: Daily Forward Simulation
 
 on:
   schedule:
-    - cron: '35 13 * * 1-5'   # 9:35am ET (UTC-4 during DST) on weekdays
-  workflow_dispatch:            # allow manual trigger from GitHub UI
+    - cron: '35 13 * * 1-5' # 9:35am ET (UTC-4 during DST) on weekdays
+  workflow_dispatch: # allow manual trigger from GitHub UI
 
 jobs:
   simulate:
@@ -30,12 +30,10 @@ jobs:
 
       - name: Commit logs
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git stash
-          git pull --rebase origin main
-          git stash pop
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -f logs/
           git diff --staged --quiet && echo "No changes" && exit 0
+          git pull --rebase origin main
           git commit -m "sim: daily run $(date +%Y-%m-%d)"
           git push origin main
