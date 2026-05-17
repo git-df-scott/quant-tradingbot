@@ -24,6 +24,28 @@ CACHE_DIR = Path(config.DATA_CACHE_DIR)
 REQUIRED_COLUMNS = ["Open", "High", "Low", "Close", "Volume"]
 MIN_TRADING_DAYS = 100
 
+# Data-quality thresholds
+_MAX_SINGLE_DAY_MOVE = 0.50   # flag >50% single-day price move
+_ZERO_VOL_LOOKBACK   = 5      # flag zero volume within last N bars
+
+
+def _validate_data(ticker: str, df: pd.DataFrame) -> tuple[bool, str]:
+    """Return (ok, reason). Flags extreme moves or zero volume."""
+    recent = df.tail(30)
+
+    daily_ret = recent["Close"].pct_change().abs().dropna()
+    bad = daily_ret[daily_ret > _MAX_SINGLE_DAY_MOVE]
+    if not bad.empty:
+        max_move = bad.max()
+        on_date  = bad.idxmax().date() if hasattr(bad.idxmax(), "date") else bad.idxmax()
+        return False, f"spike {max_move:.0%} on {on_date} — data quality flag"
+
+    zero_vol = (df["Volume"].tail(_ZERO_VOL_LOOKBACK) == 0).sum()
+    if zero_vol > 0:
+        return False, f"zero volume on {zero_vol} of last {_ZERO_VOL_LOOKBACK} bars"
+
+    return True, ""
+
 
 def _cache_path(ticker: str) -> Path:
     return CACHE_DIR / f"{ticker}.csv"
@@ -162,6 +184,18 @@ def fetch_all(
                 _save_to_cache(ticker, df)
 
         if df is not None and len(df) >= MIN_TRADING_DAYS:
+            ok, val_warn = _validate_data(ticker, df)
+            if not ok:
+                console.print(f"[yellow]  SKIP {ticker}: {val_warn}[/yellow]")
+                summary_rows.append({
+                    "ticker": ticker,
+                    "rows": str(len(df)),
+                    "date_range": f"{df.index[0].date()} to {df.index[-1].date()}",
+                    "source": source,
+                    "warning": f"SKIPPED (quality): {val_warn}",
+                })
+                continue
+
             result[ticker] = df
             date_range = f"{df.index[0].date()} to {df.index[-1].date()}"
             summary_rows.append({

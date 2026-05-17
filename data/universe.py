@@ -1,85 +1,103 @@
 """
-Small-cap momentum universe: ~380 candidate tickers filtered at runtime by
-price ($5-$200) and ADV (>300k shares).  Targets NYSE/NASDAQ companies with
-historical market cap roughly $300M-$3B.
+Small-cap momentum universe — cleaned 2026-05-17.
+
+Verified against yfinance: 77 dead/delisted tickers removed, 3 suspicious
+(zero-volume or extreme spike) removed, ~43 replacements added.
+Runtime fetch filters further by price ($5-$200) and ADV (>300k shares).
 """
 
 CANDIDATE_TICKERS: list[str] = [
     # ── Energy – E&P, midstream, oilfield services ────────────────────────────
-    "SM",    "GPOR",  "NOG",   "CIVI",  "TALO",  "SBOW",  "ESTE",  "VAALCO",
-    "KOS",   "WHD",   "PUMP",  "WTTR",  "MRC",   "RES",   "NINE",  "USAC",
-    "AROC",  "NGL",   "DKL",   "SJT",   "VET",   "REX",   "BSM",   "REPX",
-    "FLNG",  "MNRL",  "PTEN",  "HPK",   "SRLP",  "CAPL",  "BATL",  "NGAS",
-    "CDEV",  "SWN",   "MARPS",
+    "SM",    "GPOR",  "NOG",   "TALO",  "KOS",   "WHD",   "PUMP",  "WTTR",
+    "RES",   "NINE",  "USAC",  "AROC",  "NGL",   "DKL",   "SJT",   "VET",
+    "REX",   "BSM",   "REPX",  "FLNG",  "PTEN",  "HPK",   "CAPL",  "MARPS",
+    # replacements: Vital Energy, Chord, Sitio Royalties, Aris Water,
+    #               KLX Energy, Ring Energy, Amplify Energy, Primoris
+    "VTLE",  "CHRD",  "SITIO", "ARIS",  "KLXE",  "REI",   "AMPY",  "PRIM",
 
     # ── Biotech / Specialty Pharma ────────────────────────────────────────────
     "ACAD",  "HIMS",  "PRAX",  "NVAX",  "INVA",  "RCUS",  "IMVT",  "ARDX",
-    "ITCI",  "ALKS",  "MGNX",  "ADMA",  "AMRX",  "APLT",  "RVNC",  "AGEN",
-    "AKRO",  "ARVN",  "CDMO",  "CYTK",  "ENTA",  "GKOS",  "HALO",  "HRTX",
-    "IRWD",  "KYMR",  "LGND",  "MDGL",  "MNKD",  "MYGN",  "NUVL",  "OCUL",
-    "PAHC",  "PTGX",  "RYTM",  "SILK",  "SUPN",  "TGTX",  "XENE",  "YMAB",
-    "ALLO",  "AMPH",  "ASRT",  "ATRC",  "AXSM",  "CARA",  "CBAY",  "CLDX",
-    "CMPS",  "CRIS",  "EXEL",  "FOLD",  "FATE",  "SAGE",  "ABCL",  "ALDX",
-    "AMRN",  "ANIP",  "ARQT",  "ATAI",  "ALEC",  "ANIK",  "BHVN",  "CNTA",
-    "IOVA",  "JANX",  "KROS",  "LBPH",  "MIRM",  "NKTR",  "NTLA",  "ONCT",
-    "PCVX",  "RXRX",  "GRTS",  "GLYC",
+    "ALKS",  "MGNX",  "ADMA",  "AMRX",  "AGEN",  "ARVN",  "CYTK",  "ENTA",
+    "GKOS",  "HALO",  "IRWD",  "KYMR",  "LGND",  "MDGL",  "MNKD",  "MYGN",
+    "NUVL",  "OCUL",  "PAHC",  "PTGX",  "RYTM",  "SUPN",  "TGTX",  "XENE",
+    "ALLO",  "AMPH",  "ASRT",  "ATRC",  "AXSM",  "CLDX",  "CMPS",  "EXEL",
+    "FATE",  "ABCL",  "ALDX",  "AMRN",  "ANIP",  "ARQT",  "ATAI",  "ALEC",
+    "ANIK",  "BHVN",  "CNTA",  "IOVA",  "JANX",  "MIRM",  "NKTR",  "NTLA",
+    "PCVX",  "RXRX",
+    # replacements: Corcept, Krystal Bio, Arrowhead, Blueprint Med,
+    #               Tarsus, Vera Therapeutics, Immunocore, Scholar Rock,
+    #               Prothena, Day One Bio, Rocket Pharma, Viking Therapeutics
+    "CORT",  "KRYS",  "ARWR",  "BPMC",  "TARS",  "VERA",  "IMCR",  "SRRK",
+    "PRTA",  "DAWN",  "RCKT",  "VKTX",
 
     # ── Medical Devices / Healthcare Services ────────────────────────────────
     "CNMD",  "INGN",  "INMD",  "CCRN",  "HCSG",  "MMSI",  "NVCR",  "CCXI",
-    "AXNX",  "CDNA",  "PNTG",  "ADUS",  "AHCO",  "ATRI",  "USPH",  "IART",
-    "RGEN",  "TCMD",  "TMDX",
+    "CDNA",  "PNTG",  "ADUS",  "AHCO",  "USPH",  "IART",  "RGEN",  "TCMD",
+    "TMDX",
+    # replacements: Orthofix Medical, Envista Holdings, Haemonetics
+    "OFIX",  "NVST",  "HAE",
 
     # ── Technology – Software / SaaS / Internet ──────────────────────────────
-    "YEXT",  "NCNO",  "DOCN",  "LPSN",  "UPLD",  "EGHT",  "VIAV",  "DOMO",
-    "BIGC",  "CERT",  "CNXC",  "CTLP",  "APPS",  "BRZE",  "CDLX",  "FSLY",
-    "SPSC",  "SMAR",  "RSKD",  "PYCR",  "PRGS",  "PDFS",  "NTUS",  "MTTR",
-    "MIME",  "LQDT",  "LLNW",  "ATEN",  "NTGR",  "ARLO",  "BAND",  "BMBL",
-    "CARS",  "BLNK",  "VRNT",  "AVDX",  "CALX",  "NRDS",  "PRFT",  "APPN",
+    "YEXT",  "NCNO",  "DOCN",  "LPSN",  "EGHT",  "VIAV",  "DOMO",
+    "CERT",  "CNXC",  "APPS",  "BRZE",  "FSLY",
+    "SPSC",  "RSKD",  "PRGS",  "PDFS",
+    "LQDT",  "ATEN",  "NTGR",  "ARLO",  "BAND",  "BMBL",
+    "CARS",  "CALX",  "NRDS",  "APPN",
     "CARG",  "TTGT",  "UPWK",  "ALRM",  "KFRC",  "RMNI",  "SCSC",  "TNET",
-    "SUMO",  "LOPE",
+    "LOPE",
+    # replacements: PAR Technology, Freshworks, TaskUs, DoubleVerify,
+    #               Alkami Technology, Docebo, LiveRamp
+    "PAR",   "FRSH",  "TASK",  "DV",    "ALKT",  "DCBO",  "RAMP",
 
     # ── Semiconductors / Electronic Components ───────────────────────────────
     "COHU",  "SMTC",  "FORM",  "ICHR",  "POWI",  "DIOD",  "AEHR",  "ACMR",
-    "AMKR",  "AOSL",  "AXTI",  "CRUS",  "EMKR",  "IMOS",  "CCMP",  "CAMP",
+    "AMKR",  "AOSL",  "AXTI",  "CRUS",  "IMOS",  "CAMP",
     "DAIO",  "QUIK",  "ONTO",  "SITM",  "ACLS",  "MTSI",  "POWL",
 
     # ── Industrials – Defense / Manufacturing / Distribution ─────────────────
-    "KTOS",  "FELE",  "GTES",  "HLIO",  "ATKR",  "DY",    "ARCB",  "BWEN",
+    "KTOS",  "FELE",  "GTES",  "HLIO",  "ATKR",  "DY",    "ARCB",
     "CMCO",  "DAN",   "DNOW",  "DXPE",  "GBX",   "GFF",   "GNTX",  "HUBG",
-    "HURC",  "HWKN",  "IEC",   "IIIN",  "INFN",  "INSG",  "HLX",   "CLFD",
-    "AVAV",  "AAON",  "AEIS",  "AMWD",  "APOG",  "ASTE",  "AZEK",  "GRC",
-    "GNSS",  "ROAD",  "ESAB",  "EXTR",  "WERN",  "HTLD",  "MRTN",  "DSKE",
-    "ECHO",  "MATX",  "TREX",  "MYRG",  "HAYN",  "ZEUS",  "NPO",   "THRM",
+    "HURC",  "HWKN",  "IIIN",  "INSG",  "HLX",   "CLFD",
+    "AVAV",  "AAON",  "AEIS",  "AMWD",  "APOG",  "ASTE",  "GRC",
+    "GNSS",  "ROAD",  "ESAB",  "EXTR",  "WERN",  "HTLD",  "MRTN",
+    "MATX",  "TREX",  "MYRG",  "NPO",   "THRM",
     "TRNS",  "OSIS",  "STRL",  "VSEC",  "MTRN",
+    # replacements: Shyft Group, NV5 Global, Huron Consulting,
+    #               Herc Holdings, Blue Bird Corp
+    "SHYF",  "NVEE",  "HURN",  "HRI",   "BLBD",
 
     # ── Consumer – Restaurants / Leisure ─────────────────────────────────────
-    "CAKE",  "CHUY",  "BJRI",  "RRGB",  "LOCO",  "JACK",  "BLMN",  "FAT",
-    "NATH",  "SHAK",  "PBPB",  "MCRI",  "FRGI",  "DINE",  "EAT",   "ARCO",
-    "PZZA",
+    "CAKE",  "BJRI",  "RRGB",  "LOCO",  "JACK",  "BLMN",
+    "NATH",  "SHAK",  "MCRI",  "DINE",  "EAT",   "ARCO",  "PZZA",
+    # replacements: Portillo's, Dave & Buster's, RCI Hospitality
+    "PTLO",  "PLAY",  "RICK",
 
     # ── Consumer – Retail / Brands ────────────────────────────────────────────
-    "BOOT",  "CATO",  "LESL",  "DRVN",  "PRTY",  "TLYS",  "GCO",   "PLCE",
-    "BGFV",  "HIBB",  "SCVL",  "BKE",   "RCII",  "CONN",  "HOFT",  "SNBR",
-    "LE",    "WGO",   "XPEL",  "IPAR",  "AMMO",  "SMPL",  "CENT",  "UNFI",
+    "BOOT",  "CATO",  "DRVN",  "TLYS",  "GCO",   "PLCE",
+    "SCVL",  "BKE",   "HOFT",  "SNBR",
+    "LE",    "WGO",   "XPEL",  "IPAR",  "SMPL",  "CENT",  "UNFI",
 
     # ── Financial – BDCs / Closed-End / Asset Managers ───────────────────────
     "CSWC",  "HTGC",  "GAIN",  "NEWT",  "TPVG",  "PFLT",  "HRZN",  "OCSL",
     "GSHD",  "MAIN",  "SLRC",  "TCPC",  "NMFC",
 
     # ── Financial – Banks / Insurance ────────────────────────────────────────
-    "GBCI",  "FFIN",  "IBTX",  "INDB",  "LKFN",  "FISI",  "HCI",   "SBCF",
-    "TOWN",  "RNST",  "HONE",  "HTBK",  "LBAI",  "IBCP",  "FFBC",  "HIFS",
-    "HMST",  "CATC",  "ACNB",  "CVBF",  "EGBN",  "CBTX",  "AMTB",  "UMBF",
-    "VBTX",  "SFNC",  "PEBO",  "NBTB",
+    "GBCI",  "FFIN",  "INDB",  "LKFN",  "FISI",  "HCI",   "SBCF",
+    "TOWN",  "RNST",  "IBCP",  "FFBC",
+    "ACNB",  "CVBF",  "EGBN",  "AMTB",  "UMBF",
+    "SFNC",  "PEBO",  "NBTB",
+    # replacements: Granite Point Mortgage, Investors Title,
+    #               First Bancshares MS, Pinnacle Financial
+    "GPMT",  "ITIC",  "FBMS",  "PNFP",
 
     # ── Materials / Chemicals / Metals ────────────────────────────────────────
     "ASIX",  "AVNT",  "BCPC",  "KALU",  "AG",    "CDE",   "HL",    "EXK",
-    "GATO",  "PAAS",  "MAG",   "FSM",   "USAS",  "ROCK",  "WDFC",  "LXFR",
-    "TPIC",  "TISI",  "SPWH",  "MLAB",
+    "PAAS",  "FSM",   "USAS",  "ROCK",  "WDFC",  "LXFR",
+    "TISI",  "SPWH",  "MLAB",
 
     # ── Real Estate – REITs ───────────────────────────────────────────────────
-    "GOOD",  "PLYM",  "ILPT",  "BRT",   "CLPR",  "NXRT",  "CHCT",  "GMRE",
-    "ELME",  "UHT",   "PKST",  "AIRC",
+    "GOOD",  "ILPT",  "BRT",   "CLPR",  "NXRT",  "CHCT",
+    "ELME",  "UHT",
 ]
 
 # De-duplicate while preserving order
