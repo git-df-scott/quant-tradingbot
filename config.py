@@ -13,6 +13,11 @@ MOMENTUM_WINDOW = 20         # days for momentum return calculation
 ENTRY_MA_WINDOW = 5          # short MA for pullback entry
 EXIT_MA_WINDOW = 20          # mean-reversion target MA
 VOLUME_MULTIPLIER = 1.2      # volume must exceed this × 20-day avg
+
+# Adaptive stop — replaces fixed STOP_LOSS_PCT for primary stop check
+ATR_STOP_MULTIPLIER = 2.0    # stop = entry - (multiplier × 20-day ATR)
+ATR_STOP_MIN_PCT    = 0.04   # floor: stop never tighter than -4% from entry
+ATR_STOP_MAX_PCT    = 0.12   # ceiling: stop never wider than -12% from entry
 MOMENTUM_PERCENTILE = 0.70   # top 30% of universe by momentum
 
 # ── Risk & execution ──────────────────────────────────────────────────────────

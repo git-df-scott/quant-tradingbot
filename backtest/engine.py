@@ -206,14 +206,15 @@ def run(
                 peak_px   = pos["peak_price"]
                 shares    = pos["shares"]
 
-                stop_hit     = risk_manager.check_stop(entry_px, close_px)
+                adaptive_stop_px = pos.get("stop_price", risk_manager.stop_price(entry_px))
+                stop_hit     = close_px <= adaptive_stop_px
                 dollar_hit   = risk_manager.check_hard_dollar_stop(entry_px, close_px, shares)
                 trail_hit    = risk_manager.check_trailing_stop(entry_px, peak_px, close_px)
                 tp_hit       = risk_manager.check_take_profit(entry_px, close_px)
 
                 if stop_hit or dollar_hit:
                     pos["exit_reason"] = "stop_loss" if stop_hit else "hard_dollar_stop"
-                    pos["exit_price"]  = max(close_px, risk_manager.stop_price(entry_px))
+                    pos["exit_price"]  = max(close_px, adaptive_stop_px)
                     to_exit.append(ticker)
                 elif trail_hit:
                     pos["exit_reason"] = "trailing_stop"
@@ -308,6 +309,16 @@ def run(
                         if cash < cost:
                             continue
 
+                        # Adaptive stop: entry - (2 × ATR), clamped to [-4%, -12%]
+                        atr_abs = row.get("atr_abs", np.nan)
+                        if pd.isna(atr_abs) or atr_abs <= 0:
+                            stop_px = eff_entry * (1 + config.STOP_LOSS_PCT)
+                        else:
+                            raw_stop   = eff_entry - config.ATR_STOP_MULTIPLIER * atr_abs
+                            floor_stop = eff_entry * (1 - config.ATR_STOP_MIN_PCT)
+                            ceil_stop  = eff_entry * (1 - config.ATR_STOP_MAX_PCT)
+                            stop_px    = max(min(raw_stop, floor_stop), ceil_stop)
+
                         cash -= cost
                         open_positions[ticker] = {
                             "entry_price":   eff_entry,
@@ -315,6 +326,7 @@ def run(
                             "shares":        shares,
                             "entry_date":    date,
                             "current_price": eff_entry,
+                            "stop_price":    stop_px,
                         }
 
     # ── Close remaining positions at last close ───────────────────────────────

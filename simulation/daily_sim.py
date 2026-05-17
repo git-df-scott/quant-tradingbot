@@ -461,7 +461,7 @@ def run_daily() -> None:
     pending_all = still_pending + new_pending
 
     lines = [
-        f"\n{'─'*62}",
+        f"\n{'-'*62}",
         f"  DATE         : {today.date()}",
         f"  CASH         : ${cash:>12,.2f}",
         f"  POSITION VAL : ${pos_val:>12,.2f}",
@@ -470,7 +470,7 @@ def run_daily() -> None:
         f"  DAILY P&L    : ${daily_pnl:>+12,.2f}",
         f"  TOTAL P&L    : ${total_pnl:>+12,.2f}  ({ret_pct:+.2f}%)",
         f"  TRADES TODAY : {trades_today}",
-        f"{'─'*62}",
+        f"{'-'*62}",
     ]
     summary = "\n".join(lines)
     print(summary)

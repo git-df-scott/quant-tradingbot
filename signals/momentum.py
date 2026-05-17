@@ -1,10 +1,13 @@
 """
 Cross-sectional momentum signal generation.
 
-ENTRY conditions (all three must be true):
+ENTRY conditions (all three must be true — V1 logic):
   1. 20-day return in top 30% of universe (momentum-qualified)
   2. Close ≤ 5-day MA  (pullback entry)
   3. Volume > 1.2× 20-day average volume (volume confirmation)
+
+Each signal row includes atr_abs (20-day ATR in dollars) so the engine
+can compute a per-trade adaptive stop at fill time.
 
 No look-ahead bias: all computations use only data available at bar t.
 Signals generated at close of t; engine fills at open of t+1.
@@ -22,21 +25,26 @@ import config
 console = Console()
 
 
-def _build_wide_frames(price_data: dict[str, pd.DataFrame]) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    """Stack per-ticker DataFrames into (close_wide, open_wide, volume_wide)."""
-    closes, opens, volumes = {}, {}, {}
+def _build_wide_frames(
+    price_data: dict[str, pd.DataFrame],
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Stack per-ticker DataFrames into (close, open, volume, high, low) wide frames."""
+    closes, opens, volumes, highs, lows = {}, {}, {}, {}, {}
     for ticker, df in price_data.items():
         closes[ticker]  = df["Close"]
         opens[ticker]   = df["Open"]
         volumes[ticker] = df["Volume"]
+        highs[ticker]   = df["High"]
+        lows[ticker]    = df["Low"]
 
     close_df  = pd.DataFrame(closes).sort_index()
     open_df   = pd.DataFrame(opens).sort_index()
     volume_df = pd.DataFrame(volumes).sort_index()
+    high_df   = pd.DataFrame(highs).sort_index()
+    low_df    = pd.DataFrame(lows).sort_index()
 
-    # Align all frames to common index
     idx = close_df.index.intersection(open_df.index).intersection(volume_df.index)
-    return close_df.loc[idx], open_df.loc[idx], volume_df.loc[idx]
+    return close_df.loc[idx], open_df.loc[idx], volume_df.loc[idx], high_df.loc[idx], low_df.loc[idx]
 
 
 def generate_signals(price_data: dict[str, pd.DataFrame]) -> pd.DataFrame:
@@ -47,7 +55,7 @@ def generate_signals(price_data: dict[str, pd.DataFrame]) -> pd.DataFrame:
         date, ticker, signal, momentum_rank, pct_from_5ma, volume_ratio,
         momentum_20d, ma5, ma20, close, volume
     """
-    close_df, _, volume_df = _build_wide_frames(price_data)
+    close_df, _, volume_df, high_df, low_df = _build_wide_frames(price_data)
 
     # ── Feature computation (all rolling, no look-ahead) ─────────────────────
 
@@ -63,13 +71,25 @@ def generate_signals(price_data: dict[str, pd.DataFrame]) -> pd.DataFrame:
     # 20-day average volume
     avg_vol_20 = volume_df.rolling(config.MOMENTUM_WINDOW, min_periods=config.MOMENTUM_WINDOW).mean()
 
+    # 20-day ATR as fraction of price (True Range = max of H-L, |H-prevC|, |prevC-L|)
+    prev_close = close_df.shift(1)
+    tr = np.maximum(
+        np.maximum(
+            (high_df - low_df).values,
+            (high_df - prev_close).abs().values,
+        ),
+        (prev_close - low_df).abs().values,
+    )
+    tr_df  = pd.DataFrame(tr, index=close_df.index, columns=close_df.columns)
+    atr_20 = tr_df.rolling(config.MOMENTUM_WINDOW, min_periods=config.MOMENTUM_WINDOW).mean()
+    atr_pct = atr_20 / close_df                                        # ATR as fraction of price
+
     # ── Cross-sectional ranking (per date) ────────────────────────────────────
-    # Rank momentum: 1.0 = highest, normalised to [0,1]
     mom_rank = mom_20.rank(axis=1, pct=True)
 
-    # ── Conditions ────────────────────────────────────────────────────────────
-    cond_momentum = mom_rank >= config.MOMENTUM_PERCENTILE           # top 30%
-    cond_pullback = close_df <= ma5                                  # at or below 5-day MA
+    # ── Conditions (V1) ──────────────────────────────────────────────────────
+    cond_momentum = mom_rank >= config.MOMENTUM_PERCENTILE             # top 30%
+    cond_pullback = close_df <= ma5                                    # at or below 5-day MA
     cond_volume   = volume_df >= avg_vol_20 * config.VOLUME_MULTIPLIER
 
     signal_matrix = (cond_momentum & cond_pullback & cond_volume).astype(int)
@@ -81,15 +101,16 @@ def generate_signals(price_data: dict[str, pd.DataFrame]) -> pd.DataFrame:
     for date in signal_matrix.index:
         for ticker in tickers:
             try:
-                sig        = signal_matrix.loc[date, ticker]
-                mom_val    = mom_20.loc[date, ticker]
-                rank_val   = mom_rank.loc[date, ticker]
-                ma5_val    = ma5.loc[date, ticker]
-                ma20_val   = ma20.loc[date, ticker]
-                close_val  = close_df.loc[date, ticker]
-                vol_val    = volume_df.loc[date, ticker]
-                avg_vol    = avg_vol_20.loc[date, ticker]
-                vol_ratio  = vol_val / avg_vol if avg_vol > 0 else np.nan
+                sig          = signal_matrix.loc[date, ticker]
+                mom_val      = mom_20.loc[date, ticker]
+                rank_val     = mom_rank.loc[date, ticker]
+                ma5_val      = ma5.loc[date, ticker]
+                ma20_val     = ma20.loc[date, ticker]
+                close_val    = close_df.loc[date, ticker]
+                vol_val      = volume_df.loc[date, ticker]
+                avg_vol      = avg_vol_20.loc[date, ticker]
+                atr_val      = atr_20.loc[date, ticker]       # dollar ATR for adaptive stop
+                vol_ratio    = vol_val / avg_vol if avg_vol > 0 else np.nan
                 pct_from_ma5 = (close_val - ma5_val) / ma5_val if ma5_val > 0 else np.nan
             except (KeyError, ZeroDivisionError):
                 continue
@@ -105,6 +126,7 @@ def generate_signals(price_data: dict[str, pd.DataFrame]) -> pd.DataFrame:
                 "momentum_20d":   round(mom_val, 4),
                 "pct_from_5ma":   round(pct_from_ma5, 4) if not pd.isna(pct_from_ma5) else None,
                 "volume_ratio":   round(vol_ratio, 4) if not pd.isna(vol_ratio) else None,
+                "atr_abs":        round(atr_val, 4) if not pd.isna(atr_val) else None,
                 "ma5":            round(ma5_val, 4),
                 "ma20":           round(ma20_val, 4) if not pd.isna(ma20_val) else None,
                 "close":          round(close_val, 4),

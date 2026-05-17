@@ -263,7 +263,7 @@ def print_spy_correlation(trades: pd.DataFrame, spy_ret: pd.Series) -> None:
     labels_ = ["<-3%", "-3%->-2%", "-2%->-1%", "-1%->0%", "0%->+1%", "+1%->+2%", "+2%->+3%", ">+3%"]
     cuts = pd.cut(matched["spy_ret"], bins=[-np.inf] + buckets + [np.inf], labels=labels_)
     for bucket, cnt in cuts.value_counts().sort_index().items():
-        bar = "█" * cnt
+        bar = "#" * cnt
         color = "red" if bucket.startswith("<") or "->0" in bucket else "green"
         console.print(f"    [{color}]{bucket:>12}  {bar} {cnt}[/{color}]")
 
