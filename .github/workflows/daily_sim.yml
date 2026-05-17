@@ -30,13 +30,7 @@ jobs:
 
       - name: Commit logs
         run: |
+          git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git config user.name "GitHub Actions"
-          git add --force logs/paper_*.log
-          git add logs/weekly_summary.csv logs/sim_state.json 2>/dev/null || true
-          if git diff --staged --quiet; then
-            echo "No changes to commit."
-          else
-            git commit -m "sim: daily run $(date -u +%Y-%m-%d)"
-            git push
-          fi
+          git add logs/
+          git diff --staged --quiet || (git commit -m "sim: daily run $(date +%Y-%m-%d)" && git pull --rebase origin main && git push)
