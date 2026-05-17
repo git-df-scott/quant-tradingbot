@@ -6,6 +6,7 @@ Runs the backtest on startup (background thread) and caches results as JSON.
 import json
 import math
 import threading
+from datetime import datetime as _dt
 from pathlib import Path
 from typing import Optional
 
@@ -43,7 +44,18 @@ def _run_and_cache(start_date: Optional[str] = None, end_date: Optional[str] = N
     try:
         _status = {"state": "running", "msg": f"Fetching data ({date_label})..."}
         from data.fetch import fetch_all
-        price_data = fetch_all()
+
+        # When a historical start_date is given, extend the fetch window so there
+        # are enough pre-window bars to satisfy the 60-bar minimum entry check.
+        # We need at least ~200 calendar days before window start (≈ 140 trading days).
+        lookback = config.LOOKBACK_DAYS
+        min_start: str | None = None
+        if start_date:
+            days_to_window = (_dt.today() - pd.Timestamp(start_date).to_pydatetime()).days
+            lookback = max(lookback, days_to_window + 200)
+            min_start = (pd.Timestamp(start_date) - pd.Timedelta(days=200)).strftime("%Y-%m-%d")
+
+        price_data = fetch_all(lookback_days=lookback, min_start_date=min_start)
 
         # ── Signal generation on FULL history (momentum needs full lookback) ────
         _status["msg"] = f"Generating signals ({date_label})..."
@@ -96,23 +108,11 @@ def _run_and_cache(start_date: Optional[str] = None, end_date: Optional[str] = N
                 signals_df = signals_df[smask.values]
             print(f"[data] {len(signals_df)} signals in window")
 
-        _status["msg"] = f"Computing market regime ({date_label})..."
-        from risk.regime import compute_spy_regime
-        regime_dates = sorted(set(
-            d for df in price_data.values() for d in df.index.normalize()
-        ))
-        if regime_dates:
-            spy_regime = compute_spy_regime(regime_dates[0], regime_dates[-1])
-            print(f"[regime] {spy_regime.value_counts().to_dict()}")
-        else:
-            spy_regime = None
-
         _status["msg"] = f"Running backtest ({date_label})..."
         from backtest.engine import run as run_engine
         result = run_engine(
             price_data, signals_df,
             pre_window_bars=pre_window_bars or None,
-            spy_regime=spy_regime,
         )
 
         _status["msg"] = "Fetching SPY benchmark..."

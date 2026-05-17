@@ -119,7 +119,6 @@ def run(
     initial_capital: float = config.INITIAL_CAPITAL,
     commission: float = config.COMMISSION,
     pre_window_bars: dict[str, int] | None = None,
-    spy_regime: pd.Series | None = None,
 ) -> BacktestResult:
     """
     Execute bar-by-bar backtest.
@@ -155,15 +154,6 @@ def run(
             ma20_df=ma20_df,
         )
 
-    # Regime diagnostics
-    if spy_regime is None:
-        print("[regime-engine] spy_regime=None — all days default to bull")
-    elif spy_regime.empty:
-        print("[regime-engine] spy_regime is EMPTY — all days default to bull (SPY fetch may have failed)")
-    else:
-        counts = spy_regime.value_counts().to_dict()
-        print(f"[regime-engine] spy_regime OK: {counts}")
-
     # Index signals by date for fast lookup
     sig_by_date: dict[pd.Timestamp, pd.DataFrame] = {}
     if not signals_df.empty:
@@ -176,7 +166,6 @@ def run(
     all_trades: list[dict] = []
     # cooldown_until[ticker] = bar index after which the ticker may be re-entered
     cooldown_until: dict[str, int] = {}
-    _bear_blocks: int = 0
 
     # Pre-compute per-ticker bar counts for the 60-bar minimum check
     ticker_bar_counts: dict[str, list[pd.Timestamp]] = {
@@ -237,7 +226,8 @@ def run(
 
             for ticker in to_exit:
                 pos = open_positions.pop(ticker)
-                exit_px  = pos["exit_price"]
+                # Apply exit slippage: receive slightly below the exit price
+                exit_px  = pos["exit_price"] * (1 - config.SLIPPAGE)
                 proceeds = pos["shares"] * exit_px * (1 - commission)
                 cash += proceeds
 
@@ -263,118 +253,89 @@ def run(
 
             # ── Process entries from yesterday's signals (fill at today's open) ──
             if i > 0:
-                prev_date = dates[i - 1]
+                prev_date   = dates[i - 1]
+                day_signals = sig_by_date.get(pd.Timestamp(prev_date), pd.DataFrame())
 
-                # ── Market regime gate ────────────────────────────────────────
-                regime = "bull"
-                if spy_regime is not None and not spy_regime.empty:
-                    r = spy_regime.get(pd.Timestamp(prev_date))
-                    if r is not None and not (isinstance(r, float) and pd.isna(r)):
-                        regime = str(r)
+                if not day_signals.empty:
+                    available_slots = config.MAX_POSITIONS - len(open_positions)
+                    candidates = (
+                        day_signals
+                        .sort_values("momentum_rank", ascending=False)
+                        .head(available_slots)
+                    )
 
-                # Death cross: no new entries at all
-                if regime == "bear":
-                    day_sigs = sig_by_date.get(pd.Timestamp(prev_date), pd.DataFrame())
-                    _bear_blocks += len(day_sigs)
+                    for _, row in candidates.iterrows():
+                        ticker = row["ticker"]
 
-                else:
-                    day_signals = sig_by_date.get(pd.Timestamp(prev_date), pd.DataFrame())
+                        if ticker in open_positions:
+                            continue
+                        if ticker not in open_df.columns:
+                            continue
 
-                    if not day_signals.empty:
-                        if regime == "caution":
-                            pos_cap    = config.REGIME_CAUTION_MAX_POSITIONS
-                            size_mult  = config.REGIME_CAUTION_SIZE_MULT
-                            min_rank   = config.REGIME_CAUTION_MOMENTUM_PERCENTILE
-                            min_vol    = config.REGIME_CAUTION_VOLUME_MULTIPLIER
-                        else:
-                            pos_cap    = config.MAX_POSITIONS
-                            size_mult  = 1.0
-                            min_rank   = 0.0
-                            min_vol    = 0.0  # bull: no extra volume gate beyond signal pre-screen
+                        # Cooldown check
+                        if cooldown_until.get(ticker, 0) > i:
+                            continue
 
-                        available_slots = pos_cap - len(open_positions)
+                        fill_px = open_df.loc[date, ticker] if date in open_df.index else np.nan
+                        if pd.isna(fill_px) or fill_px <= 0:
+                            continue
 
-                        filtered = day_signals[day_signals["momentum_rank"] >= min_rank]
-                        if min_vol > 0 and "volume_ratio" in filtered.columns:
-                            filtered = filtered[filtered["volume_ratio"].fillna(0) >= min_vol]
-
-                        candidates = (
-                            filtered
-                            .sort_values("momentum_rank", ascending=False)
-                            .head(available_slots)
+                        # 60-bar minimum: enough history for reliable signals.
+                        # pre_window_bars accounts for history before a trimmed window.
+                        in_window = sum(
+                            1 for t in ticker_bar_counts.get(ticker, []) if t < date
                         )
+                        pre_window = (pre_window_bars or {}).get(ticker, 0)
+                        if in_window + pre_window < config.MIN_BARS_BEFORE_ENTRY:
+                            continue
 
-                        for _, row in candidates.iterrows():
-                            ticker = row["ticker"]
+                        # Recompute portfolio value for correct sizing
+                        pos_val = sum(
+                            p["shares"] * p.get("current_price", p["entry_price"])
+                            for p in open_positions.values()
+                        )
+                        pv = cash + pos_val
 
-                            if ticker in open_positions:
-                                continue
-                            if ticker not in open_df.columns:
-                                continue
+                        dollar_size = risk_manager.size_position(pv, len(open_positions))
+                        if dollar_size <= 0:
+                            continue
 
-                            # Cooldown check
-                            if cooldown_until.get(ticker, 0) > i:
-                                continue
+                        # Apply entry slippage: fill slightly above the open
+                        eff_entry = fill_px * (1 + config.SLIPPAGE)
+                        shares    = dollar_size / eff_entry
+                        cost      = shares * eff_entry * (1 + commission)
 
-                            fill_px = open_df.loc[date, ticker] if date in open_df.index else np.nan
-                            if pd.isna(fill_px) or fill_px <= 0:
-                                continue
+                        if cash < cost:
+                            continue
 
-                            # 60-bar minimum: enough history for reliable signals.
-                            # pre_window_bars accounts for history before a trimmed window.
-                            in_window = sum(
-                                1 for t in ticker_bar_counts.get(ticker, []) if t < date
-                            )
-                            pre_window = (pre_window_bars or {}).get(ticker, 0)
-                            if in_window + pre_window < config.MIN_BARS_BEFORE_ENTRY:
-                                continue
-
-                            # Recompute portfolio value for correct sizing
-                            pos_val = sum(
-                                p["shares"] * p.get("current_price", p["entry_price"])
-                                for p in open_positions.values()
-                            )
-                            pv = cash + pos_val
-
-                            dollar_size = risk_manager.size_position(pv, len(open_positions)) * size_mult
-                            if dollar_size <= 0:
-                                continue
-
-                            shares = dollar_size / fill_px
-                            cost   = shares * fill_px * (1 + commission)
-
-                            if cash < cost:
-                                continue
-
-                            cash -= cost
-                            open_positions[ticker] = {
-                                "entry_price":   fill_px,
-                                "peak_price":    fill_px,
-                                "shares":        shares,
-                                "entry_date":    date,
-                                "current_price": fill_px,
-                            }
-
-    print(f"[regime-engine] bear-blocked entry attempts: {_bear_blocks}")
+                        cash -= cost
+                        open_positions[ticker] = {
+                            "entry_price":   eff_entry,
+                            "peak_price":    eff_entry,
+                            "shares":        shares,
+                            "entry_date":    date,
+                            "current_price": eff_entry,
+                        }
 
     # ── Close remaining positions at last close ───────────────────────────────
     last_date = dates[-1]
     for ticker, pos in open_positions.items():
         if ticker in close_df.columns:
-            last_px  = close_df.loc[last_date, ticker]
-            proceeds = pos["shares"] * last_px * (1 - commission)
+            last_px     = close_df.loc[last_date, ticker]
+            last_px_eff = last_px * (1 - config.SLIPPAGE)
+            proceeds    = pos["shares"] * last_px_eff * (1 - commission)
             cash += proceeds
-            pnl_pct = (last_px - pos["entry_price"]) / pos["entry_price"]
+            pnl_pct = (last_px_eff - pos["entry_price"]) / pos["entry_price"]
             all_trades.append({
                 "ticker":       ticker,
                 "entry_date":   pos["entry_date"],
                 "entry_price":  pos["entry_price"],
                 "exit_date":    last_date,
-                "exit_price":   last_px,
+                "exit_price":   last_px_eff,
                 "exit_reason":  "end_of_backtest",
                 "shares":       pos["shares"],
                 "pnl_pct":      pnl_pct,
-                "pnl_dollar":   (last_px - pos["entry_price"]) * pos["shares"],
+                "pnl_dollar":   (last_px_eff - pos["entry_price"]) * pos["shares"],
                 "holding_days": (last_date - pos["entry_date"]).days,
             })
 
