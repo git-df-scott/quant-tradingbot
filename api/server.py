@@ -23,6 +23,13 @@ CACHE_FILE = Path("results/backtest_cache.json")
 STATIC_DIR = Path(__file__).parent / "static"
 
 _status: dict = {"state": "idle", "msg": ""}
+_status_lock = threading.Lock()
+
+
+def _set_status(state: str, msg: str) -> None:
+    global _status
+    with _status_lock:
+        _status = {"state": state, "msg": msg}
 
 
 def _clean_json(obj):
@@ -39,10 +46,9 @@ def _clean_json(obj):
 # ── Backtest runner ───────────────────────────────────────────────────────────
 
 def _run_and_cache(start_date: Optional[str] = None, end_date: Optional[str] = None) -> None:
-    global _status
     date_label = f"{start_date or 'start'} to {end_date or 'now'}"
     try:
-        _status = {"state": "running", "msg": f"Fetching data ({date_label})..."}
+        _set_status("running", f"Fetching data ({date_label})...")
         from data.fetch import fetch_all
 
         # When a historical start_date is given, extend the fetch window so there
@@ -58,7 +64,7 @@ def _run_and_cache(start_date: Optional[str] = None, end_date: Optional[str] = N
         price_data = fetch_all(lookback_days=lookback, min_start_date=min_start)
 
         # ── Signal generation on FULL history (momentum needs full lookback) ────
-        _status["msg"] = f"Generating signals ({date_label})..."
+        _set_status("running", f"Generating signals ({date_label})...")
         from signals.momentum import generate_signals
         signals_df = generate_signals(price_data)
 
@@ -108,19 +114,19 @@ def _run_and_cache(start_date: Optional[str] = None, end_date: Optional[str] = N
                 signals_df = signals_df[smask.values]
             print(f"[data] {len(signals_df)} signals in window")
 
-        _status["msg"] = f"Running backtest ({date_label})..."
+        _set_status("running", f"Running backtest ({date_label})...")
         from backtest.engine import run as run_engine
         result = run_engine(
             price_data, signals_df,
             pre_window_bars=pre_window_bars or None,
         )
 
-        _status["msg"] = "Fetching SPY benchmark..."
+        _set_status("running", "Fetching SPY benchmark...")
         equity = result.equity_curve
 
         if equity.empty:
             print("[warn] equity curve is empty — no data in requested window")
-            _status = {"state": "error", "msg": "No price data in the selected date range. Try a wider window."}
+            _set_status("error", "No price data in the selected date range. Try a wider window.")
             return
 
         spy_aligned = pd.Series(dtype=float)
@@ -176,7 +182,7 @@ def _run_and_cache(start_date: Optional[str] = None, end_date: Optional[str] = N
                 signal_stats[str(ticker)] = int(cnt)
 
         # Trade analytics
-        _status["msg"] = "Computing trade analytics..."
+        _set_status("running", "Computing trade analytics...")
         from reporting.analysis import analyze_trades, print_analysis
         analysis = analyze_trades(result.trades) if not result.trades.empty else {}
         print_analysis(analysis)
@@ -200,13 +206,13 @@ def _run_and_cache(start_date: Optional[str] = None, end_date: Optional[str] = N
 
         Path("results").mkdir(exist_ok=True)
         CACHE_FILE.write_text(json.dumps(_clean_json(cache), default=str), encoding="utf-8")
-        _status = {"state": "complete", "msg": f"Done — {date_label}"}
+        _set_status("complete", f"Done — {date_label}")
 
     except Exception as exc:
         import traceback
         tb = traceback.format_exc()
         print(f"[error] _run_and_cache failed:\n{tb}")
-        _status = {"state": "error", "msg": str(exc)}
+        _set_status("error", str(exc))
 
 
 # ── Startup ───────────────────────────────────────────────────────────────────
@@ -217,8 +223,7 @@ async def startup() -> None:
         t = threading.Thread(target=_run_and_cache, daemon=True)
         t.start()
     else:
-        global _status
-        _status = {"state": "complete", "msg": "Loaded from cache"}
+        _set_status("complete", "Loaded from cache")
 
 
 # ── Routes ────────────────────────────────────────────────────────────────────
@@ -259,8 +264,10 @@ def run(
     start_date: Optional[str] = Query(default=None),
     end_date:   Optional[str] = Query(default=None),
 ):
-    if _status.get("state") == "running":
-        return {"status": "already_running"}
+    with _status_lock:
+        if _status.get("state") == "running":
+            return {"status": "already_running"}
+        _status["state"] = "running"  # claim the slot before releasing lock
     CACHE_FILE.unlink(missing_ok=True)
     t = threading.Thread(
         target=_run_and_cache,
