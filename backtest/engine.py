@@ -73,16 +73,16 @@ def _compute_metrics(
 
     if trades.empty:
         return {
-            "total_return_pct":     round(total_return * 100, 2),
+            "total_return_pct":      round(total_return * 100, 2),
             "annualized_return_pct": round(annual_return * 100, 2),
-            "max_drawdown_pct":     round(max_dd * 100, 2),
-            "sharpe_ratio":         round(sharpe, 3),
-            "win_rate_pct":         0.0,
-            "avg_win_pct":          0.0,
-            "avg_loss_pct":         0.0,
-            "profit_factor":        0.0,
-            "total_trades":         0,
-            "avg_holding_days":     0.0,
+            "max_drawdown_pct":      round(max_dd * 100, 2),
+            "sharpe_ratio":          round(sharpe, 3),
+            "win_rate_pct":          None,
+            "avg_win_pct":           None,
+            "avg_loss_pct":          None,
+            "profit_factor":         None,
+            "total_trades":          0,
+            "avg_holding_days":      None,
         }
 
     wins   = trades[trades["pnl_pct"] > 0]
@@ -281,17 +281,28 @@ def run(
                     day_signals = sig_by_date.get(pd.Timestamp(prev_date), pd.DataFrame())
 
                     if not day_signals.empty:
-                        # Caution: halve the position cap and dollar size
                         if regime == "caution":
-                            pos_cap   = config.REGIME_CAUTION_MAX_POSITIONS
-                            size_mult = config.REGIME_CAUTION_SIZE_MULT
+                            pos_cap    = config.REGIME_CAUTION_MAX_POSITIONS
+                            size_mult  = config.REGIME_CAUTION_SIZE_MULT
+                            min_rank   = config.REGIME_CAUTION_MOMENTUM_PERCENTILE
+                            min_vol    = config.REGIME_CAUTION_VOLUME_MULTIPLIER
                         else:
-                            pos_cap   = config.MAX_POSITIONS
-                            size_mult = 1.0
+                            pos_cap    = config.MAX_POSITIONS
+                            size_mult  = 1.0
+                            min_rank   = 0.0
+                            min_vol    = 0.0  # bull: no extra volume gate beyond signal pre-screen
 
                         available_slots = pos_cap - len(open_positions)
 
-                        candidates = day_signals.sort_values("momentum_rank", ascending=False).head(available_slots)
+                        filtered = day_signals[day_signals["momentum_rank"] >= min_rank]
+                        if min_vol > 0 and "volume_ratio" in filtered.columns:
+                            filtered = filtered[filtered["volume_ratio"].fillna(0) >= min_vol]
+
+                        candidates = (
+                            filtered
+                            .sort_values("momentum_rank", ascending=False)
+                            .head(available_slots)
+                        )
 
                         for _, row in candidates.iterrows():
                             ticker = row["ticker"]
