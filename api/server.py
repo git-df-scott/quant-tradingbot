@@ -142,7 +142,7 @@ def _run_and_cache(start_date: Optional[str] = None, end_date: Optional[str] = N
                 if hasattr(spy_close.index, "tz") and spy_close.index.tz:
                     spy_close.index = spy_close.index.tz_convert(None)
                 spy_norm = spy_close / spy_close.iloc[0] * config.INITIAL_CAPITAL
-                spy_aligned = spy_norm.reindex(equity.index, method="ffill").dropna()
+                spy_aligned = spy_norm.reindex(equity.index).ffill().dropna()
             else:
                 print(f"[warn] SPY download returned no data for this window")
         except Exception as spy_exc:

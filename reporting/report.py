@@ -97,7 +97,7 @@ def generate_report(result: BacktestResult) -> None:
     # Compute alpha vs SPY if possible
     spy = _fetch_benchmark(equity.index[0], equity.index[-1])
     if spy is not None:
-        spy_aligned = spy.reindex(equity.index, method="ffill").dropna()
+        spy_aligned = spy.reindex(equity.index).ffill().dropna()
         if len(spy_aligned) > 1:
             spy_return = (spy_aligned.iloc[-1] / spy_aligned.iloc[0] - 1) * 100
             alpha = m.get("total_return_pct", 0) - spy_return

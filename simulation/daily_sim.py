@@ -246,12 +246,27 @@ def run_daily() -> None:
             log.warning("SKIP-FILL %s: need $%.2f, have $%.2f", ticker, cost, cash)
             continue
 
+        # Adaptive stop: mirrors backtest engine logic (ATR-based, clamped)
+        atr_abs = entry.get("atr_abs")
+        try:
+            atr_val = float(atr_abs) if atr_abs is not None and not pd.isna(float(atr_abs)) else 0.0
+        except (TypeError, ValueError):
+            atr_val = 0.0
+        if atr_val > 0:
+            raw_stop   = eff_entry - config.ATR_STOP_MULTIPLIER * atr_val
+            floor_stop = eff_entry * (1 - config.ATR_STOP_MIN_PCT)
+            ceil_stop  = eff_entry * (1 - config.ATR_STOP_MAX_PCT)
+            stop_price = max(min(raw_stop, floor_stop), ceil_stop)
+        else:
+            stop_price = eff_entry * (1 + config.STOP_LOSS_PCT)
+
         cash -= cost
         open_positions[ticker] = {
             "shares":      shares,
             "entry_price": eff_entry,
             "entry_date":  today_str,
             "peak_price":  eff_entry,
+            "stop_price":  stop_price,
         }
         filled_today.add(ticker)
         trades_today += 1
@@ -290,7 +305,7 @@ def run_daily() -> None:
         pos["peak_price"] = max(peak_px, day_high)
         peak_px = pos["peak_price"]
 
-        stop_px  = risk.stop_price(entry_px)
+        stop_px  = pos["stop_price"] if "stop_price" in pos else risk.stop_price(entry_px)
         tp_px    = entry_px * (1.0 + config.TAKE_PROFIT_PCT)
         trail_px = risk.trail_stop_price(peak_px)
 
@@ -416,7 +431,11 @@ def run_daily() -> None:
                 log.info("SKIP-SIG %s: zero size (equity=%.2f)", ticker, equity)
                 continue
 
-            new_pending.append({"ticker": ticker, "dollar_size": dollar_sz})
+            new_pending.append({
+                "ticker":     ticker,
+                "dollar_size": dollar_sz,
+                "atr_abs":    row.get("atr_abs"),
+            })
             log.info(
                 "QUEUED  %s: rank=%.3f  size=$%.2f → fill tomorrow at open",
                 ticker, row.get("momentum_rank", 0), dollar_sz,
