@@ -40,13 +40,7 @@ def run_backtest() -> None:
     signal_summary(signals_df)
 
     console.print("[bold]Step 3/4[/bold] Running backtest engine...")
-    from risk.regime import compute_spy_regime
-    import pandas as pd
-    all_dates = sorted(set(d for df in price_data.values() for d in df.index.normalize()))
-    spy_regime = compute_spy_regime(all_dates[0], all_dates[-1]) if all_dates else None
-    if spy_regime is not None and not spy_regime.empty:
-        console.print(f"  Regime: {spy_regime.value_counts().to_dict()}")
-    result = run_engine(price_data, signals_df, spy_regime=spy_regime)
+    result = run_engine(price_data, signals_df)
 
     console.print("[bold]Step 4/4[/bold] Generating report...")
     generate_report(result)
@@ -58,50 +52,9 @@ def run_backtest() -> None:
 # ── Mode: simulate ─────────────────────────────────────────────────────────────
 
 def run_simulate() -> None:
-    from data.fetch import fetch_all
-    from signals.momentum import generate_signals
-    from simulation.market_sim import MarketSimulator
-    from risk.manager import RiskManager
-    import config
-
-    console.rule("[bold cyan]SIMULATION MODE (30-day replay)[/bold cyan]")
-
-    price_data = fetch_all()
-    signals_df = generate_signals(price_data)
-
-    sim = MarketSimulator(price_data=price_data)
-    risk = RiskManager()
-
-    for day_num in range(30):
-        sim.step()
-        pf = sim.get_portfolio()
-        date = pf["date"]
-
-        # Get signals for this date
-        if date is not None and not signals_df.empty:
-            day_sigs = signals_df[
-                (signals_df["date"] == pd.Timestamp(date)) & (signals_df["signal"] == 1)
-            ]
-            for _, row in day_sigs.head(config.MAX_POSITIONS - len(pf["positions"])).iterrows():
-                ticker = row["ticker"]
-                price_info = sim.get_price(ticker)
-                if price_info:
-                    dollar_size = risk.size_position(pf["equity"], len(pf["positions"]))
-                    qty = int(dollar_size / price_info["close"])
-                    if qty > 0:
-                        sim.submit_order(ticker, qty, "buy")
-                        console.print(f"  [green]BUY {qty} {ticker} @ ~${price_info['close']:.2f}[/green]")
-
-        # Advance to fill at next open
-        console.print(
-            f"  Day {day_num+1:2d} | {date} | Equity: ${pf['equity']:>12,.2f} | "
-            f"Cash: ${pf['cash']:>10,.2f} | Positions: {len(pf['positions'])}"
-        )
-
-    console.print("\n[bold]Final portfolio:[/bold]")
-    final = sim.get_portfolio()
-    console.print(f"  Equity: ${final['equity']:,.2f}")
-    console.print(f"  Positions: {list(final['positions'].keys())}")
+    from simulation.daily_sim import run_daily
+    console.rule("[bold cyan]SIMULATION MODE (live-forward daily)[/bold cyan]")
+    run_daily()
 
 
 # ── Mode: paper ────────────────────────────────────────────────────────────────

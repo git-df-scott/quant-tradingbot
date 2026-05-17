@@ -644,14 +644,14 @@ function clearAnalysis() {
 }
 
 function renderMetrics(m, d) {
-  const totalRet = m.total_return_pct || 0;
-  const annRet   = m.annualized_return_pct || 0;
-  const maxDD    = m.max_drawdown_pct || 0;
-  const sharpe   = m.sharpe_ratio || 0;
-  const wr       = m.win_rate_pct || 0;
-  const pf       = m.profit_factor;
-  const trades   = m.total_trades || 0;
-  const hold     = m.avg_holding_days || 0;
+  const totalRet = m.total_return_pct ?? 0;
+  const annRet   = m.annualized_return_pct ?? 0;
+  const maxDD    = m.max_drawdown_pct ?? 0;
+  const sharpe   = m.sharpe_ratio ?? 0;
+  const wr       = m.win_rate_pct;     // null = no trades
+  const pf       = m.profit_factor;    // null = no trades OR no losses
+  const trades   = m.total_trades ?? 0;
+  const hold     = m.avg_holding_days; // null = no trades
 
   // SPY return from last/first of spy_curve
   let spyRet = 0;
@@ -664,11 +664,11 @@ function renderMetrics(m, d) {
   set('mv-spy-delta', `Alpha: ${fmtSigned(alpha, '%')}`, '');
   set('mv-annual',    fmt(annRet, '%'), colorClass(annRet));
   set('mv-dd',        `${maxDD.toFixed(2)}%`, 'negative');
-  set('mv-sharpe',    sharpe.toFixed(3), sharpe > 1 ? 'positive' : sharpe > 0 ? 'neutral' : 'negative');
-  set('mv-wr',        `${wr.toFixed(1)}%`, wr > 55 ? 'positive' : wr > 45 ? 'neutral' : 'negative');
-  set('mv-pf',        pf != null ? pf.toFixed(3) : '∞', pf == null || pf > 1.5 ? 'positive' : pf > 1 ? 'neutral' : 'negative');
+  set('mv-sharpe',    trades > 0 ? sharpe.toFixed(3) : '—', trades > 0 ? (sharpe > 1 ? 'positive' : sharpe > 0 ? 'neutral' : 'negative') : '');
+  set('mv-wr',        wr != null ? `${wr.toFixed(1)}%` : '—', wr != null ? (wr > 55 ? 'positive' : wr > 45 ? 'neutral' : 'negative') : '');
+  set('mv-pf',        trades === 0 ? '—' : (pf != null ? pf.toFixed(3) : '∞'), trades === 0 ? '' : (pf == null || pf > 1.5 ? 'positive' : pf > 1 ? 'neutral' : 'negative'));
   set('mv-trades',    trades.toString(), 'cyan');
-  set('mv-hold',      `${hold.toFixed(1)}d`, 'cyan');
+  set('mv-hold',      hold != null ? `${hold.toFixed(1)}d` : '—', 'cyan');
   set('mv-alpha',     fmtSigned(alpha, '%'), colorClass(alpha));
 }
 

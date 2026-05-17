@@ -1,0 +1,42 @@
+name: Daily Forward Simulation
+
+on:
+  schedule:
+    - cron: '35 13 * * 1-5'   # 9:35am ET (UTC-4 during DST) on weekdays
+  workflow_dispatch:            # allow manual trigger from GitHub UI
+
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run daily simulation
+        run: python main.py --mode simulate
+
+      - name: Commit logs
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git add --force logs/paper_*.log
+          git add logs/weekly_summary.csv logs/sim_state.json 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "sim: daily run $(date -u +%Y-%m-%d)"
+            git push
+          fi

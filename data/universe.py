@@ -1,49 +1,90 @@
 """
-25 small-cap tickers ($50M-$500M market cap as of 2022), diversified across 5 sectors.
-Max 5 per sector. Selected for clean data availability and genuine small-cap classification.
+Small-cap momentum universe: ~380 candidate tickers filtered at runtime by
+price ($5-$200) and ADV (>300k shares).  Targets NYSE/NASDAQ companies with
+historical market cap roughly $300M-$3B.
 """
 
-UNIVERSE = {
-    # ── Industrials (5) ───────────────────────────────────────────────────────
-    # Specialty manufacturers and defense — cyclical but data-clean
-    "ATKR": {"sector": "Industrials",  "name": "Atkore Inc",                    "note": "Electrical conduit, benefited from infrastructure spend"},
-    "KTOS": {"sector": "Industrials",  "name": "Kratos Defense & Security",     "note": "Drone/defense tech, ~$2B cap in 2022"},
-    "FELE": {"sector": "Industrials",  "name": "Franklin Electric Co",          "note": "Water/fuel systems, steady compounder"},
-    "GTES": {"sector": "Industrials",  "name": "Gates Industrial Corporation",  "note": "Industrial belts & hoses, IPO 2018"},
-    "HLIO": {"sector": "Industrials",  "name": "Helios Technologies Inc",       "note": "Hydraulic controls, formerly Sun Hydraulics"},
+CANDIDATE_TICKERS: list[str] = [
+    # ── Energy – E&P, midstream, oilfield services ────────────────────────────
+    "SM",    "GPOR",  "NOG",   "CIVI",  "TALO",  "SBOW",  "ESTE",  "VAALCO",
+    "KOS",   "WHD",   "PUMP",  "WTTR",  "MRC",   "RES",   "NINE",  "USAC",
+    "AROC",  "NGL",   "DKL",   "SJT",   "VET",   "REX",   "BSM",   "REPX",
+    "FLNG",  "MNRL",  "PTEN",  "HPK",   "SRLP",  "CAPL",  "BATL",  "NGAS",
+    "CDEV",  "SWN",   "MARPS",
 
-    # ── Consumer Discretionary (5) ────────────────────────────────────────────
-    "BOOT": {"sector": "ConsumerDisc", "name": "Boot Barn Holdings",            "note": "Western & work apparel, strong momentum cycles"},
-    "GSHD": {"sector": "ConsumerDisc", "name": "Goosehead Insurance",           "note": "Independent insurance distribution, IPO 2018"},
-    "LESL": {"sector": "ConsumerDisc", "name": "Leslie's Inc",                  "note": "Pool supply retail, IPO 2020"},
-    "CATO": {"sector": "ConsumerDisc", "name": "Cato Corporation",               "note": "Specialty apparel retail, established small-cap"},
-    "DRVN": {"sector": "ConsumerDisc", "name": "Driven Brands Holdings",        "note": "Auto service franchisor, IPO 2021"},
+    # ── Biotech / Specialty Pharma ────────────────────────────────────────────
+    "ACAD",  "HIMS",  "PRAX",  "NVAX",  "INVA",  "RCUS",  "IMVT",  "ARDX",
+    "ITCI",  "ALKS",  "MGNX",  "ADMA",  "AMRX",  "APLT",  "RVNC",  "AGEN",
+    "AKRO",  "ARVN",  "CDMO",  "CYTK",  "ENTA",  "GKOS",  "HALO",  "HRTX",
+    "IRWD",  "KYMR",  "LGND",  "MDGL",  "MNKD",  "MYGN",  "NUVL",  "OCUL",
+    "PAHC",  "PTGX",  "RYTM",  "SILK",  "SUPN",  "TGTX",  "XENE",  "YMAB",
+    "ALLO",  "AMPH",  "ASRT",  "ATRC",  "AXSM",  "CARA",  "CBAY",  "CLDX",
+    "CMPS",  "CRIS",  "EXEL",  "FOLD",  "FATE",  "SAGE",  "ABCL",  "ALDX",
+    "AMRN",  "ANIP",  "ARQT",  "ATAI",  "ALEC",  "ANIK",  "BHVN",  "CNTA",
+    "IOVA",  "JANX",  "KROS",  "LBPH",  "MIRM",  "NKTR",  "NTLA",  "ONCT",
+    "PCVX",  "RXRX",  "GRTS",  "GLYC",
 
-    # ── Healthcare (5) ────────────────────────────────────────────────────────
-    "ACAD": {"sector": "Healthcare",   "name": "Acadia Pharmaceuticals",        "note": "CNS drugs, high-beta biotech"},
-    "INVA": {"sector": "Healthcare",   "name": "Innoviva Inc",                  "note": "Royalty-based pharma, low vol"},
-    "HIMS": {"sector": "Healthcare",   "name": "Hims & Hers Health",            "note": "DTC telehealth, SPAC 2021"},
-    "PRAX": {"sector": "Healthcare",   "name": "Praxis Precision Medicine",     "note": "Clinical-stage neuro, IPO 2020"},
-    "NVAX": {"sector": "Healthcare",   "name": "Novavax Inc",                   "note": "Vaccine biotech, extreme momentum cycles"},
+    # ── Medical Devices / Healthcare Services ────────────────────────────────
+    "CNMD",  "INGN",  "INMD",  "CCRN",  "HCSG",  "MMSI",  "NVCR",  "CCXI",
+    "AXNX",  "CDNA",  "PNTG",  "ADUS",  "AHCO",  "ATRI",  "USPH",  "IART",
+    "RGEN",  "TCMD",  "TMDX",
 
-    # ── Technology (5) ───────────────────────────────────────────────────────
-    "POWI": {"sector": "Technology",   "name": "Power Integrations",             "note": "Analog semiconductor, established 1988"},
-    "YEXT": {"sector": "Technology",   "name": "Yext Inc",                      "note": "Digital presence platform, IPO 2017"},
-    "NCNO": {"sector": "Technology",   "name": "nCino Inc",                     "note": "Banking cloud, IPO 2020"},
-    "DOCN": {"sector": "Technology",   "name": "DigitalOcean Holdings",         "note": "Developer cloud, IPO 2021"},
-    "LPSN": {"sector": "Technology",   "name": "LivePerson Inc",                "note": "Conversational AI, established 2000"},
+    # ── Technology – Software / SaaS / Internet ──────────────────────────────
+    "YEXT",  "NCNO",  "DOCN",  "LPSN",  "UPLD",  "EGHT",  "VIAV",  "DOMO",
+    "BIGC",  "CERT",  "CNXC",  "CTLP",  "APPS",  "BRZE",  "CDLX",  "FSLY",
+    "SPSC",  "SMAR",  "RSKD",  "PYCR",  "PRGS",  "PDFS",  "NTUS",  "MTTR",
+    "MIME",  "LQDT",  "LLNW",  "ATEN",  "NTGR",  "ARLO",  "BAND",  "BMBL",
+    "CARS",  "BLNK",  "VRNT",  "AVDX",  "CALX",  "NRDS",  "PRFT",  "APPN",
+    "CARG",  "TTGT",  "UPWK",  "ALRM",  "KFRC",  "RMNI",  "SCSC",  "TNET",
+    "SUMO",  "LOPE",
 
-    # ── Energy (5) ───────────────────────────────────────────────────────────
-    "SM":   {"sector": "Energy",       "name": "SM Energy",                     "note": "E&P focused on Permian and Midland Basin"},
-    "SJT":  {"sector": "Energy",       "name": "San Juan Basin Royalty Trust",  "note": "Natural gas royalty, high-yield"},
-    "VET":  {"sector": "Energy",       "name": "Vermilion Energy",              "note": "International E&P, TSX/NYSE dual-listed"},
-    "WHD":  {"sector": "Energy",       "name": "Cactus Inc",                    "note": "Wellhead equipment, IPO 2018"},
-    "GPOR": {"sector": "Energy",       "name": "Gulfport Energy Corporation",   "note": "Natural gas, relisted 2021 post-restructuring"},
-}
+    # ── Semiconductors / Electronic Components ───────────────────────────────
+    "COHU",  "SMTC",  "FORM",  "ICHR",  "POWI",  "DIOD",  "AEHR",  "ACMR",
+    "AMKR",  "AOSL",  "AXTI",  "CRUS",  "EMKR",  "IMOS",  "CCMP",  "CAMP",
+    "DAIO",  "QUIK",  "ONTO",  "SITM",  "ACLS",  "MTSI",  "POWL",
 
-TICKERS = list(UNIVERSE.keys())
+    # ── Industrials – Defense / Manufacturing / Distribution ─────────────────
+    "KTOS",  "FELE",  "GTES",  "HLIO",  "ATKR",  "DY",    "ARCB",  "BWEN",
+    "CMCO",  "DAN",   "DNOW",  "DXPE",  "GBX",   "GFF",   "GNTX",  "HUBG",
+    "HURC",  "HWKN",  "IEC",   "IIIN",  "INFN",  "INSG",  "HLX",   "CLFD",
+    "AVAV",  "AAON",  "AEIS",  "AMWD",  "APOG",  "ASTE",  "AZEK",  "GRC",
+    "GNSS",  "ROAD",  "ESAB",  "EXTR",  "WERN",  "HTLD",  "MRTN",  "DSKE",
+    "ECHO",  "MATX",  "TREX",  "MYRG",  "HAYN",  "ZEUS",  "NPO",   "THRM",
+    "TRNS",  "OSIS",  "STRL",  "VSEC",  "MTRN",
 
-SECTORS = {}
-for ticker, info in UNIVERSE.items():
-    sector = info["sector"]
-    SECTORS.setdefault(sector, []).append(ticker)
+    # ── Consumer – Restaurants / Leisure ─────────────────────────────────────
+    "CAKE",  "CHUY",  "BJRI",  "RRGB",  "LOCO",  "JACK",  "BLMN",  "FAT",
+    "NATH",  "SHAK",  "PBPB",  "MCRI",  "FRGI",  "DINE",  "EAT",   "ARCO",
+    "PZZA",
+
+    # ── Consumer – Retail / Brands ────────────────────────────────────────────
+    "BOOT",  "CATO",  "LESL",  "DRVN",  "PRTY",  "TLYS",  "GCO",   "PLCE",
+    "BGFV",  "HIBB",  "SCVL",  "BKE",   "RCII",  "CONN",  "HOFT",  "SNBR",
+    "LE",    "WGO",   "XPEL",  "IPAR",  "AMMO",  "SMPL",  "CENT",  "UNFI",
+
+    # ── Financial – BDCs / Closed-End / Asset Managers ───────────────────────
+    "CSWC",  "HTGC",  "GAIN",  "NEWT",  "TPVG",  "PFLT",  "HRZN",  "OCSL",
+    "GSHD",  "MAIN",  "SLRC",  "TCPC",  "NMFC",
+
+    # ── Financial – Banks / Insurance ────────────────────────────────────────
+    "GBCI",  "FFIN",  "IBTX",  "INDB",  "LKFN",  "FISI",  "HCI",   "SBCF",
+    "TOWN",  "RNST",  "HONE",  "HTBK",  "LBAI",  "IBCP",  "FFBC",  "HIFS",
+    "HMST",  "CATC",  "ACNB",  "CVBF",  "EGBN",  "CBTX",  "AMTB",  "UMBF",
+    "VBTX",  "SFNC",  "PEBO",  "NBTB",
+
+    # ── Materials / Chemicals / Metals ────────────────────────────────────────
+    "ASIX",  "AVNT",  "BCPC",  "KALU",  "AG",    "CDE",   "HL",    "EXK",
+    "GATO",  "PAAS",  "MAG",   "FSM",   "USAS",  "ROCK",  "WDFC",  "LXFR",
+    "TPIC",  "TISI",  "SPWH",  "MLAB",
+
+    # ── Real Estate – REITs ───────────────────────────────────────────────────
+    "GOOD",  "PLYM",  "ILPT",  "BRT",   "CLPR",  "NXRT",  "CHCT",  "GMRE",
+    "ELME",  "UHT",   "PKST",  "AIRC",
+]
+
+# De-duplicate while preserving order
+_seen: set[str] = set()
+CANDIDATE_TICKERS = [t for t in CANDIDATE_TICKERS if t not in _seen and not _seen.add(t)]  # type: ignore[func-returns-value]
+
+# Backward-compatible alias
+TICKERS = CANDIDATE_TICKERS

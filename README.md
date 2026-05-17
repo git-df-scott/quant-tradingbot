@@ -16,12 +16,13 @@ An end-to-end quantitative trading system with live backtesting dashboard.
 
 | Parameter | Value |
 |-----------|-------|
-| Universe | 25 small-cap stocks, 5 sectors, $50M–$500M market cap (2022) |
-| Entry | 20-day return top 30% AND close ≤ 5-day MA AND volume > 1.2× avg |
-| Exit | Close crosses above 20-day MA (take profit) OR −8% (stop loss) |
-| Sizing | Equal weight, max 10 positions, 10% per slot |
+| Universe | 300 small-cap stocks, $5–$200 price, 300K min ADV |
+| Entry | Momentum top 30% AND close ≤ 5-day MA AND volume > 1.5× avg AND confirmation candle AND 5-day MA > 20-day MA |
+| Exit | +15% take profit OR −6% hard stop OR trailing stop (activates at +8%, trails 4%) |
+| Regime filter | SPY SMA50/200 death-cross blocks all entries; caution mode reduces size/count |
+| Sizing | Equal weight, max 5 positions, 10% per slot |
 | Capital | $100,000 paper |
-| Lookback | 2 years of daily OHLCV data |
+| Lookback | ~4.4 years of daily OHLCV data |
 
 ## Dashboard
 
