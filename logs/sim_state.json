@@ -1,20 +1,22 @@
 {
-  "cash": 10000.0,
+  "cash": 7998.0,
   "initial_capital": 10000.0,
   "start_date": "2026-05-18",
-  "open_positions": {},
-  "pending_entries": [
-    {
-      "ticker": "TTGT",
-      "dollar_size": 1000.0,
-      "atr_abs": 0.5205
+  "open_positions": {
+    "TTGT": {
+      "shares": 194.02923176201392,
+      "entry_price": 5.153862595438957,
+      "entry_date": "2026-05-18",
+      "peak_price": 5.153862595438957
     },
-    {
-      "ticker": "REI",
-      "dollar_size": 1000.0,
-      "atr_abs": 0.136
+    "REI": {
+      "shares": 729.379969781377,
+      "entry_price": 1.3710275047719478,
+      "entry_date": "2026-05-18",
+      "peak_price": 1.3710275047719478
     }
-  ],
+  },
+  "pending_entries": [],
   "cooldown_until": {},
   "total_pnl": 0.0,
   "total_trades": 0
