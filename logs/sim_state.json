@@ -1,0 +1,21 @@
+{
+  "cash": 10000.0,
+  "initial_capital": 10000.0,
+  "start_date": "2026-05-18",
+  "open_positions": {},
+  "pending_entries": [
+    {
+      "ticker": "TTGT",
+      "dollar_size": 1000.0,
+      "atr_abs": 0.5205
+    },
+    {
+      "ticker": "REI",
+      "dollar_size": 1000.0,
+      "atr_abs": 0.136
+    }
+  ],
+  "cooldown_until": {},
+  "total_pnl": 0.0,
+  "total_trades": 0
+}
