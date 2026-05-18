@@ -1,3 +1,3 @@
-2026-05-18 17:22:04,863 INFO === Run: today=2026-05-18  signal_date=2026-05-15 ===
-2026-05-18 17:22:04,863 INFO Fetching historical price data...
-2026-05-18 17:22:14,793 ERROR No price data — aborting.
+2026-05-18 17:25:31,032 INFO === Run: today=2026-05-18  signal_date=2026-05-15 ===
+2026-05-18 17:25:31,032 INFO Fetching historical price data...
+2026-05-18 17:25:42,099 ERROR No price data — aborting.
