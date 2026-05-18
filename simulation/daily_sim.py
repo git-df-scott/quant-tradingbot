@@ -96,7 +96,7 @@ def _save_state(state: dict) -> None:
 
 def _fetch_history() -> dict[str, pd.DataFrame]:
     from data.fetch import fetch_all
-    return fetch_all(lookback_days=90, force_refresh=True)
+    return fetch_all(lookback_days=365, force_refresh=True)
 
 
 def _fetch_todays_opens(
