@@ -1,23 +1,30 @@
 {
-  "cash": 7998.0,
+  "cash": 8936.355705,
   "initial_capital": 10000.0,
   "start_date": "2026-05-18",
   "open_positions": {
-    "TTGT": {
-      "shares": 194.02923176201392,
-      "entry_price": 5.153862595438957,
-      "entry_date": "2026-05-18",
-      "peak_price": 5.153862595438957
-    },
     "REI": {
       "shares": 729.379969781377,
       "entry_price": 1.3710275047719478,
       "entry_date": "2026-05-18",
-      "peak_price": 1.3710275047719478
+      "peak_price": 1.3799999952316284
     }
   },
-  "pending_entries": [],
-  "cooldown_until": {},
-  "total_pnl": 0.0,
-  "total_trades": 0
+  "pending_entries": [
+    {
+      "ticker": "CCRN",
+      "dollar_size": 991.3724888852729,
+      "atr_abs": 0.376
+    },
+    {
+      "ticker": "TBI",
+      "dollar_size": 991.3724888852729,
+      "atr_abs": 0.449
+    }
+  ],
+  "cooldown_until": {
+    "TTGT": "2026-05-30"
+  },
+  "total_pnl": -60.7050000000002,
+  "total_trades": 1
 }
