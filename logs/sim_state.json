@@ -1,20 +1,22 @@
 {
-  "cash": 10000.0,
+  "cash": 7998.0,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
-  "open_positions": {},
-  "pending_entries": [
-    {
-      "ticker": "CCRN",
-      "dollar_size": 1000.0,
-      "atr_abs": 0.376
+  "open_positions": {
+    "CCRN": {
+      "shares": 76.04646392465447,
+      "entry_price": 13.149855343580246,
+      "entry_date": "2026-05-19",
+      "peak_price": 13.149855343580246
     },
-    {
-      "ticker": "TBI",
-      "dollar_size": 1000.0,
-      "atr_abs": 0.449
+    "TBI": {
+      "shares": 178.43760340992446,
+      "entry_price": 5.604199904561043,
+      "entry_date": "2026-05-19",
+      "peak_price": 5.604199904561043
     }
-  ],
+  },
+  "pending_entries": [],
   "cooldown_until": {},
   "total_pnl": 0.0,
   "total_trades": 0
