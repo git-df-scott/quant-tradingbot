@@ -96,39 +96,98 @@ def _save_state(state: dict) -> None:
 
 def _fetch_history() -> dict[str, pd.DataFrame]:
     from data.fetch import fetch_all
-    return fetch_all(lookback_days=365, force_refresh=True)
+    data = fetch_all(lookback_days=365, force_refresh=True)
+    # A blocked/rate-limited download (common on shared CI IPs) returns {} and
+    # would otherwise abort the whole run. Fall back to the last-good cache so
+    # the execution pipeline still gets to fill pending orders and check exits.
+    if not data:
+        logging.warning("Live download returned no data — falling back to cache.")
+        data = fetch_all(lookback_days=365, force_refresh=False)
+    return data
 
 
 def _fetch_todays_opens(
     tickers: list[str], today: pd.Timestamp
 ) -> dict[str, float]:
-    """Download today's opening prices (available ~9:35am ET)."""
+    """Today's opening prices, fetched shortly after the 9:30 ET open.
+
+    Only TODAY's open is ever returned — never a stale prior-session bar — so
+    fills stay faithful to the backtest's signal-close -> next-open convention.
+    Two passes: (1) the daily bar dated today, and (2) a 1-minute intraday
+    fallback for tickers whose daily bar has not been published yet (Yahoo
+    often lags the daily bar by minutes-to-hours after the open).
+    """
+    if not tickers:
+        return {}
+
     today_str    = today.strftime("%Y-%m-%d")
     tomorrow_str = (today + pd.Timedelta(days=1)).strftime("%Y-%m-%d")
+    window_start = (today - pd.Timedelta(days=4)).strftime("%Y-%m-%d")
     opens: dict[str, float] = {}
+
+    def _today_open(series: pd.Series) -> float | None:
+        s = series.dropna()
+        s = s[s.index.normalize() == today]
+        if s.empty:
+            return None
+        val = float(s.iloc[0])
+        return val if val > 0 else None
+
+    def _first_open(series: pd.Series) -> float | None:
+        s = series.dropna()
+        if s.empty:
+            return None
+        val = float(s.iloc[0])
+        return val if val > 0 else None
+
+    # Pass 1 — daily bar dated today.
     try:
         raw = yf.download(
             tickers,
-            start=today_str, end=tomorrow_str,
+            start=window_start, end=tomorrow_str,
             interval="1d", auto_adjust=True,
             progress=False, threads=True,
         )
-        if raw.empty:
-            return opens
-        if isinstance(raw.columns, pd.MultiIndex):
-            open_df = raw["Open"]
-            for t in tickers:
-                if t in open_df.columns:
-                    val = open_df[t].dropna()
-                    if not val.empty and val.iloc[0] > 0:
-                        opens[t] = float(val.iloc[0])
-        else:
-            if not raw.empty and "Open" in raw.columns:
-                val = raw["Open"].dropna()
-                if not val.empty and val.iloc[0] > 0:
-                    opens[tickers[0]] = float(val.iloc[0])
+        if not raw.empty:
+            if isinstance(raw.columns, pd.MultiIndex):
+                open_df = raw["Open"]
+                for t in tickers:
+                    if t in open_df.columns:
+                        v = _today_open(open_df[t])
+                        if v is not None:
+                            opens[t] = v
+            elif "Open" in raw.columns:
+                v = _today_open(raw["Open"])
+                if v is not None:
+                    opens[tickers[0]] = v
     except Exception as exc:
-        logging.warning("Failed fetching today's opens: %s", exc)
+        logging.warning("Daily opens fetch failed: %s", exc)
+
+    # Pass 2 — 1-minute intraday fallback for tickers still missing.
+    missing = [t for t in tickers if t not in opens]
+    if missing:
+        try:
+            raw = yf.download(
+                missing,
+                start=today_str, end=tomorrow_str,
+                interval="1m", auto_adjust=True,
+                progress=False, threads=True,
+            )
+            if not raw.empty:
+                if isinstance(raw.columns, pd.MultiIndex):
+                    open_df = raw["Open"]
+                    for t in missing:
+                        if t in open_df.columns:
+                            v = _first_open(open_df[t])
+                            if v is not None:
+                                opens[t] = v
+                elif "Open" in raw.columns:
+                    v = _first_open(raw["Open"])
+                    if v is not None:
+                        opens[missing[0]] = v
+        except Exception as exc:
+            logging.warning("Intraday opens fallback failed: %s", exc)
+
     return opens
 
 
@@ -211,6 +270,10 @@ def run_daily() -> None:
     log.info("Fetching today's opens for %d tickers...", len(tickers))
     todays_opens = _fetch_todays_opens(tickers, today)
     log.info("Got opens for %d tickers.", len(todays_opens))
+    if pending:
+        have = sum(1 for e in pending if todays_opens.get(e["ticker"], 0) > 0)
+        print(f"  [OPEN] {len(todays_opens)}/{len(tickers)} opens fetched | "
+              f"{have}/{len(pending)} pending have an open price")
 
     risk         = RiskManager(initial_capital=INITIAL_CAPITAL)
     daily_pnl    = 0.0
@@ -235,6 +298,7 @@ def run_daily() -> None:
         open_px = todays_opens.get(ticker)
         if open_px is None or open_px <= 0:
             log.warning("SKIP-FILL %s: no open price — carrying forward", ticker)
+            print(f"  [WAIT] {ticker}: no open price yet -- carried forward to next run")
             still_pending.append(entry)
             continue
 
@@ -275,6 +339,10 @@ def run_daily() -> None:
                f"cost=${cost:.2f}  slip=${(eff_entry - open_px)*shares:.2f}")
         log.info(msg)
         print(f"  [BUY ] {msg}")
+        # Confirmation marker: pending -> held conversion succeeded at the open.
+        exec_msg = f"[EXEC] {ticker} opened at ${open_px:.2f}"
+        log.info(exec_msg)
+        print(f"  {exec_msg}")
 
     # ── 5. SL/TP check using yesterday's intraday H/L ────────────────────────
     log.info("--- Checking exits for %d open positions ---", len(open_positions))
@@ -465,10 +533,24 @@ def run_daily() -> None:
             "entry_price": float(v["entry_price"]),
             "entry_date":  v["entry_date"],
             "peak_price":  float(v["peak_price"]),
+            # Persist the entry-time stop so exit checks on later runs use the
+            # same adaptive stop instead of silently recomputing a fixed-pct one.
+            **({"stop_price": float(v["stop_price"])} if "stop_price" in v else {}),
         }
         for k, v in open_positions.items()
     }
-    state["pending_entries"] = still_pending + new_pending
+    state["pending_entries"] = [
+        {
+            "ticker":      e["ticker"],
+            "dollar_size": float(e["dollar_size"]),
+            **(
+                {"atr_abs": float(e["atr_abs"])}
+                if e.get("atr_abs") is not None and not pd.isna(pd.to_numeric(e["atr_abs"], errors="coerce"))
+                else {}
+            ),
+        }
+        for e in (still_pending + new_pending)
+    ]
     state["cooldown_until"]  = cooldown_until
     state["total_pnl"]       = total_pnl
     state["total_trades"]    = total_trades
