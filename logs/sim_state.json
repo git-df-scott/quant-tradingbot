@@ -4,19 +4,25 @@
   "start_date": "2026-05-19",
   "open_positions": {
     "CCRN": {
-      "shares": 76.04646392465447,
-      "entry_price": 13.149855343580246,
-      "entry_date": "2026-05-19",
-      "peak_price": 13.149855343580246
+      "shares": 76.22048728044766,
+      "entry_price": 13.119832156419754,
+      "entry_date": "2026-05-20",
+      "peak_price": 13.119832156419754
     },
     "TBI": {
-      "shares": 178.43760340992446,
-      "entry_price": 5.604199904561043,
-      "entry_date": "2026-05-19",
-      "peak_price": 5.604199904561043
+      "shares": 187.82904696155043,
+      "entry_price": 5.323990171790123,
+      "entry_date": "2026-05-20",
+      "peak_price": 5.323990171790123
     }
   },
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "ticker": "DIN",
+      "dollar_size": 1000.5130373137871,
+      "atr_abs": 1.6405
+    }
+  ],
   "cooldown_until": {},
   "total_pnl": 0.0,
   "total_trades": 0
