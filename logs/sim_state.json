@@ -1,5 +1,5 @@
 {
-  "cash": 7998.0,
+  "cash": 8042.28915564682,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -7,23 +7,17 @@
       "shares": 76.22048728044766,
       "entry_price": 13.119832156419754,
       "entry_date": "2026-05-20",
-      "peak_price": 13.119832156419754
+      "peak_price": 13.140000343322754
     },
-    "TBI": {
-      "shares": 187.82904696155043,
-      "entry_price": 5.323990171790123,
+    "DIN": {
+      "shares": 33.8214896131676,
+      "entry_price": 29.582169465541842,
       "entry_date": "2026-05-20",
-      "peak_price": 5.323990171790123
+      "peak_price": 29.582169465541842
     }
   },
-  "pending_entries": [
-    {
-      "ticker": "DIN",
-      "dollar_size": 1000.5130373137871,
-      "atr_abs": 1.6405
-    }
-  ],
+  "pending_entries": [],
   "cooldown_until": {},
-  "total_pnl": 0.0,
-  "total_trades": 0
+  "total_pnl": 46.84955555347463,
+  "total_trades": 1
 }
