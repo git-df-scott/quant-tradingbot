@@ -16,7 +16,18 @@
       "peak_price": 30.649999618530273
     }
   },
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "ticker": "EGHT",
+      "dollar_size": 1005.449335744338,
+      "atr_abs": 0.2405
+    },
+    {
+      "ticker": "VET",
+      "dollar_size": 1005.449335744338,
+      "atr_abs": 0.51
+    }
+  ],
   "cooldown_until": {},
   "total_pnl": 46.84955555347463,
   "total_trades": 1
