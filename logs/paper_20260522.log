@@ -1,0 +1,98 @@
+2026-05-22 00:42:54,390 INFO === Run: today=2026-05-22  signal_date=2026-05-21 ===
+2026-05-22 00:42:54,391 INFO Fetching historical price data...
+2026-05-22 00:43:07,433 INFO Using signal bar: 2026-05-21
+2026-05-22 00:43:07,433 INFO Fetching today's opens for 35 tickers...
+2026-05-22 00:43:07,860 ERROR $VET: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:07,862 ERROR $DRVN: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:07,864 ERROR $NCNO: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:07,868 ERROR $PTLO: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:08,366 ERROR $INVA: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:08,369 ERROR $SJT: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:08,372 ERROR $JACK: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:08,388 ERROR $EGHT: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:08,799 ERROR $TTGT: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:08,801 ERROR $KELYA: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:08,805 ERROR $PLAY: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:08,806 ERROR $PRAX: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:09,283 ERROR $ANGI: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:09,292 ERROR $FATE: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:09,295 ERROR $GPOR: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:09,296 ERROR $HLIO: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:09,715 ERROR $REI: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:09,718 ERROR $CCRN: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:09,721 ERROR $AMPY: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:09,745 ERROR $MYGN: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:10,199 ERROR $SM: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:10,203 ERROR $POWI: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:10,204 ERROR $RMNI: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:10,208 ERROR $GSHD: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:10,637 ERROR $BMBL: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:10,642 ERROR $NVAX: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:10,643 ERROR $YEXT: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:10,668 ERROR $WHD: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:11,116 ERROR $IRWD: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:11,126 ERROR $DOMO: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:11,130 ERROR $DIN: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:11,153 ERROR $CATO: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:11,549 ERROR $TBI: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:11,550 ERROR $ACAD: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:11,578 ERROR $AGEN: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:11,585 ERROR 
+35 Failed downloads:
+2026-05-22 00:43:11,585 ERROR ['VET', 'DRVN', 'NCNO', 'PTLO', 'INVA', 'SJT', 'JACK', 'EGHT', 'TTGT', 'KELYA', 'PLAY', 'PRAX', 'ANGI', 'FATE', 'GPOR', 'HLIO', 'REI', 'CCRN', 'AMPY', 'MYGN', 'SM', 'POWI', 'RMNI', 'GSHD', 'BMBL', 'NVAX', 'YEXT', 'WHD', 'IRWD', 'DOMO', 'DIN', 'CATO', 'TBI', 'ACAD', 'AGEN']: possibly delisted; no price data found  (1d 2026-05-22 -> 2026-05-23) (Yahoo error = "Data doesn't exist for startDate = 1779422400, endDate = 1779508800")
+2026-05-22 00:43:11,588 INFO Got opens for 0 tickers.
+2026-05-22 00:43:11,588 INFO --- Processing 0 pending entries ---
+2026-05-22 00:43:11,588 INFO --- Checking exits for 2 open positions ---
+2026-05-22 00:43:11,589 INFO HOLD    CCRN: close=13.05  entry=13.12  peak=13.14  stop=12.33  tp=15.09
+2026-05-22 00:43:11,589 INFO HOLD    DIN: close=30.32  entry=29.58  peak=30.44  stop=27.81  tp=34.02
+2026-05-22 00:43:11,589 INFO --- Generating signals for 2026-05-21 ---
+2026-05-22 00:43:13,261 INFO --- Signal evaluation: 35 candidates ---
+2026-05-22 00:43:13,262 INFO EVAL-FAIL FATE: rank=1.000  reason=[above_5ma=+0.127]
+2026-05-22 00:43:13,262 INFO EVAL-PASS CCRN: rank=0.971  vol_ratio=2.39  pct_from_5ma=-0.004
+2026-05-22 00:43:13,262 INFO EVAL-FAIL TBI: rank=0.943  reason=[above_5ma=+0.010 | vol_ratio=0.81<1.2]
+2026-05-22 00:43:13,262 INFO EVAL-FAIL CATO: rank=0.914  reason=[above_5ma=+0.114]
+2026-05-22 00:43:13,262 INFO EVAL-FAIL HLIO: rank=0.886  reason=[above_5ma=+0.002]
+2026-05-22 00:43:13,262 INFO EVAL-FAIL KELYA: rank=0.857  reason=[above_5ma=+0.070]
+2026-05-22 00:43:13,262 INFO EVAL-FAIL SM: rank=0.829  reason=[vol_ratio=0.83<1.2]
+2026-05-22 00:43:13,262 INFO EVAL-PASS EGHT: rank=0.800  vol_ratio=1.30  pct_from_5ma=-0.078
+2026-05-22 00:43:13,262 INFO EVAL-FAIL WHD: rank=0.771  reason=[above_5ma=+0.027 | vol_ratio=0.74<1.2]
+2026-05-22 00:43:13,262 INFO EVAL-FAIL NVAX: rank=0.743  reason=[vol_ratio=0.59<1.2]
+2026-05-22 00:43:13,262 INFO EVAL-FAIL DRVN: rank=0.714  reason=[above_5ma=+0.007]
+2026-05-22 00:43:13,262 INFO EVAL-FAIL DIN: rank=0.686  reason=[momentum_rank=0.686<0.7 | above_5ma=+0.014 | vol_ratio=0.46<1.2]
+2026-05-22 00:43:13,262 INFO EVAL-FAIL PRAX: rank=0.657  reason=[momentum_rank=0.657<0.7 | above_5ma=+0.050 | vol_ratio=0.72<1.2]
+2026-05-22 00:43:13,262 INFO EVAL-FAIL RMNI: rank=0.629  reason=[momentum_rank=0.629<0.7 | above_5ma=+0.007 | vol_ratio=1.01<1.2]
+2026-05-22 00:43:13,263 INFO EVAL-FAIL IRWD: rank=0.600  reason=[momentum_rank=0.600<0.7 | above_5ma=+0.039 | vol_ratio=0.78<1.2]
+2026-05-22 00:43:13,263 INFO EVAL-FAIL VET: rank=0.571  reason=[momentum_rank=0.571<0.7 | vol_ratio=0.50<1.2]
+2026-05-22 00:43:13,263 INFO EVAL-FAIL POWI: rank=0.543  reason=[momentum_rank=0.543<0.7 | above_5ma=+0.011 | vol_ratio=0.81<1.2]
+2026-05-22 00:43:13,263 INFO EVAL-FAIL ACAD: rank=0.514  reason=[momentum_rank=0.514<0.7 | above_5ma=+0.017 | vol_ratio=0.92<1.2]
+2026-05-22 00:43:13,263 INFO EVAL-FAIL YEXT: rank=0.486  reason=[momentum_rank=0.486<0.7 | above_5ma=+0.006 | vol_ratio=0.69<1.2]
+2026-05-22 00:43:13,263 INFO EVAL-FAIL GPOR: rank=0.457  reason=[momentum_rank=0.457<0.7 | vol_ratio=0.98<1.2]
+2026-05-22 00:43:13,263 INFO EVAL-FAIL INVA: rank=0.429  reason=[momentum_rank=0.429<0.7 | above_5ma=+0.010 | vol_ratio=1.17<1.2]
+2026-05-22 00:43:13,263 INFO EVAL-FAIL DOMO: rank=0.400  reason=[momentum_rank=0.400<0.7 | vol_ratio=0.64<1.2]
+2026-05-22 00:43:13,263 INFO EVAL-FAIL NCNO: rank=0.371  reason=[momentum_rank=0.371<0.7 | above_5ma=+0.036 | vol_ratio=0.94<1.2]
+2026-05-22 00:43:13,263 INFO EVAL-FAIL SJT: rank=0.343  reason=[momentum_rank=0.343<0.7 | vol_ratio=0.81<1.2]
+2026-05-22 00:43:13,263 INFO EVAL-FAIL PLAY: rank=0.314  reason=[momentum_rank=0.314<0.7 | above_5ma=+0.072 | vol_ratio=0.92<1.2]
+2026-05-22 00:43:13,263 INFO EVAL-FAIL JACK: rank=0.286  reason=[momentum_rank=0.286<0.7 | above_5ma=+0.021 | vol_ratio=0.72<1.2]
+2026-05-22 00:43:13,263 INFO EVAL-FAIL REI: rank=0.257  reason=[momentum_rank=0.257<0.7 | vol_ratio=0.55<1.2]
+2026-05-22 00:43:13,263 INFO EVAL-FAIL TTGT: rank=0.229  reason=[momentum_rank=0.229<0.7 | vol_ratio=0.80<1.2]
+2026-05-22 00:43:13,263 INFO EVAL-FAIL AMPY: rank=0.200  reason=[momentum_rank=0.200<0.7 | vol_ratio=1.08<1.2]
+2026-05-22 00:43:13,263 INFO EVAL-FAIL AGEN: rank=0.171  reason=[momentum_rank=0.171<0.7 | vol_ratio=0.51<1.2]
+2026-05-22 00:43:13,264 INFO EVAL-FAIL GSHD: rank=0.143  reason=[momentum_rank=0.143<0.7 | above_5ma=+0.037 | vol_ratio=1.15<1.2]
+2026-05-22 00:43:13,264 INFO EVAL-FAIL MYGN: rank=0.114  reason=[momentum_rank=0.114<0.7 | above_5ma=+0.057 | vol_ratio=0.77<1.2]
+2026-05-22 00:43:13,264 INFO EVAL-FAIL ANGI: rank=0.086  reason=[momentum_rank=0.086<0.7 | above_5ma=+0.002 | vol_ratio=0.81<1.2]
+2026-05-22 00:43:13,264 INFO EVAL-FAIL BMBL: rank=0.057  reason=[momentum_rank=0.057<0.7 | vol_ratio=0.90<1.2]
+2026-05-22 00:43:13,264 INFO EVAL-FAIL PTLO: rank=0.029  reason=[momentum_rank=0.029<0.7 | above_5ma=+0.031 | vol_ratio=1.07<1.2]
+2026-05-22 00:43:13,264 INFO --- 2 signals fired ---
+2026-05-22 00:43:13,264 INFO SKIP-SIG CCRN: already in position
+2026-05-22 00:43:13,265 INFO QUEUED  EGHT: rank=0.800  size=$1006.24 → fill tomorrow at open
+2026-05-22 00:43:13,265 INFO 
+--------------------------------------------------------------
+  DATE         : 2026-05-22
+  CASH         : $    8,042.29
+  POSITION VAL : $    2,020.14
+  EQUITY       : $   10,062.43
+  OPEN POS     : 2 held  |  1 pending
+  DAILY P&L    : $       +0.00
+  TOTAL P&L    : $      +46.85  (+0.62%)
+  TRADES TODAY : 0
+--------------------------------------------------------------

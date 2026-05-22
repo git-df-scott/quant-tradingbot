@@ -13,19 +13,14 @@
       "shares": 33.8214896131676,
       "entry_price": 29.582169465541842,
       "entry_date": "2026-05-20",
-      "peak_price": 30.3799991607666
+      "peak_price": 30.440000534057617
     }
   },
   "pending_entries": [
     {
       "ticker": "EGHT",
-      "dollar_size": 1005.449335744338,
-      "atr_abs": 0.2405
-    },
-    {
-      "ticker": "VET",
-      "dollar_size": 1005.449335744338,
-      "atr_abs": 0.51
+      "dollar_size": 1006.2434083944308,
+      "atr_abs": 0.2445
     }
   ],
   "cooldown_until": {},
