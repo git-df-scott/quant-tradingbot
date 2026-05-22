@@ -1,5 +1,5 @@
 {
-  "cash": 8042.28915564682,
+  "cash": 7035.039503843995,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -14,15 +14,15 @@
       "entry_price": 29.582169465541842,
       "entry_date": "2026-05-20",
       "peak_price": 30.440000534057617
+    },
+    "EGHT": {
+      "shares": 472.0606748369974,
+      "entry_price": 2.131597614526749,
+      "entry_date": "2026-05-22",
+      "peak_price": 2.131597614526749
     }
   },
-  "pending_entries": [
-    {
-      "ticker": "EGHT",
-      "dollar_size": 1006.2434083944308,
-      "atr_abs": 0.2445
-    }
-  ],
+  "pending_entries": [],
   "cooldown_until": {},
   "total_pnl": 46.84955555347463,
   "total_trades": 1
