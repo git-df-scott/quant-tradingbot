@@ -1,5 +1,5 @@
 {
-  "cash": 8080.050042541219,
+  "cash": 9119.17349399078,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -8,16 +8,10 @@
       "entry_price": 13.119832156419754,
       "entry_date": "2026-05-20",
       "peak_price": 13.140000343322754
-    },
-    "DIN": {
-      "shares": 33.8214896131676,
-      "entry_price": 29.582169465541842,
-      "entry_date": "2026-05-20",
-      "peak_price": 32.060001373291016
     }
   },
   "pending_entries": [],
   "cooldown_until": {},
-  "total_pnl": 86.66274245156129,
-  "total_trades": 2
+  "total_pnl": 126.3133202023987,
+  "total_trades": 3
 }
