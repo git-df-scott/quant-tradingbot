@@ -7,10 +7,16 @@
       "shares": 76.22048728044766,
       "entry_price": 13.119832156419754,
       "entry_date": "2026-05-20",
-      "peak_price": 13.1899995803833
+      "peak_price": 13.229999542236328
     }
   },
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "ticker": "HLIO",
+      "dollar_size": 1012.3759539607727,
+      "atr_abs": 3.2805
+    }
+  ],
   "cooldown_until": {},
   "total_pnl": 126.3133202023987,
   "total_trades": 3
