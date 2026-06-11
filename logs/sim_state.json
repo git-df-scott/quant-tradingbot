@@ -16,7 +16,13 @@
       "peak_price": 85.9800033569336
     }
   },
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "ticker": "RMNI",
+      "dollar_size": 1006.2586528031645,
+      "atr_abs": 0.1633
+    }
+  ],
   "cooldown_until": {},
   "total_pnl": 126.3133202023987,
   "total_trades": 3
