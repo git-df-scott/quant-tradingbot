@@ -1,5 +1,5 @@
 {
-  "cash": 8105.785164076046,
+  "cash": 7098.520252620079,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -14,15 +14,15 @@
       "entry_price": 85.0437383594513,
       "entry_date": "2026-06-09",
       "peak_price": 85.9800033569336
+    },
+    "RMNI": {
+      "shares": 240.55133150794973,
+      "entry_price": 4.1831348282098775,
+      "entry_date": "2026-06-12",
+      "peak_price": 4.1831348282098775
     }
   },
-  "pending_entries": [
-    {
-      "ticker": "RMNI",
-      "dollar_size": 1006.2586528031645,
-      "atr_abs": 0.1633
-    }
-  ],
+  "pending_entries": [],
   "cooldown_until": {},
   "total_pnl": 126.3133202023987,
   "total_trades": 3
