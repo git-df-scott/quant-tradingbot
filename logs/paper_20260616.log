@@ -1,0 +1,51 @@
+2026-06-16 18:18:35,981 INFO === Run: today=2026-06-16  signal_date=2026-06-15 ===
+2026-06-16 18:18:35,982 INFO Fetching historical price data...
+2026-06-16 18:18:41,643 INFO Using signal bar: 2026-06-15
+2026-06-16 18:18:41,643 INFO Fetching today's opens for 35 tickers...
+2026-06-16 18:18:42,563 INFO Got opens for 35 tickers.
+2026-06-16 18:18:42,563 INFO --- Processing 0 pending entries ---
+2026-06-16 18:18:42,563 INFO --- Checking exits for 3 open positions ---
+2026-06-16 18:18:42,564 INFO HOLD    CCRN: close=13.17  entry=13.12  peak=13.23  stop=12.33  tp=15.09
+2026-06-16 18:18:42,564 INFO HOLD    HLIO: close=85.53  entry=85.04  peak=87.87  stop=79.94  tp=97.80
+2026-06-16 18:18:42,564 INFO HOLD    RMNI: close=4.17  entry=4.18  peak=4.22  stop=3.93  tp=4.81
+2026-06-16 18:18:42,564 INFO --- Generating signals for 2026-06-15 ---
+2026-06-16 18:18:44,263 INFO --- Signal evaluation: 26 candidates ---
+2026-06-16 18:18:44,263 INFO EVAL-PASS PLAY: rank=1.000  vol_ratio=2.77  pct_from_5ma=-0.012
+2026-06-16 18:18:44,263 INFO EVAL-FAIL MYGN: rank=0.962  reason=[vol_ratio=0.64<1.2]
+2026-06-16 18:18:44,263 INFO EVAL-FAIL RMNI: rank=0.923  reason=[above_5ma=+0.004 | vol_ratio=0.47<1.2]
+2026-06-16 18:18:44,263 INFO EVAL-FAIL JACK: rank=0.885  reason=[above_5ma=+0.024 | vol_ratio=0.96<1.2]
+2026-06-16 18:18:44,263 INFO EVAL-FAIL YEXT: rank=0.846  reason=[above_5ma=+0.038 | vol_ratio=0.98<1.2]
+2026-06-16 18:18:44,263 INFO EVAL-FAIL FATE: rank=0.808  reason=[above_5ma=+0.025 | vol_ratio=0.66<1.2]
+2026-06-16 18:18:44,263 INFO EVAL-FAIL POWI: rank=0.769  reason=[above_5ma=+0.071 | vol_ratio=0.63<1.2]
+2026-06-16 18:18:44,264 INFO EVAL-FAIL PTLO: rank=0.731  reason=[above_5ma=+0.033 | vol_ratio=0.58<1.2]
+2026-06-16 18:18:44,264 INFO EVAL-FAIL HLIO: rank=0.692  reason=[momentum_rank=0.692<0.7 | above_5ma=+0.024 | vol_ratio=0.66<1.2]
+2026-06-16 18:18:44,264 INFO EVAL-FAIL DRVN: rank=0.654  reason=[momentum_rank=0.654<0.7 | vol_ratio=0.63<1.2]
+2026-06-16 18:18:44,264 INFO EVAL-FAIL WHD: rank=0.615  reason=[momentum_rank=0.615<0.7 | vol_ratio=0.57<1.2]
+2026-06-16 18:18:44,264 INFO EVAL-FAIL INVA: rank=0.577  reason=[momentum_rank=0.577<0.7 | vol_ratio=0.77<1.2]
+2026-06-16 18:18:44,264 INFO EVAL-FAIL NVAX: rank=0.538  reason=[momentum_rank=0.538<0.7 | above_5ma=+0.038 | vol_ratio=0.71<1.2]
+2026-06-16 18:18:44,264 INFO EVAL-FAIL CCRN: rank=0.500  reason=[momentum_rank=0.500<0.7 | vol_ratio=0.37<1.2]
+2026-06-16 18:18:44,264 INFO EVAL-FAIL ACAD: rank=0.462  reason=[momentum_rank=0.462<0.7 | vol_ratio=0.97<1.2]
+2026-06-16 18:18:44,264 INFO EVAL-FAIL NCNO: rank=0.423  reason=[momentum_rank=0.423<0.7 | vol_ratio=0.62<1.2]
+2026-06-16 18:18:44,264 INFO EVAL-FAIL GSHD: rank=0.385  reason=[momentum_rank=0.385<0.7 | vol_ratio=0.86<1.2]
+2026-06-16 18:18:44,264 INFO EVAL-FAIL BMBL: rank=0.346  reason=[momentum_rank=0.346<0.7 | above_5ma=+0.058 | vol_ratio=0.84<1.2]
+2026-06-16 18:18:44,264 INFO EVAL-FAIL DOMO: rank=0.308  reason=[momentum_rank=0.308<0.7 | above_5ma=+0.049]
+2026-06-16 18:18:44,264 INFO EVAL-FAIL AGEN: rank=0.269  reason=[momentum_rank=0.269<0.7 | above_5ma=+0.008 | vol_ratio=0.73<1.2]
+2026-06-16 18:18:44,264 INFO EVAL-FAIL GPOR: rank=0.231  reason=[momentum_rank=0.231<0.7 | vol_ratio=1.15<1.2]
+2026-06-16 18:18:44,264 INFO EVAL-FAIL SM: rank=0.192  reason=[momentum_rank=0.192<0.7]
+2026-06-16 18:18:44,265 INFO EVAL-FAIL AMPY: rank=0.154  reason=[momentum_rank=0.154<0.7 | vol_ratio=1.14<1.2]
+2026-06-16 18:18:44,265 INFO EVAL-FAIL PRAX: rank=0.115  reason=[momentum_rank=0.115<0.7 | above_5ma=+0.041 | vol_ratio=1.09<1.2]
+2026-06-16 18:18:44,265 INFO EVAL-FAIL SJT: rank=0.077  reason=[momentum_rank=0.077<0.7]
+2026-06-16 18:18:44,265 INFO EVAL-FAIL EGHT: rank=0.038  reason=[momentum_rank=0.038<0.7 | above_5ma=+0.009 | vol_ratio=0.63<1.2]
+2026-06-16 18:18:44,265 INFO --- 1 signals fired ---
+2026-06-16 18:18:44,266 INFO QUEUED  PLAY: rank=1.000  size=$1012.36 → fill tomorrow at open
+2026-06-16 18:18:44,266 INFO 
+--------------------------------------------------------------
+  DATE         : 2026-06-16
+  CASH         : $    7,098.52
+  POSITION VAL : $    3,025.09
+  EQUITY       : $   10,123.61
+  OPEN POS     : 3 held  |  1 pending
+  DAILY P&L    : $       +0.00
+  TOTAL P&L    : $     +126.31  (+1.24%)
+  TRADES TODAY : 0
+--------------------------------------------------------------
