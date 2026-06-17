@@ -1,5 +1,5 @@
 {
-  "cash": 7098.520252620079,
+  "cash": 6085.147128647143,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -19,16 +19,16 @@
       "shares": 240.55133150794973,
       "entry_price": 4.1831348282098775,
       "entry_date": "2026-06-12",
-      "peak_price": 4.21999979019165
+      "peak_price": 4.230000019073486
+    },
+    "PLAY": {
+      "shares": 87.50882568713787,
+      "entry_price": 11.568670419931411,
+      "entry_date": "2026-06-17",
+      "peak_price": 11.568670419931411
     }
   },
-  "pending_entries": [
-    {
-      "ticker": "PLAY",
-      "dollar_size": 1012.360763209726,
-      "atr_abs": 0.9648
-    }
-  ],
+  "pending_entries": [],
   "cooldown_until": {},
   "total_pnl": 126.3133202023987,
   "total_trades": 3
