@@ -19,16 +19,27 @@
       "shares": 240.55133150794973,
       "entry_price": 4.1831348282098775,
       "entry_date": "2026-06-12",
-      "peak_price": 4.230000019073486
+      "peak_price": 4.260000228881836
     },
     "PLAY": {
       "shares": 87.50882568713787,
       "entry_price": 11.568670419931411,
       "entry_date": "2026-06-17",
-      "peak_price": 11.568670419931411
+      "peak_price": 12.220000267028809
     }
   },
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "ticker": "TBI",
+      "dollar_size": 1006.3954273852131,
+      "atr_abs": 0.373
+    },
+    {
+      "ticker": "YEXT",
+      "dollar_size": 1006.3954273852131,
+      "atr_abs": 0.2611
+    }
+  ],
   "cooldown_until": {},
   "total_pnl": 126.3133202023987,
   "total_trades": 3
