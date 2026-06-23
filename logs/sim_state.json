@@ -1,5 +1,5 @@
 {
-  "cash": 4070.343483021947,
+  "cash": 4945.505861433813,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -13,7 +13,7 @@
       "shares": 11.90417981958648,
       "entry_price": 85.0437383594513,
       "entry_date": "2026-06-09",
-      "peak_price": 90.5999984741211
+      "peak_price": 92.41000366210938
     },
     "RMNI": {
       "shares": 240.55133150794973,
@@ -21,33 +21,24 @@
       "entry_date": "2026-06-12",
       "peak_price": 4.260000228881836
     },
-    "PLAY": {
-      "shares": 87.50882568713787,
-      "entry_price": 11.568670419931411,
-      "entry_date": "2026-06-17",
-      "peak_price": 12.220000267028809
-    },
-    "TBI": {
-      "shares": 150.54509316326724,
-      "entry_price": 6.6850098282098775,
-      "entry_date": "2026-06-22",
-      "peak_price": 6.6850098282098775
-    },
     "YEXT": {
       "shares": 256.5411165600289,
       "entry_price": 3.922940076351166,
       "entry_date": "2026-06-22",
-      "peak_price": 3.922940076351166
+      "peak_price": 4.005000114440918
+    },
+    "KELYA": {
+      "shares": 93.50807376532207,
+      "entry_price": 10.888160114526748,
+      "entry_date": "2026-06-23",
+      "peak_price": 10.888160114526748
     }
   },
-  "pending_entries": [
-    {
-      "ticker": "KELYA",
-      "dollar_size": 1018.1308791578048,
-      "atr_abs": 0.437
-    }
-  ],
-  "cooldown_until": {},
-  "total_pnl": 126.3133202023987,
-  "total_trades": 3
+  "pending_entries": [],
+  "cooldown_until": {
+    "PLAY": "2026-07-04",
+    "TBI": "2026-07-04"
+  },
+  "total_pnl": 3.7647256523328068,
+  "total_trades": 5
 }
