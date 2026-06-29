@@ -1,5 +1,5 @@
 {
-  "cash": 7074.695241058596,
+  "cash": 8230.673553912913,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -13,13 +13,7 @@
       "shares": 240.55133150794973,
       "entry_price": 4.1831348282098775,
       "entry_date": "2026-06-12",
-      "peak_price": 4.329999923706055
-    },
-    "KELYA": {
-      "shares": 93.50807376532207,
-      "entry_price": 10.888160114526748,
-      "entry_date": "2026-06-23",
-      "peak_price": 11.989999771118164
+      "peak_price": 4.349999904632568
     }
   },
   "pending_entries": [],
@@ -27,6 +21,6 @@
     "PLAY": "2026-07-04",
     "TBI": "2026-07-04"
   },
-  "total_pnl": 116.31404463145505,
-  "total_trades": 7
+  "total_pnl": 255.31861377626967,
+  "total_trades": 8
 }
