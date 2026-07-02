@@ -1,5 +1,5 @@
 {
-  "cash": 8230.673553912913,
+  "cash": 9279.563827576969,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -8,12 +8,6 @@
       "entry_price": 13.119832156419754,
       "entry_date": "2026-05-20",
       "peak_price": 13.229999542236328
-    },
-    "RMNI": {
-      "shares": 240.55133150794973,
-      "entry_price": 4.1831348282098775,
-      "entry_date": "2026-06-12",
-      "peak_price": 4.440000057220459
     }
   },
   "pending_entries": [],
@@ -21,6 +15,6 @@
     "PLAY": "2026-07-04",
     "TBI": "2026-07-04"
   },
-  "total_pnl": 255.31861377626967,
-  "total_trades": 8
+  "total_pnl": 299.00017485103916,
+  "total_trades": 9
 }
