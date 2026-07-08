@@ -1,5 +1,5 @@
 {
-  "cash": 9279.563827576969,
+  "cash": 8249.967835638357,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -8,15 +8,15 @@
       "entry_price": 13.119832156419754,
       "entry_date": "2026-05-20",
       "peak_price": 13.229999542236328
+    },
+    "JACK": {
+      "shares": 67.7251318770604,
+      "entry_price": 15.187381641149521,
+      "entry_date": "2026-07-08",
+      "peak_price": 15.187381641149521
     }
   },
-  "pending_entries": [
-    {
-      "ticker": "JACK",
-      "dollar_size": 1028.5674245140974,
-      "atr_abs": 1.4235
-    }
-  ],
+  "pending_entries": [],
   "cooldown_until": {
     "PLAY": "2026-07-04",
     "TBI": "2026-07-04"
