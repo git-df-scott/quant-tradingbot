@@ -10,7 +10,13 @@
       "peak_price": 13.229999542236328
     }
   },
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "ticker": "GSHD",
+      "dollar_size": 1022.2002586290612,
+      "atr_abs": 2.9043
+    }
+  ],
   "cooldown_until": {
     "PLAY": "2026-07-04",
     "TBI": "2026-07-04",
