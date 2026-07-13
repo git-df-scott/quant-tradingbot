@@ -1,5 +1,5 @@
 {
-  "cash": 9215.129946408317,
+  "cash": 8191.907487520627,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -8,15 +8,15 @@
       "entry_price": 13.119832156419754,
       "entry_date": "2026-05-20",
       "peak_price": 13.229999542236328
+    },
+    "GSHD": {
+      "shares": 19.077963495058274,
+      "entry_price": 53.58015591621399,
+      "entry_date": "2026-07-13",
+      "peak_price": 53.58015591621399
     }
   },
-  "pending_entries": [
-    {
-      "ticker": "GSHD",
-      "dollar_size": 1022.2002586290612,
-      "atr_abs": 2.9043
-    }
-  ],
+  "pending_entries": [],
   "cooldown_until": {
     "PLAY": "2026-07-04",
     "TBI": "2026-07-04",
