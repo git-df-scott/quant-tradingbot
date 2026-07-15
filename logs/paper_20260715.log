@@ -1,0 +1,38 @@
+2026-07-15 15:09:14,482 INFO === Run: today=2026-07-15  signal_date=2026-07-14 ===
+2026-07-15 15:09:14,482 INFO Fetching historical price data...
+2026-07-15 15:09:20,024 INFO Using signal bar: 2026-07-14
+2026-07-15 15:09:20,024 INFO Fetching today's opens for 34 tickers...
+2026-07-15 15:09:20,879 INFO Got opens for 34 tickers.
+2026-07-15 15:09:20,880 INFO --- Processing 0 pending entries ---
+2026-07-15 15:09:20,880 INFO --- Checking exits for 2 open positions ---
+2026-07-15 15:09:20,880 WARNING NaN H/L for CCRN on 2026-07-14 — skipping
+2026-07-15 15:09:20,880 INFO STOP    GSHD: low=50.03 <= stop=50.37
+2026-07-15 15:09:20,880 INFO CLOSED  GSHD   [stop_loss]: 19.0780 sh @ $50.33  P&L=$-62.05 (-6.07%)  entry=$53.58
+2026-07-15 15:09:20,880 INFO --- Generating signals for 2026-07-14 ---
+2026-07-15 15:09:23,244 INFO --- Signal evaluation: 14 candidates ---
+2026-07-15 15:09:23,244 INFO EVAL-FAIL FATE: rank=1.000  reason=[vol_ratio=0.38<1.2]
+2026-07-15 15:09:23,244 INFO EVAL-FAIL GSHD: rank=0.929  reason=[vol_ratio=0.44<1.2]
+2026-07-15 15:09:23,245 INFO EVAL-FAIL YEXT: rank=0.857  reason=[above_5ma=+0.056 | vol_ratio=1.06<1.2]
+2026-07-15 15:09:23,245 INFO EVAL-FAIL PRAX: rank=0.786  reason=[above_5ma=+0.003 | vol_ratio=0.61<1.2]
+2026-07-15 15:09:23,245 INFO EVAL-FAIL DRVN: rank=0.714  reason=[above_5ma=+0.013 | vol_ratio=0.48<1.2]
+2026-07-15 15:09:23,245 INFO EVAL-FAIL NCNO: rank=0.643  reason=[momentum_rank=0.643<0.7 | above_5ma=+0.016 | vol_ratio=0.44<1.2]
+2026-07-15 15:09:23,245 INFO EVAL-FAIL RMNI: rank=0.571  reason=[momentum_rank=0.571<0.7 | vol_ratio=0.77<1.2]
+2026-07-15 15:09:23,245 INFO EVAL-FAIL DOMO: rank=0.500  reason=[momentum_rank=0.500<0.7 | vol_ratio=0.25<1.2]
+2026-07-15 15:09:23,245 INFO EVAL-FAIL BMBL: rank=0.429  reason=[momentum_rank=0.429<0.7 | vol_ratio=0.46<1.2]
+2026-07-15 15:09:23,245 INFO EVAL-FAIL PTLO: rank=0.357  reason=[momentum_rank=0.357<0.7 | vol_ratio=0.82<1.2]
+2026-07-15 15:09:23,245 INFO EVAL-FAIL AMPY: rank=0.286  reason=[momentum_rank=0.286<0.7 | above_5ma=+0.016 | vol_ratio=0.58<1.2]
+2026-07-15 15:09:23,246 INFO EVAL-FAIL GPOR: rank=0.214  reason=[momentum_rank=0.214<0.7 | vol_ratio=0.50<1.2]
+2026-07-15 15:09:23,246 INFO EVAL-FAIL WHD: rank=0.143  reason=[momentum_rank=0.143<0.7 | vol_ratio=1.14<1.2]
+2026-07-15 15:09:23,246 INFO EVAL-FAIL PLAY: rank=0.071  reason=[momentum_rank=0.071<0.7 | vol_ratio=1.05<1.2]
+2026-07-15 15:09:23,246 INFO --- 0 signals fired ---
+2026-07-15 15:09:23,247 INFO 
+--------------------------------------------------------------
+  DATE         : 2026-07-15
+  CASH         : $    9,151.09
+  POSITION VAL : $        0.00
+  EQUITY       : $    9,151.09
+  OPEN POS     : 1 held  |  0 pending
+  DAILY P&L    : $      -62.05
+  TOTAL P&L    : $     +174.51  (-8.49%)
+  TRADES TODAY : 1
+--------------------------------------------------------------

@@ -1,5 +1,5 @@
 {
-  "cash": 8191.907487520627,
+  "cash": 9151.094931857682,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -8,20 +8,15 @@
       "entry_price": 13.119832156419754,
       "entry_date": "2026-05-20",
       "peak_price": 13.229999542236328
-    },
-    "GSHD": {
-      "shares": 19.077963495058274,
-      "entry_price": 53.58015591621399,
-      "entry_date": "2026-07-13",
-      "peak_price": 55.5
     }
   },
   "pending_entries": [],
   "cooldown_until": {
     "PLAY": "2026-07-04",
     "TBI": "2026-07-04",
-    "JACK": "2026-07-20"
+    "JACK": "2026-07-20",
+    "GSHD": "2026-07-26"
   },
-  "total_pnl": 236.56098934591085,
-  "total_trades": 10
+  "total_pnl": 174.50832264583363,
+  "total_trades": 11
 }
