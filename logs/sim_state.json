@@ -10,7 +10,13 @@
       "peak_price": 13.270000457763672
     }
   },
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "ticker": "DOMO",
+      "dollar_size": 915.1094931857683,
+      "atr_abs": 0.3331
+    }
+  ],
   "cooldown_until": {
     "PLAY": "2026-07-04",
     "TBI": "2026-07-04",
