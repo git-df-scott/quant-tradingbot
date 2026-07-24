@@ -1,5 +1,5 @@
 {
-  "cash": 9151.094931857682,
+  "cash": 8235.070329178729,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -8,15 +8,15 @@
       "entry_price": 13.119832156419754,
       "entry_date": "2026-05-20",
       "peak_price": 13.270000457763672
+    },
+    "DOMO": {
+      "shares": 228.6059188572991,
+      "entry_price": 4.003,
+      "entry_date": "2026-07-24",
+      "peak_price": 4.003
     }
   },
-  "pending_entries": [
-    {
-      "ticker": "DOMO",
-      "dollar_size": 915.1094931857683,
-      "atr_abs": 0.3331
-    }
-  ],
+  "pending_entries": [],
   "cooldown_until": {
     "PLAY": "2026-07-04",
     "TBI": "2026-07-04",
