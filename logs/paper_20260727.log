@@ -1,0 +1,53 @@
+2026-07-27 16:00:24,899 INFO === Run: today=2026-07-27  signal_date=2026-07-24 ===
+2026-07-27 16:00:24,899 INFO Fetching historical price data...
+2026-07-27 16:00:32,145 INFO Using signal bar: 2026-07-24
+2026-07-27 16:00:32,145 INFO Fetching today's opens for 34 tickers...
+2026-07-27 16:00:33,210 INFO Got opens for 34 tickers.
+2026-07-27 16:00:33,211 INFO --- Processing 0 pending entries ---
+2026-07-27 16:00:33,211 INFO --- Checking exits for 2 open positions ---
+2026-07-27 16:00:33,211 WARNING No H/L for CCRN on 2026-07-24 — skipping exit check
+2026-07-27 16:00:33,211 INFO STOP    DOMO: low=3.65 <= stop=3.76
+2026-07-27 16:00:33,211 INFO CLOSED  DOMO   [stop_loss]: 228.6059 sh @ $3.76  P&L=$-55.55 (-6.07%)  entry=$4.00
+2026-07-27 16:00:33,211 INFO --- Generating signals for 2026-07-24 ---
+2026-07-27 16:00:34,867 INFO --- Signal evaluation: 29 candidates ---
+2026-07-27 16:00:34,867 INFO EVAL-FAIL DOMO: rank=1.000  reason=[above_5ma=+0.041]
+2026-07-27 16:00:34,868 INFO EVAL-FAIL SM: rank=0.966  reason=[above_5ma=+0.016 | vol_ratio=0.77<1.2]
+2026-07-27 16:00:34,868 INFO EVAL-FAIL REI: rank=0.931  reason=[vol_ratio=0.45<1.2]
+2026-07-27 16:00:34,868 INFO EVAL-FAIL VET: rank=0.897  reason=[above_5ma=+0.053]
+2026-07-27 16:00:34,868 INFO EVAL-FAIL TBI: rank=0.862  reason=[vol_ratio=0.54<1.2]
+2026-07-27 16:00:34,868 INFO EVAL-FAIL NCNO: rank=0.828  reason=[vol_ratio=0.60<1.2]
+2026-07-27 16:00:34,868 INFO EVAL-FAIL JACK: rank=0.793  reason=[above_5ma=+0.009 | vol_ratio=0.55<1.2]
+2026-07-27 16:00:34,868 INFO EVAL-FAIL ANGI: rank=0.759  reason=[vol_ratio=1.15<1.2]
+2026-07-27 16:00:34,868 INFO EVAL-FAIL RMNI: rank=0.724  reason=[vol_ratio=0.64<1.2]
+2026-07-27 16:00:34,868 INFO EVAL-FAIL EGHT: rank=0.690  reason=[momentum_rank=0.690<0.7]
+2026-07-27 16:00:34,868 INFO EVAL-FAIL ACAD: rank=0.655  reason=[momentum_rank=0.655<0.7 | vol_ratio=0.59<1.2]
+2026-07-27 16:00:34,868 INFO EVAL-FAIL MYGN: rank=0.621  reason=[momentum_rank=0.621<0.7 | vol_ratio=0.69<1.2]
+2026-07-27 16:00:34,868 INFO EVAL-FAIL WHD: rank=0.586  reason=[momentum_rank=0.586<0.7 | above_5ma=+0.001 | vol_ratio=0.94<1.2]
+2026-07-27 16:00:34,868 INFO EVAL-FAIL CATO: rank=0.552  reason=[momentum_rank=0.552<0.7 | vol_ratio=0.18<1.2]
+2026-07-27 16:00:34,868 INFO EVAL-FAIL DIN: rank=0.517  reason=[momentum_rank=0.517<0.7 | vol_ratio=0.44<1.2]
+2026-07-27 16:00:34,869 INFO EVAL-FAIL PRAX: rank=0.483  reason=[momentum_rank=0.483<0.7 | above_5ma=+0.028 | vol_ratio=0.59<1.2]
+2026-07-27 16:00:34,869 INFO EVAL-FAIL AMPY: rank=0.448  reason=[momentum_rank=0.448<0.7 | vol_ratio=0.65<1.2]
+2026-07-27 16:00:34,869 INFO EVAL-FAIL PTLO: rank=0.414  reason=[momentum_rank=0.414<0.7 | vol_ratio=0.93<1.2]
+2026-07-27 16:00:34,869 INFO EVAL-FAIL GPOR: rank=0.379  reason=[momentum_rank=0.379<0.7 | above_5ma=+0.010 | vol_ratio=0.32<1.2]
+2026-07-27 16:00:34,869 INFO EVAL-FAIL IRWD: rank=0.345  reason=[momentum_rank=0.345<0.7 | vol_ratio=0.44<1.2]
+2026-07-27 16:00:34,869 INFO EVAL-FAIL BMBL: rank=0.310  reason=[momentum_rank=0.310<0.7 | vol_ratio=0.71<1.2]
+2026-07-27 16:00:34,869 INFO EVAL-FAIL TTGT: rank=0.276  reason=[momentum_rank=0.276<0.7]
+2026-07-27 16:00:34,869 INFO EVAL-FAIL INVA: rank=0.241  reason=[momentum_rank=0.241<0.7 | above_5ma=+0.003 | vol_ratio=0.61<1.2]
+2026-07-27 16:00:34,869 INFO EVAL-FAIL PLAY: rank=0.207  reason=[momentum_rank=0.207<0.7 | vol_ratio=0.57<1.2]
+2026-07-27 16:00:34,869 INFO EVAL-FAIL NVAX: rank=0.172  reason=[momentum_rank=0.172<0.7 | vol_ratio=0.86<1.2]
+2026-07-27 16:00:34,869 INFO EVAL-FAIL HLIO: rank=0.138  reason=[momentum_rank=0.138<0.7 | vol_ratio=0.56<1.2]
+2026-07-27 16:00:34,869 INFO EVAL-FAIL SJT: rank=0.103  reason=[momentum_rank=0.103<0.7 | vol_ratio=0.56<1.2]
+2026-07-27 16:00:34,869 INFO EVAL-FAIL POWI: rank=0.069  reason=[momentum_rank=0.069<0.7 | vol_ratio=0.81<1.2]
+2026-07-27 16:00:34,869 INFO EVAL-FAIL LESL: rank=0.035  reason=[momentum_rank=0.035<0.7 | vol_ratio=0.55<1.2]
+2026-07-27 16:00:34,870 INFO --- 0 signals fired ---
+2026-07-27 16:00:34,870 INFO 
+--------------------------------------------------------------
+  DATE         : 2026-07-27
+  CASH         : $    9,093.77
+  POSITION VAL : $        0.00
+  EQUITY       : $    9,093.77
+  OPEN POS     : 1 held  |  0 pending
+  DAILY P&L    : $      -55.55
+  TOTAL P&L    : $     +118.96  (-9.06%)
+  TRADES TODAY : 1
+--------------------------------------------------------------
