@@ -1,0 +1,49 @@
+2026-07-29 15:35:19,558 INFO === Run: today=2026-07-29  signal_date=2026-07-28 ===
+2026-07-29 15:35:19,559 INFO Fetching historical price data...
+2026-07-29 15:35:30,869 INFO Using signal bar: 2026-07-28
+2026-07-29 15:35:30,869 INFO Fetching today's opens for 34 tickers...
+2026-07-29 15:35:33,047 INFO Got opens for 34 tickers.
+2026-07-29 15:35:33,047 INFO --- Processing 0 pending entries ---
+2026-07-29 15:35:33,047 INFO --- Checking exits for 1 open positions ---
+2026-07-29 15:35:33,048 WARNING No H/L for CCRN on 2026-07-28 — skipping exit check
+2026-07-29 15:35:33,048 INFO --- Generating signals for 2026-07-28 ---
+2026-07-29 15:35:35,357 INFO --- Signal evaluation: 27 candidates ---
+2026-07-29 15:35:35,358 INFO EVAL-FAIL GSHD: rank=1.000  reason=[above_5ma=+0.167]
+2026-07-29 15:35:35,358 INFO EVAL-FAIL DOMO: rank=0.963  reason=[above_5ma=+0.038 | vol_ratio=0.71<1.2]
+2026-07-29 15:35:35,358 INFO EVAL-FAIL KELYA: rank=0.926  reason=[above_5ma=+0.042 | vol_ratio=0.94<1.2]
+2026-07-29 15:35:35,358 INFO EVAL-FAIL YEXT: rank=0.889  reason=[above_5ma=+0.081 | vol_ratio=1.01<1.2]
+2026-07-29 15:35:35,358 INFO EVAL-FAIL NCNO: rank=0.852  reason=[above_5ma=+0.082 | vol_ratio=1.19<1.2]
+2026-07-29 15:35:35,358 INFO EVAL-FAIL RMNI: rank=0.815  reason=[above_5ma=+0.081]
+2026-07-29 15:35:35,358 INFO EVAL-FAIL TTGT: rank=0.778  reason=[above_5ma=+0.188]
+2026-07-29 15:35:35,358 INFO EVAL-FAIL SM: rank=0.741  reason=[vol_ratio=0.74<1.2]
+2026-07-29 15:35:35,358 INFO EVAL-FAIL EGHT: rank=0.704  reason=[above_5ma=+0.082 | vol_ratio=1.08<1.2]
+2026-07-29 15:35:35,359 INFO EVAL-FAIL TBI: rank=0.667  reason=[momentum_rank=0.667<0.7 | vol_ratio=0.82<1.2]
+2026-07-29 15:35:35,359 INFO EVAL-FAIL WHD: rank=0.630  reason=[momentum_rank=0.630<0.7 | vol_ratio=1.04<1.2]
+2026-07-29 15:35:35,359 INFO EVAL-FAIL ANGI: rank=0.593  reason=[momentum_rank=0.593<0.7 | above_5ma=+0.080 | vol_ratio=0.73<1.2]
+2026-07-29 15:35:35,359 INFO EVAL-FAIL CATO: rank=0.556  reason=[momentum_rank=0.556<0.7 | above_5ma=+0.022 | vol_ratio=0.15<1.2]
+2026-07-29 15:35:35,359 INFO EVAL-FAIL REI: rank=0.518  reason=[momentum_rank=0.518<0.7 | vol_ratio=0.49<1.2]
+2026-07-29 15:35:35,359 INFO EVAL-FAIL DIN: rank=0.481  reason=[momentum_rank=0.481<0.7 | above_5ma=+0.036 | vol_ratio=0.88<1.2]
+2026-07-29 15:35:35,359 INFO EVAL-FAIL PTLO: rank=0.444  reason=[momentum_rank=0.444<0.7 | above_5ma=+0.040]
+2026-07-29 15:35:35,359 INFO EVAL-FAIL FATE: rank=0.407  reason=[momentum_rank=0.407<0.7 | vol_ratio=0.60<1.2]
+2026-07-29 15:35:35,359 INFO EVAL-FAIL INVA: rank=0.370  reason=[momentum_rank=0.370<0.7 | above_5ma=+0.017 | vol_ratio=0.77<1.2]
+2026-07-29 15:35:35,359 INFO EVAL-FAIL BMBL: rank=0.333  reason=[momentum_rank=0.333<0.7 | above_5ma=+0.047 | vol_ratio=0.80<1.2]
+2026-07-29 15:35:35,360 INFO EVAL-FAIL PLAY: rank=0.296  reason=[momentum_rank=0.296<0.7 | above_5ma=+0.026 | vol_ratio=0.52<1.2]
+2026-07-29 15:35:35,360 INFO EVAL-FAIL MYGN: rank=0.259  reason=[momentum_rank=0.259<0.7 | vol_ratio=1.15<1.2]
+2026-07-29 15:35:35,360 INFO EVAL-FAIL IRWD: rank=0.222  reason=[momentum_rank=0.222<0.7 | vol_ratio=0.83<1.2]
+2026-07-29 15:35:35,360 INFO EVAL-FAIL SJT: rank=0.185  reason=[momentum_rank=0.185<0.7 | vol_ratio=0.51<1.2]
+2026-07-29 15:35:35,360 INFO EVAL-FAIL PRAX: rank=0.148  reason=[momentum_rank=0.148<0.7 | vol_ratio=1.16<1.2]
+2026-07-29 15:35:35,360 INFO EVAL-FAIL NVAX: rank=0.111  reason=[momentum_rank=0.111<0.7 | vol_ratio=0.85<1.2]
+2026-07-29 15:35:35,360 INFO EVAL-FAIL POWI: rank=0.074  reason=[momentum_rank=0.074<0.7 | vol_ratio=0.95<1.2]
+2026-07-29 15:35:35,360 INFO EVAL-FAIL LESL: rank=0.037  reason=[momentum_rank=0.037<0.7 | vol_ratio=0.45<1.2]
+2026-07-29 15:35:35,361 INFO --- 0 signals fired ---
+2026-07-29 15:35:35,361 INFO 
+--------------------------------------------------------------
+  DATE         : 2026-07-29
+  CASH         : $    9,093.77
+  POSITION VAL : $        0.00
+  EQUITY       : $    9,093.77
+  OPEN POS     : 1 held  |  0 pending
+  DAILY P&L    : $       +0.00
+  TOTAL P&L    : $     +118.96  (-9.06%)
+  TRADES TODAY : 0
+--------------------------------------------------------------
