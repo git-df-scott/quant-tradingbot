@@ -10,7 +10,13 @@
       "peak_price": 13.270000457763672
     }
   },
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "ticker": "VET",
+      "dollar_size": 909.3768542809254,
+      "atr_abs": 0.434
+    }
+  ],
   "cooldown_until": {
     "PLAY": "2026-07-04",
     "TBI": "2026-07-04",
