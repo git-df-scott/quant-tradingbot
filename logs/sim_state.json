@@ -1,5 +1,5 @@
 {
-  "cash": 8183.482311674047,
+  "cash": 7273.7490989372045,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -13,14 +13,25 @@
       "shares": 78.67491928790385,
       "entry_price": 11.558662690877915,
       "entry_date": "2026-07-31",
-      "peak_price": 11.558662690877915
+      "peak_price": 11.920000076293945
+    },
+    "GSHD": {
+      "shares": 14.514036843809507,
+      "entry_price": 62.61692719459534,
+      "entry_date": "2026-08-03",
+      "peak_price": 62.61692719459534
     }
   },
   "pending_entries": [
     {
-      "ticker": "GSHD",
-      "dollar_size": 908.8243883484943,
-      "atr_abs": 4.272
+      "ticker": "KELYA",
+      "dollar_size": 911.1424427167627,
+      "atr_abs": 0.5645
+    },
+    {
+      "ticker": "RMNI",
+      "dollar_size": 911.1424427167627,
+      "atr_abs": 0.2132
     }
   ],
   "cooldown_until": {
