@@ -1,0 +1,63 @@
+2026-08-04 15:58:36,541 INFO === Run: today=2026-08-04  signal_date=2026-08-03 ===
+2026-08-04 15:58:36,541 INFO Fetching historical price data...
+2026-08-04 15:58:42,170 INFO Using signal bar: 2026-08-03
+2026-08-04 15:58:42,170 INFO Fetching today's opens for 34 tickers...
+2026-08-04 15:58:42,987 INFO Got opens for 34 tickers.
+2026-08-04 15:58:42,987 INFO --- Processing 2 pending entries ---
+2026-08-04 15:58:42,987 INFO FILLED  KELYA : 60.7783 sh @ $14.99  cost=$912.05  slip=$0.68
+2026-08-04 15:58:42,987 INFO FILLED  RMNI  : 191.6757 sh @ $4.75  cost=$912.05  slip=$0.68
+2026-08-04 15:58:42,988 INFO --- Checking exits for 5 open positions ---
+2026-08-04 15:58:42,988 WARNING No H/L for CCRN on 2026-08-03 — skipping exit check
+2026-08-04 15:58:42,988 INFO HOLD    VET: close=11.55  entry=11.56  peak=11.92  stop=10.87  tp=13.29
+2026-08-04 15:58:42,988 INFO HOLD    GSHD: close=65.65  entry=62.62  peak=66.00  stop=58.86  tp=72.01
+2026-08-04 15:58:42,988 INFO HOLD    KELYA: just entered today
+2026-08-04 15:58:42,988 INFO HOLD    RMNI: just entered today
+2026-08-04 15:58:42,988 INFO --- Generating signals for 2026-08-03 ---
+2026-08-04 15:58:45,370 INFO --- Signal evaluation: 34 candidates ---
+2026-08-04 15:58:45,370 INFO EVAL-FAIL VET: rank=1.000  reason=[above_5ma=+0.029 | vol_ratio=0.69<1.2]
+2026-08-04 15:58:45,370 INFO EVAL-FAIL WHD: rank=0.971  reason=[above_5ma=+0.077 | vol_ratio=1.09<1.2]
+2026-08-04 15:58:45,370 INFO EVAL-FAIL GSHD: rank=0.941  reason=[vol_ratio=0.75<1.2]
+2026-08-04 15:58:45,370 INFO EVAL-FAIL SM: rank=0.912  reason=[above_5ma=+0.014 | vol_ratio=0.87<1.2]
+2026-08-04 15:58:45,370 INFO EVAL-FAIL REI: rank=0.882  reason=[above_5ma=+0.036 | vol_ratio=0.72<1.2]
+2026-08-04 15:58:45,371 INFO EVAL-FAIL KELYA: rank=0.853  reason=[vol_ratio=0.72<1.2]
+2026-08-04 15:58:45,371 INFO EVAL-FAIL YEXT: rank=0.824  reason=[above_5ma=+0.014 | vol_ratio=0.70<1.2]
+2026-08-04 15:58:45,371 INFO EVAL-FAIL DOMO: rank=0.794  reason=[above_5ma=+0.046 | vol_ratio=0.59<1.2]
+2026-08-04 15:58:45,371 INFO EVAL-FAIL PLAY: rank=0.765  reason=[above_5ma=+0.073]
+2026-08-04 15:58:45,371 INFO EVAL-PASS TTGT: rank=0.735  vol_ratio=1.38  pct_from_5ma=-0.004
+2026-08-04 15:58:45,371 INFO EVAL-FAIL JACK: rank=0.706  reason=[above_5ma=+0.032]
+2026-08-04 15:58:45,371 INFO EVAL-FAIL EGHT: rank=0.676  reason=[momentum_rank=0.676<0.7 | above_5ma=+0.063 | vol_ratio=1.01<1.2]
+2026-08-04 15:58:45,371 INFO EVAL-FAIL NCNO: rank=0.647  reason=[momentum_rank=0.647<0.7 | above_5ma=+0.028 | vol_ratio=1.00<1.2]
+2026-08-04 15:58:45,371 INFO EVAL-FAIL CATO: rank=0.618  reason=[momentum_rank=0.618<0.7 | above_5ma=+0.028 | vol_ratio=0.41<1.2]
+2026-08-04 15:58:45,371 INFO EVAL-FAIL AMPY: rank=0.588  reason=[momentum_rank=0.588<0.7 | above_5ma=+0.046 | vol_ratio=1.17<1.2]
+2026-08-04 15:58:45,372 INFO EVAL-FAIL RMNI: rank=0.559  reason=[momentum_rank=0.559<0.7]
+2026-08-04 15:58:45,372 INFO EVAL-FAIL DIN: rank=0.529  reason=[momentum_rank=0.529<0.7 | vol_ratio=1.10<1.2]
+2026-08-04 15:58:45,372 INFO EVAL-FAIL IRWD: rank=0.500  reason=[momentum_rank=0.500<0.7 | above_5ma=+0.120]
+2026-08-04 15:58:45,372 INFO EVAL-FAIL ACAD: rank=0.471  reason=[momentum_rank=0.471<0.7 | vol_ratio=0.96<1.2]
+2026-08-04 15:58:45,372 INFO EVAL-FAIL GPOR: rank=0.441  reason=[momentum_rank=0.441<0.7 | above_5ma=+0.034 | vol_ratio=1.05<1.2]
+2026-08-04 15:58:45,372 INFO EVAL-FAIL BMBL: rank=0.412  reason=[momentum_rank=0.412<0.7 | above_5ma=+0.042]
+2026-08-04 15:58:45,372 INFO EVAL-FAIL PRAX: rank=0.382  reason=[momentum_rank=0.382<0.7 | above_5ma=+0.013 | vol_ratio=0.90<1.2]
+2026-08-04 15:58:45,372 INFO EVAL-FAIL HLIO: rank=0.353  reason=[momentum_rank=0.353<0.7 | above_5ma=+0.034 | vol_ratio=0.87<1.2]
+2026-08-04 15:58:45,372 INFO EVAL-FAIL DRVN: rank=0.324  reason=[momentum_rank=0.324<0.7 | vol_ratio=1.20<1.2]
+2026-08-04 15:58:45,372 INFO EVAL-FAIL PTLO: rank=0.294  reason=[momentum_rank=0.294<0.7 | vol_ratio=0.97<1.2]
+2026-08-04 15:58:45,372 INFO EVAL-FAIL INVA: rank=0.265  reason=[momentum_rank=0.265<0.7 | vol_ratio=1.04<1.2]
+2026-08-04 15:58:45,373 INFO EVAL-FAIL ANGI: rank=0.235  reason=[momentum_rank=0.235<0.7 | above_5ma=+0.002]
+2026-08-04 15:58:45,373 INFO EVAL-FAIL TBI: rank=0.206  reason=[momentum_rank=0.206<0.7 | above_5ma=+0.016 | vol_ratio=0.95<1.2]
+2026-08-04 15:58:45,373 INFO EVAL-FAIL FATE: rank=0.176  reason=[momentum_rank=0.176<0.7 | above_5ma=+0.030 | vol_ratio=0.55<1.2]
+2026-08-04 15:58:45,373 INFO EVAL-FAIL POWI: rank=0.147  reason=[momentum_rank=0.147<0.7 | above_5ma=+0.014 | vol_ratio=0.95<1.2]
+2026-08-04 15:58:45,373 INFO EVAL-FAIL SJT: rank=0.118  reason=[momentum_rank=0.118<0.7 | vol_ratio=1.11<1.2]
+2026-08-04 15:58:45,373 INFO EVAL-FAIL NVAX: rank=0.088  reason=[momentum_rank=0.088<0.7 | above_5ma=+0.005 | vol_ratio=0.83<1.2]
+2026-08-04 15:58:45,373 INFO EVAL-FAIL MYGN: rank=0.059  reason=[momentum_rank=0.059<0.7]
+2026-08-04 15:58:45,373 INFO EVAL-FAIL LESL: rank=0.029  reason=[momentum_rank=0.029<0.7 | above_5ma=+0.116 | vol_ratio=0.44<1.2]
+2026-08-04 15:58:45,374 INFO --- 1 signals fired ---
+2026-08-04 15:58:45,374 INFO QUEUED  TTGT: rank=0.735  size=$914.17 → fill tomorrow at open
+2026-08-04 15:58:45,375 INFO 
+--------------------------------------------------------------
+  DATE         : 2026-08-04
+  CASH         : $    5,449.64
+  POSITION VAL : $    3,692.02
+  EQUITY       : $    9,141.67
+  OPEN POS     : 5 held  |  1 pending
+  DAILY P&L    : $       +0.00
+  TOTAL P&L    : $     +118.96  (-8.58%)
+  TRADES TODAY : 2
+--------------------------------------------------------------

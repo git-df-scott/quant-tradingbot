@@ -1,5 +1,5 @@
 {
-  "cash": 7273.7490989372045,
+  "cash": 5449.641928618245,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -19,19 +19,26 @@
       "shares": 14.514036843809507,
       "entry_price": 62.61692719459534,
       "entry_date": "2026-08-03",
-      "peak_price": 62.61692719459534
+      "peak_price": 66.0
+    },
+    "KELYA": {
+      "shares": 60.77834618427023,
+      "entry_price": 14.991234541893006,
+      "entry_date": "2026-08-04",
+      "peak_price": 14.991234541893006
+    },
+    "RMNI": {
+      "shares": 191.67570484594717,
+      "entry_price": 4.7535625,
+      "entry_date": "2026-08-04",
+      "peak_price": 4.7535625
     }
   },
   "pending_entries": [
     {
-      "ticker": "KELYA",
-      "dollar_size": 911.1424427167627,
-      "atr_abs": 0.5645
-    },
-    {
-      "ticker": "RMNI",
-      "dollar_size": 911.1424427167627,
-      "atr_abs": 0.2132
+      "ticker": "TTGT",
+      "dollar_size": 914.1665941699763,
+      "atr_abs": 0.304
     }
   ],
   "cooldown_until": {
