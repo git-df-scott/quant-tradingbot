@@ -16,7 +16,13 @@
       "peak_price": 5.079999923706055
     }
   },
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "ticker": "JACK",
+      "dollar_size": 919.3509221923159,
+      "atr_abs": 1.2715
+    }
+  ],
   "cooldown_until": {
     "PLAY": "2026-07-04",
     "TBI": "2026-07-04",
