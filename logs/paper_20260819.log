@@ -1,0 +1,55 @@
+2026-08-19 14:08:35,936 INFO === Run: today=2026-08-19  signal_date=2026-08-18 ===
+2026-08-19 14:08:35,937 INFO Fetching historical price data...
+2026-08-19 14:08:39,529 ERROR $CCRN: possibly delisted; no price data found  (1d 2025-08-19 -> 2026-08-19)
+2026-08-19 14:08:39,531 ERROR $CCRN: possibly delisted; no price data found  (1d 2025-08-19 -> 2026-08-19)
+2026-08-19 14:08:39,531 ERROR 
+1 Failed download:
+2026-08-19 14:08:39,531 ERROR ['CCRN']: possibly delisted; no price data found  (1d 2025-08-19 -> 2026-08-19)
+2026-08-19 14:08:42,183 INFO Using signal bar: 2026-08-18
+2026-08-19 14:08:42,183 INFO Fetching today's opens for 34 tickers...
+2026-08-19 14:08:43,527 INFO Got opens for 34 tickers.
+2026-08-19 14:08:43,527 INFO --- Processing 0 pending entries ---
+2026-08-19 14:08:43,527 INFO --- Checking exits for 3 open positions ---
+2026-08-19 14:08:43,527 WARNING No H/L for CCRN on 2026-08-18 — skipping exit check
+2026-08-19 14:08:43,527 INFO HOLD    RMNI: close=5.01  entry=4.75  peak=5.09  stop=4.47  tp=5.47
+2026-08-19 14:08:43,527 INFO HOLD    JACK: close=16.73  entry=17.04  peak=17.40  stop=16.02  tp=19.59
+2026-08-19 14:08:43,527 INFO --- Generating signals for 2026-08-18 ---
+2026-08-19 14:08:45,214 INFO --- Signal evaluation: 26 candidates ---
+2026-08-19 14:08:45,215 INFO EVAL-FAIL GSHD: rank=1.000  reason=[vol_ratio=0.56<1.2]
+2026-08-19 14:08:45,215 INFO EVAL-FAIL VET: rank=0.962  reason=[above_5ma=+0.055 | vol_ratio=1.12<1.2]
+2026-08-19 14:08:45,215 INFO EVAL-FAIL ACAD: rank=0.923  reason=[above_5ma=+0.039 | vol_ratio=1.18<1.2]
+2026-08-19 14:08:45,215 INFO EVAL-FAIL NCNO: rank=0.885  reason=[above_5ma=+0.001 | vol_ratio=1.11<1.2]
+2026-08-19 14:08:45,215 INFO EVAL-FAIL PRAX: rank=0.846  reason=[vol_ratio=0.60<1.2]
+2026-08-19 14:08:45,215 INFO EVAL-FAIL YEXT: rank=0.808  reason=[above_5ma=+0.015 | vol_ratio=0.54<1.2]
+2026-08-19 14:08:45,215 INFO EVAL-FAIL SJT: rank=0.769  reason=[above_5ma=+0.001 | vol_ratio=0.44<1.2]
+2026-08-19 14:08:45,215 INFO EVAL-FAIL JACK: rank=0.731  reason=[NaN/unknown]
+2026-08-19 14:08:45,215 INFO EVAL-FAIL REI: rank=0.692  reason=[momentum_rank=0.692<0.7 | above_5ma=+0.042 | vol_ratio=1.08<1.2]
+2026-08-19 14:08:45,215 INFO EVAL-FAIL RMNI: rank=0.654  reason=[momentum_rank=0.654<0.7 | above_5ma=+0.012 | vol_ratio=0.82<1.2]
+2026-08-19 14:08:45,215 INFO EVAL-FAIL IRWD: rank=0.615  reason=[momentum_rank=0.615<0.7 | above_5ma=+0.008 | vol_ratio=0.64<1.2]
+2026-08-19 14:08:45,216 INFO EVAL-FAIL SM: rank=0.577  reason=[momentum_rank=0.577<0.7 | above_5ma=+0.046 | vol_ratio=0.77<1.2]
+2026-08-19 14:08:45,216 INFO EVAL-FAIL DOMO: rank=0.538  reason=[momentum_rank=0.538<0.7 | vol_ratio=0.18<1.2]
+2026-08-19 14:08:45,216 INFO EVAL-FAIL EGHT: rank=0.500  reason=[momentum_rank=0.500<0.7 | vol_ratio=0.64<1.2]
+2026-08-19 14:08:45,216 INFO EVAL-FAIL TTGT: rank=0.462  reason=[momentum_rank=0.462<0.7 | above_5ma=+0.017 | vol_ratio=0.94<1.2]
+2026-08-19 14:08:45,216 INFO EVAL-FAIL PTLO: rank=0.423  reason=[momentum_rank=0.423<0.7 | vol_ratio=0.68<1.2]
+2026-08-19 14:08:45,216 INFO EVAL-FAIL DIN: rank=0.385  reason=[momentum_rank=0.385<0.7 | vol_ratio=0.58<1.2]
+2026-08-19 14:08:45,216 INFO EVAL-FAIL NVAX: rank=0.346  reason=[momentum_rank=0.346<0.7 | vol_ratio=0.66<1.2]
+2026-08-19 14:08:45,216 INFO EVAL-FAIL BMBL: rank=0.308  reason=[momentum_rank=0.308<0.7 | above_5ma=+0.018 | vol_ratio=0.95<1.2]
+2026-08-19 14:08:45,216 INFO EVAL-FAIL PLAY: rank=0.269  reason=[momentum_rank=0.269<0.7 | vol_ratio=0.67<1.2]
+2026-08-19 14:08:45,216 INFO EVAL-FAIL FATE: rank=0.231  reason=[momentum_rank=0.231<0.7]
+2026-08-19 14:08:45,216 INFO EVAL-FAIL DRVN: rank=0.192  reason=[momentum_rank=0.192<0.7 | above_5ma=+0.009]
+2026-08-19 14:08:45,216 INFO EVAL-FAIL POWI: rank=0.154  reason=[momentum_rank=0.154<0.7]
+2026-08-19 14:08:45,216 INFO EVAL-FAIL ANGI: rank=0.115  reason=[momentum_rank=0.115<0.7 | above_5ma=+0.008 | vol_ratio=1.01<1.2]
+2026-08-19 14:08:45,216 INFO EVAL-FAIL MYGN: rank=0.077  reason=[momentum_rank=0.077<0.7 | vol_ratio=0.77<1.2]
+2026-08-19 14:08:45,216 INFO EVAL-FAIL LESL: rank=0.038  reason=[momentum_rank=0.038<0.7 | vol_ratio=0.46<1.2]
+2026-08-19 14:08:45,217 INFO --- 0 signals fired ---
+2026-08-19 14:08:45,218 INFO 
+--------------------------------------------------------------
+  DATE         : 2026-08-19
+  CASH         : $    7,316.78
+  POSITION VAL : $    1,863.04
+  EQUITY       : $    9,179.82
+  OPEN POS     : 3 held  |  0 pending
+  DAILY P&L    : $       +0.00
+  TOTAL P&L    : $     +181.64  (-8.20%)
+  TRADES TODAY : 0
+--------------------------------------------------------------
