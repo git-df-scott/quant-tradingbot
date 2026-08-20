@@ -1,0 +1,39 @@
+2026-08-20 14:10:05,650 INFO === Run: today=2026-08-20  signal_date=2026-08-19 ===
+2026-08-20 14:10:05,651 INFO Fetching historical price data...
+2026-08-20 14:10:10,045 ERROR $CCRN: possibly delisted; no price data found  (1d 2025-08-20 -> 2026-08-20)
+2026-08-20 14:10:10,047 ERROR $CCRN: possibly delisted; no price data found  (1d 2025-08-20 -> 2026-08-20)
+2026-08-20 14:10:10,047 ERROR 
+1 Failed download:
+2026-08-20 14:10:10,047 ERROR ['CCRN']: possibly delisted; no price data found  (1d 2025-08-20 -> 2026-08-20)
+2026-08-20 14:10:13,904 INFO Using signal bar: 2026-08-19
+2026-08-20 14:10:13,904 INFO Fetching today's opens for 34 tickers...
+2026-08-20 14:10:15,437 INFO Got opens for 34 tickers.
+2026-08-20 14:10:15,437 INFO --- Processing 0 pending entries ---
+2026-08-20 14:10:15,437 INFO --- Checking exits for 3 open positions ---
+2026-08-20 14:10:15,437 WARNING No H/L for CCRN on 2026-08-19 — skipping exit check
+2026-08-20 14:10:15,438 INFO HOLD    RMNI: close=5.06  entry=4.75  peak=5.18  stop=4.47  tp=5.47
+2026-08-20 14:10:15,438 INFO HOLD    JACK: close=17.15  entry=17.04  peak=17.86  stop=16.02  tp=19.59
+2026-08-20 14:10:15,438 INFO --- Generating signals for 2026-08-19 ---
+2026-08-20 14:10:17,151 INFO --- Signal evaluation: 10 candidates ---
+2026-08-20 14:10:17,152 INFO EVAL-FAIL GSHD: rank=1.000  reason=[above_5ma=+0.032]
+2026-08-20 14:10:17,152 INFO EVAL-FAIL EGHT: rank=0.900  reason=[above_5ma=+0.013]
+2026-08-20 14:10:17,152 INFO EVAL-FAIL JACK: rank=0.800  reason=[NaN/unknown]
+2026-08-20 14:10:17,152 INFO EVAL-FAIL DOMO: rank=0.700  reason=[NaN/unknown]
+2026-08-20 14:10:17,152 INFO EVAL-FAIL VET: rank=0.600  reason=[momentum_rank=0.600<0.7 | above_5ma=+0.060]
+2026-08-20 14:10:17,152 INFO EVAL-FAIL REI: rank=0.500  reason=[momentum_rank=0.500<0.7 | above_5ma=+0.024]
+2026-08-20 14:10:17,152 INFO EVAL-FAIL NVAX: rank=0.400  reason=[momentum_rank=0.400<0.7 | above_5ma=+0.072]
+2026-08-20 14:10:17,152 INFO EVAL-FAIL SM: rank=0.300  reason=[momentum_rank=0.300<0.7 | above_5ma=+0.043 | vol_ratio=0.96<1.2]
+2026-08-20 14:10:17,152 INFO EVAL-FAIL PLAY: rank=0.200  reason=[momentum_rank=0.200<0.7]
+2026-08-20 14:10:17,153 INFO EVAL-FAIL LESL: rank=0.100  reason=[momentum_rank=0.100<0.7 | vol_ratio=0.25<1.2]
+2026-08-20 14:10:17,153 INFO --- 0 signals fired ---
+2026-08-20 14:10:17,154 INFO 
+--------------------------------------------------------------
+  DATE         : 2026-08-20
+  CASH         : $    7,316.78
+  POSITION VAL : $    1,895.29
+  EQUITY       : $    9,212.06
+  OPEN POS     : 3 held  |  0 pending
+  DAILY P&L    : $       +0.00
+  TOTAL P&L    : $     +181.64  (-7.88%)
+  TRADES TODAY : 0
+--------------------------------------------------------------
