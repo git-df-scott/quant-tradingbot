@@ -1,0 +1,38 @@
+2026-09-02 17:16:31,632 INFO === Run: today=2026-09-02  signal_date=2026-09-01 ===
+2026-09-02 17:16:31,632 INFO Fetching historical price data...
+2026-09-02 17:16:42,804 INFO Using signal bar: 2026-09-01
+2026-09-02 17:16:42,805 INFO Fetching today's opens for 35 tickers...
+2026-09-02 17:16:44,258 INFO Got opens for 35 tickers.
+2026-09-02 17:16:44,258 INFO --- Processing 0 pending entries ---
+2026-09-02 17:16:44,258 INFO --- Checking exits for 1 open positions ---
+2026-09-02 17:16:44,259 WARNING No H/L for CCRN on 2026-09-01 — skipping exit check
+2026-09-02 17:16:44,259 INFO --- Generating signals for 2026-09-01 ---
+2026-09-02 17:16:45,988 INFO --- Signal evaluation: 15 candidates ---
+2026-09-02 17:16:45,989 INFO EVAL-FAIL TBI: rank=0.971  reason=[vol_ratio=0.79<1.2]
+2026-09-02 17:16:45,989 INFO EVAL-FAIL AMPY: rank=0.943  reason=[above_5ma=+0.041 | vol_ratio=0.67<1.2]
+2026-09-02 17:16:45,989 INFO EVAL-FAIL SM: rank=0.914  reason=[above_5ma=+0.034 | vol_ratio=0.54<1.2]
+2026-09-02 17:16:45,989 INFO EVAL-FAIL VET: rank=0.886  reason=[above_5ma=+0.039]
+2026-09-02 17:16:45,989 INFO EVAL-FAIL GPOR: rank=0.829  reason=[above_5ma=+0.028 | vol_ratio=0.73<1.2]
+2026-09-02 17:16:45,989 INFO EVAL-PASS YEXT: rank=0.800  vol_ratio=3.42  pct_from_5ma=-0.025
+2026-09-02 17:16:45,989 INFO EVAL-FAIL NCNO: rank=0.771  reason=[vol_ratio=0.91<1.2]
+2026-09-02 17:16:45,989 INFO EVAL-FAIL PRAX: rank=0.714  reason=[vol_ratio=0.71<1.2]
+2026-09-02 17:16:45,989 INFO EVAL-FAIL INVA: rank=0.571  reason=[momentum_rank=0.571<0.7 | above_5ma=+0.004 | vol_ratio=1.18<1.2]
+2026-09-02 17:16:45,989 INFO EVAL-FAIL MYGN: rank=0.543  reason=[momentum_rank=0.543<0.7 | above_5ma=+0.003]
+2026-09-02 17:16:45,990 INFO EVAL-FAIL IRWD: rank=0.486  reason=[momentum_rank=0.486<0.7 | above_5ma=+0.008 | vol_ratio=0.79<1.2]
+2026-09-02 17:16:45,990 INFO EVAL-FAIL AGEN: rank=0.429  reason=[momentum_rank=0.429<0.7 | above_5ma=+0.016 | vol_ratio=0.56<1.2]
+2026-09-02 17:16:45,990 INFO EVAL-FAIL HLIO: rank=0.286  reason=[momentum_rank=0.286<0.7 | vol_ratio=0.96<1.2]
+2026-09-02 17:16:45,990 INFO EVAL-FAIL EGHT: rank=0.171  reason=[momentum_rank=0.171<0.7 | vol_ratio=0.75<1.2]
+2026-09-02 17:16:45,990 INFO EVAL-FAIL ANGI: rank=0.057  reason=[momentum_rank=0.057<0.7 | vol_ratio=0.83<1.2]
+2026-09-02 17:16:45,990 INFO --- 1 signals fired ---
+2026-09-02 17:16:45,991 INFO QUEUED  YEXT: rank=0.800  size=$917.14 → fill tomorrow at open
+2026-09-02 17:16:45,991 INFO 
+--------------------------------------------------------------
+  DATE         : 2026-09-02
+  CASH         : $    9,171.36
+  POSITION VAL : $        0.00
+  EQUITY       : $    9,171.36
+  OPEN POS     : 1 held  |  1 pending
+  DAILY P&L    : $       +0.00
+  TOTAL P&L    : $     +207.59  (-8.29%)
+  TRADES TODAY : 0
+--------------------------------------------------------------

@@ -10,7 +10,13 @@
       "peak_price": 13.270000457763672
     }
   },
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "ticker": "YEXT",
+      "dollar_size": 917.136414291454,
+      "atr_abs": 0.2905
+    }
+  ],
   "cooldown_until": {
     "PLAY": "2026-07-04",
     "TBI": "2026-07-04",
