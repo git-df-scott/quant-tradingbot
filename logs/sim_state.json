@@ -1,5 +1,5 @@
 {
-  "cash": 9171.36414291454,
+  "cash": 8253.310592208794,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -8,15 +8,15 @@
       "entry_price": 13.119832156419754,
       "entry_date": "2026-05-20",
       "peak_price": 13.270000457763672
+    },
+    "YEXT": {
+      "shares": 134.5740213191966,
+      "entry_price": 6.815107442736626,
+      "entry_date": "2026-09-03",
+      "peak_price": 6.815107442736626
     }
   },
-  "pending_entries": [
-    {
-      "ticker": "YEXT",
-      "dollar_size": 917.136414291454,
-      "atr_abs": 0.2905
-    }
-  ],
+  "pending_entries": [],
   "cooldown_until": {
     "PLAY": "2026-07-04",
     "TBI": "2026-07-04",
