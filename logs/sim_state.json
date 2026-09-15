@@ -1,5 +1,5 @@
 {
-  "cash": 7289.305840902176,
+  "cash": 8246.639982127743,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -13,16 +13,16 @@
       "shares": 595.2340286777054,
       "entry_price": 1.5311474713683129,
       "entry_date": "2026-09-11",
-      "peak_price": 1.5499999523162842
-    },
-    "ANGI": {
-      "shares": 200.59648777516648,
-      "entry_price": 4.543404961824417,
-      "entry_date": "2026-09-11",
-      "peak_price": 4.730000019073486
+      "peak_price": 1.559999942779541
     }
   },
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "ticker": "GPOR",
+      "dollar_size": 915.1395694364667,
+      "atr_abs": 4.4522
+    }
+  ],
   "cooldown_until": {
     "PLAY": "2026-07-04",
     "TBI": "2026-07-04",
@@ -33,6 +33,6 @@
     "TTGT": "2026-08-21",
     "YEXT": "2026-09-15"
   },
-  "total_pnl": 151.91407446619937,
-  "total_trades": 19
+  "total_pnl": 198.81543024318282,
+  "total_trades": 20
 }
