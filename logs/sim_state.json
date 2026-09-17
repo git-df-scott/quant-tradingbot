@@ -1,5 +1,5 @@
 {
-  "cash": 7330.58527312184,
+  "cash": 7269.618129824342,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -15,18 +15,23 @@
       "entry_date": "2026-09-11",
       "peak_price": 1.5800000429153442
     },
-    "GPOR": {
-      "shares": 5.277622823288363,
-      "entry_price": 173.3999567756653,
-      "entry_date": "2026-09-16",
-      "peak_price": 173.3999567756653
+    "SJT": {
+      "shares": 302.00205631112533,
+      "entry_price": 3.042279961824417,
+      "entry_date": "2026-09-17",
+      "peak_price": 3.042279961824417
     }
   },
   "pending_entries": [
     {
-      "ticker": "SJT",
-      "dollar_size": 918.7748043451058,
-      "atr_abs": 0.188
+      "ticker": "SM",
+      "dollar_size": 906.8650743285891,
+      "atr_abs": 1.5281
+    },
+    {
+      "ticker": "VET",
+      "dollar_size": 906.8650743285891,
+      "atr_abs": 0.4749
     }
   ],
   "cooldown_until": {
@@ -37,8 +42,9 @@
     "DOMO": "2026-08-07",
     "VET": "2026-08-18",
     "TTGT": "2026-08-21",
-    "YEXT": "2026-09-15"
+    "YEXT": "2026-09-15",
+    "GPOR": "2026-09-28"
   },
-  "total_pnl": 198.81543024318282,
-  "total_trades": 20
+  "total_pnl": 143.261882680542,
+  "total_trades": 21
 }
