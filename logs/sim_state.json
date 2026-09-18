@@ -1,5 +1,5 @@
 {
-  "cash": 7269.618129824342,
+  "cash": 5454.074251018507,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -19,21 +19,22 @@
       "shares": 302.00205631112533,
       "entry_price": 3.042279961824417,
       "entry_date": "2026-09-17",
-      "peak_price": 3.042279961824417
+      "peak_price": 3.0899999141693115
+    },
+    "SM": {
+      "shares": 24.57785358025847,
+      "entry_price": 36.89765143108368,
+      "entry_date": "2026-09-18",
+      "peak_price": 36.89765143108368
+    },
+    "VET": {
+      "shares": 71.69188375306132,
+      "entry_price": 12.649480343580246,
+      "entry_date": "2026-09-18",
+      "peak_price": 12.649480343580246
     }
   },
-  "pending_entries": [
-    {
-      "ticker": "SM",
-      "dollar_size": 906.8650743285891,
-      "atr_abs": 1.5281
-    },
-    {
-      "ticker": "VET",
-      "dollar_size": 906.8650743285891,
-      "atr_abs": 0.4749
-    }
-  ],
+  "pending_entries": [],
   "cooldown_until": {
     "PLAY": "2026-07-04",
     "TBI": "2026-07-04",
