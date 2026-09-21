@@ -25,16 +25,32 @@
       "shares": 24.57785358025847,
       "entry_price": 36.89765143108368,
       "entry_date": "2026-09-18",
-      "peak_price": 36.89765143108368
+      "peak_price": 37.31999969482422
     },
     "VET": {
       "shares": 71.69188375306132,
       "entry_price": 12.649480343580246,
       "entry_date": "2026-09-18",
-      "peak_price": 12.649480343580246
+      "peak_price": 12.739999771118164
     }
   },
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "ticker": "MYGN",
+      "dollar_size": 903.8367836481392,
+      "atr_abs": 0.2215
+    },
+    {
+      "ticker": "DOMO",
+      "dollar_size": 903.8367836481392,
+      "atr_abs": 0.1408
+    },
+    {
+      "ticker": "BMBL",
+      "dollar_size": 903.8367836481392,
+      "atr_abs": 0.1231
+    }
+  ],
   "cooldown_until": {
     "PLAY": "2026-07-04",
     "TBI": "2026-07-04",
