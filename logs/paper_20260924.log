@@ -1,0 +1,37 @@
+2026-09-24 17:55:45,674 INFO === Run: today=2026-09-24  signal_date=2026-09-23 ===
+2026-09-24 17:55:45,674 INFO Fetching historical price data...
+2026-09-24 17:55:48,039 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: CCRN"}}}
+2026-09-24 17:55:48,142 ERROR $CCRN: possibly delisted; no timezone found
+2026-09-24 17:55:48,353 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: CCRN"}}}
+2026-09-24 17:55:48,440 ERROR $CCRN: possibly delisted; no timezone found
+2026-09-24 17:55:48,441 ERROR 
+1 Failed download:
+2026-09-24 17:55:48,441 ERROR ['CCRN']: possibly delisted; no timezone found
+2026-09-24 17:55:50,551 INFO Using signal bar: 2026-09-23
+2026-09-24 17:55:50,551 INFO Fetching today's opens for 35 tickers...
+2026-09-24 17:55:51,281 INFO Got opens for 35 tickers.
+2026-09-24 17:55:51,281 INFO --- Processing 0 pending entries ---
+2026-09-24 17:55:51,281 INFO --- Checking exits for 5 open positions ---
+2026-09-24 17:55:51,281 WARNING No H/L for CCRN on 2026-09-23 — skipping exit check
+2026-09-24 17:55:51,281 INFO HOLD    SJT: close=3.02  entry=3.04  peak=3.17  stop=2.86  tp=3.50
+2026-09-24 17:55:51,281 INFO TRAIL   MYGN: low=3.97 <= trail=4.06 (peak=4.23)
+2026-09-24 17:55:51,281 INFO STOP    DOMO: low=3.45 <= stop=3.54
+2026-09-24 17:55:51,281 INFO STOP    BMBL: low=2.66 <= stop=2.73
+2026-09-24 17:55:51,281 INFO CLOSED  MYGN   [trailing_stop]: 231.5793 sh @ $4.06  P&L=$+35.86 (+3.97%)  entry=$3.90
+2026-09-24 17:55:51,281 INFO CLOSED  DOMO   [stop_loss]: 240.2020 sh @ $3.53  P&L=$-54.87 (-6.07%)  entry=$3.76
+2026-09-24 17:55:51,281 INFO CLOSED  BMBL   [stop_loss]: 311.4343 sh @ $2.73  P&L=$-54.87 (-6.07%)  entry=$2.90
+2026-09-24 17:55:51,282 INFO --- Generating signals for 2026-09-23 ---
+2026-09-24 17:55:53,000 INFO --- Signal evaluation: 1 candidates ---
+2026-09-24 17:55:53,001 INFO EVAL-FAIL LESL: rank=0.086  reason=[momentum_rank=0.086<0.7 | vol_ratio=0.17<1.2]
+2026-09-24 17:55:53,001 INFO --- 0 signals fired ---
+2026-09-24 17:55:53,002 INFO 
+--------------------------------------------------------------
+  DATE         : 2026-09-24
+  CASH         : $    7,931.98
+  POSITION VAL : $      912.05
+  EQUITY       : $    8,844.02
+  OPEN POS     : 2 held  |  0 pending
+  DAILY P&L    : $      -73.88
+  TOTAL P&L    : $      -96.05  (-11.56%)
+  TRADES TODAY : 3
+--------------------------------------------------------------
