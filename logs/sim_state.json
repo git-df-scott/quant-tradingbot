@@ -1,5 +1,5 @@
 {
-  "cash": 7931.978606756985,
+  "cash": 8915.98904971263,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -8,12 +8,6 @@
       "entry_price": 13.119832156419754,
       "entry_date": "2026-05-20",
       "peak_price": 13.270000457763672
-    },
-    "SJT": {
-      "shares": 302.00205631112533,
-      "entry_price": 3.042279961824417,
-      "entry_date": "2026-09-17",
-      "peak_price": 3.1700000762939453
     }
   },
   "pending_entries": [],
@@ -31,6 +25,6 @@
     "SM": "2026-10-03",
     "BMBL": "2026-10-05"
   },
-  "total_pnl": -96.0461542288822,
-  "total_trades": 27
+  "total_pnl": -29.82552017994759,
+  "total_trades": 28
 }
