@@ -1,5 +1,5 @@
 {
-  "cash": 8915.98904971263,
+  "cash": 8023.498545836396,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -8,13 +8,19 @@
       "entry_price": 13.119832156419754,
       "entry_date": "2026-05-20",
       "peak_price": 13.270000457763672
+    },
+    "TTGT": {
+      "shares": 238.21676595434363,
+      "entry_price": 3.7428050095438956,
+      "entry_date": "2026-09-30",
+      "peak_price": 3.7428050095438956
     }
   },
   "pending_entries": [
     {
-      "ticker": "TTGT",
-      "dollar_size": 891.5989049712631,
-      "atr_abs": 0.151
+      "ticker": "POWI",
+      "dollar_size": 891.4429252777454,
+      "atr_abs": 2.301
     }
   ],
   "cooldown_until": {
