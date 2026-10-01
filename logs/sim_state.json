@@ -1,5 +1,5 @@
 {
-  "cash": 8023.498545836396,
+  "cash": 7131.164177633374,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -13,16 +13,16 @@
       "shares": 238.21676595434363,
       "entry_price": 3.7428050095438956,
       "entry_date": "2026-09-30",
-      "peak_price": 3.7428050095438956
+      "peak_price": 3.819999933242798
+    },
+    "POWI": {
+      "shares": 17.239691807847016,
+      "entry_price": 51.708750667572026,
+      "entry_date": "2026-10-01",
+      "peak_price": 51.708750667572026
     }
   },
-  "pending_entries": [
-    {
-      "ticker": "POWI",
-      "dollar_size": 891.4429252777454,
-      "atr_abs": 2.301
-    }
-  ],
+  "pending_entries": [],
   "cooldown_until": {
     "PLAY": "2026-07-04",
     "TBI": "2026-07-04",
