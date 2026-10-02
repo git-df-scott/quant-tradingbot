@@ -1,0 +1,70 @@
+2026-10-02 18:39:11,609 INFO === Run: today=2026-10-02  signal_date=2026-10-01 ===
+2026-10-02 18:39:11,609 INFO Fetching historical price data...
+2026-10-02 18:39:14,785 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: CCRN"}}}
+2026-10-02 18:39:15,006 ERROR $CCRN: possibly delisted; no timezone found
+2026-10-02 18:39:15,477 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: CCRN"}}}
+2026-10-02 18:39:15,486 ERROR 
+1 Failed download:
+2026-10-02 18:39:15,486 ERROR ['CCRN']: SSLError('Failed to perform, curl: (35) Recv failure: Connection reset by peer. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.')
+2026-10-02 18:39:20,165 INFO Using signal bar: 2026-10-01
+2026-10-02 18:39:20,165 INFO Fetching today's opens for 34 tickers...
+2026-10-02 18:39:27,003 ERROR $REI: possibly delisted; no price data found  (1d 2026-10-02 -> 2026-10-03)
+2026-10-02 18:39:27,012 ERROR 
+1 Failed download:
+2026-10-02 18:39:27,012 ERROR ['REI']: possibly delisted; no price data found  (1d 2026-10-02 -> 2026-10-03)
+2026-10-02 18:39:27,020 INFO Got opens for 33 tickers.
+2026-10-02 18:39:27,020 INFO --- Processing 0 pending entries ---
+2026-10-02 18:39:27,020 INFO --- Checking exits for 3 open positions ---
+2026-10-02 18:39:27,020 WARNING No H/L for CCRN on 2026-10-01 — skipping exit check
+2026-10-02 18:39:27,020 INFO HOLD    TTGT: close=3.70  entry=3.74  peak=3.82  stop=3.52  tp=4.30
+2026-10-02 18:39:27,020 INFO HOLD    POWI: close=51.50  entry=51.71  peak=52.13  stop=48.61  tp=59.47
+2026-10-02 18:39:27,021 INFO --- Generating signals for 2026-10-01 ---
+2026-10-02 18:39:28,320 INFO --- Signal evaluation: 34 candidates ---
+2026-10-02 18:39:28,320 INFO EVAL-FAIL SJT: rank=1.000  reason=[above_5ma=+0.038]
+2026-10-02 18:39:28,320 INFO EVAL-FAIL MYGN: rank=0.971  reason=[vol_ratio=0.80<1.2]
+2026-10-02 18:39:28,320 INFO EVAL-FAIL EGHT: rank=0.941  reason=[above_5ma=+0.026]
+2026-10-02 18:39:28,320 INFO EVAL-FAIL ANGI: rank=0.912  reason=[above_5ma=+0.035 | vol_ratio=0.76<1.2]
+2026-10-02 18:39:28,320 INFO EVAL-PASS AGEN: rank=0.882  vol_ratio=1.70  pct_from_5ma=-0.097
+2026-10-02 18:39:28,320 INFO EVAL-FAIL NVAX: rank=0.853  reason=[vol_ratio=0.60<1.2]
+2026-10-02 18:39:28,320 INFO EVAL-FAIL POWI: rank=0.824  reason=[vol_ratio=1.11<1.2]
+2026-10-02 18:39:28,321 INFO EVAL-FAIL YEXT: rank=0.794  reason=[above_5ma=+0.019]
+2026-10-02 18:39:28,321 INFO EVAL-FAIL KELYA: rank=0.765  reason=[above_5ma=+0.001]
+2026-10-02 18:39:28,321 INFO EVAL-FAIL HLIO: rank=0.735  reason=[above_5ma=+0.004 | vol_ratio=1.12<1.2]
+2026-10-02 18:39:28,321 INFO EVAL-PASS TTGT: rank=0.706  vol_ratio=1.39  pct_from_5ma=-0.013
+2026-10-02 18:39:28,321 INFO EVAL-FAIL INVA: rank=0.676  reason=[momentum_rank=0.676<0.7 | vol_ratio=0.89<1.2]
+2026-10-02 18:39:28,321 INFO EVAL-FAIL FATE: rank=0.647  reason=[momentum_rank=0.647<0.7 | vol_ratio=0.54<1.2]
+2026-10-02 18:39:28,321 INFO EVAL-FAIL TBI: rank=0.618  reason=[momentum_rank=0.618<0.7 | above_5ma=+0.007 | vol_ratio=0.57<1.2]
+2026-10-02 18:39:28,321 INFO EVAL-FAIL SM: rank=0.588  reason=[momentum_rank=0.588<0.7 | above_5ma=+0.035 | vol_ratio=0.62<1.2]
+2026-10-02 18:39:28,321 INFO EVAL-FAIL CATO: rank=0.559  reason=[momentum_rank=0.559<0.7 | vol_ratio=0.14<1.2]
+2026-10-02 18:39:28,321 INFO EVAL-FAIL DRVN: rank=0.529  reason=[momentum_rank=0.529<0.7 | vol_ratio=0.94<1.2]
+2026-10-02 18:39:28,321 INFO EVAL-FAIL BMBL: rank=0.500  reason=[momentum_rank=0.500<0.7 | vol_ratio=1.01<1.2]
+2026-10-02 18:39:28,321 INFO EVAL-FAIL VET: rank=0.471  reason=[momentum_rank=0.471<0.7 | above_5ma=+0.010 | vol_ratio=0.78<1.2]
+2026-10-02 18:39:28,321 INFO EVAL-FAIL REI: rank=0.441  reason=[momentum_rank=0.441<0.7 | above_5ma=+0.002 | vol_ratio=0.42<1.2]
+2026-10-02 18:39:28,321 INFO EVAL-FAIL AMPY: rank=0.412  reason=[momentum_rank=0.412<0.7 | above_5ma=+0.033 | vol_ratio=0.92<1.2]
+2026-10-02 18:39:28,321 INFO EVAL-FAIL DIN: rank=0.382  reason=[momentum_rank=0.382<0.7 | above_5ma=+0.005 | vol_ratio=0.79<1.2]
+2026-10-02 18:39:28,321 INFO EVAL-FAIL WHD: rank=0.353  reason=[momentum_rank=0.353<0.7]
+2026-10-02 18:39:28,321 INFO EVAL-FAIL IRWD: rank=0.324  reason=[momentum_rank=0.324<0.7]
+2026-10-02 18:39:28,322 INFO EVAL-FAIL GPOR: rank=0.294  reason=[momentum_rank=0.294<0.7 | above_5ma=+0.005 | vol_ratio=0.62<1.2]
+2026-10-02 18:39:28,322 INFO EVAL-FAIL NCNO: rank=0.265  reason=[momentum_rank=0.265<0.7 | above_5ma=+0.035 | vol_ratio=0.86<1.2]
+2026-10-02 18:39:28,322 INFO EVAL-FAIL RMNI: rank=0.235  reason=[momentum_rank=0.235<0.7 | above_5ma=+0.015 | vol_ratio=0.86<1.2]
+2026-10-02 18:39:28,322 INFO EVAL-FAIL PRAX: rank=0.206  reason=[momentum_rank=0.206<0.7 | above_5ma=+0.006 | vol_ratio=0.86<1.2]
+2026-10-02 18:39:28,322 INFO EVAL-FAIL JACK: rank=0.176  reason=[momentum_rank=0.176<0.7 | vol_ratio=1.12<1.2]
+2026-10-02 18:39:28,322 INFO EVAL-FAIL PTLO: rank=0.147  reason=[momentum_rank=0.147<0.7 | above_5ma=+0.001]
+2026-10-02 18:39:28,322 INFO EVAL-FAIL PLAY: rank=0.118  reason=[momentum_rank=0.118<0.7 | vol_ratio=0.44<1.2]
+2026-10-02 18:39:28,322 INFO EVAL-FAIL ACAD: rank=0.088  reason=[momentum_rank=0.088<0.7 | vol_ratio=1.20<1.2]
+2026-10-02 18:39:28,322 INFO EVAL-FAIL GSHD: rank=0.059  reason=[momentum_rank=0.059<0.7 | above_5ma=+0.043 | vol_ratio=1.13<1.2]
+2026-10-02 18:39:28,322 INFO EVAL-FAIL LESL: rank=0.029  reason=[momentum_rank=0.029<0.7]
+2026-10-02 18:39:28,322 INFO --- 2 signals fired ---
+2026-10-02 18:39:28,323 INFO QUEUED  AGEN: rank=0.882  size=$890.04 → fill tomorrow at open
+2026-10-02 18:39:28,323 INFO SKIP-SIG TTGT: already in position
+2026-10-02 18:39:28,330 INFO 
+--------------------------------------------------------------
+  DATE         : 2026-10-02
+  CASH         : $    7,131.16
+  POSITION VAL : $    1,769.25
+  EQUITY       : $    8,900.41
+  OPEN POS     : 3 held  |  1 pending
+  DAILY P&L    : $       +0.00
+  TOTAL P&L    : $      -29.83  (-11.00%)
+  TRADES TODAY : 0
+--------------------------------------------------------------

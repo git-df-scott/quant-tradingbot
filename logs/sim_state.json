@@ -19,10 +19,16 @@
       "shares": 17.239691807847016,
       "entry_price": 51.708750667572026,
       "entry_date": "2026-10-01",
-      "peak_price": 51.708750667572026
+      "peak_price": 52.130001068115234
     }
   },
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "ticker": "AGEN",
+      "dollar_size": 890.0410351127626,
+      "atr_abs": 0.5985
+    }
+  ],
   "cooldown_until": {
     "PLAY": "2026-07-04",
     "TBI": "2026-07-04",
