@@ -1,5 +1,5 @@
 {
-  "cash": 7131.164177633374,
+  "cash": 7163.104766516935,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -15,20 +15,14 @@
       "entry_date": "2026-09-30",
       "peak_price": 3.819999933242798
     },
-    "POWI": {
-      "shares": 17.239691807847016,
-      "entry_price": 51.708750667572026,
-      "entry_date": "2026-10-01",
-      "peak_price": 52.130001068115234
+    "AGEN": {
+      "shares": 106.49655062257501,
+      "entry_price": 8.357463503837586,
+      "entry_date": "2026-10-05",
+      "peak_price": 8.357463503837586
     }
   },
-  "pending_entries": [
-    {
-      "ticker": "AGEN",
-      "dollar_size": 890.0410351127626,
-      "atr_abs": 0.5985
-    }
-  ],
+  "pending_entries": [],
   "cooldown_until": {
     "PLAY": "2026-07-04",
     "TBI": "2026-07-04",
@@ -43,6 +37,6 @@
     "SM": "2026-10-03",
     "BMBL": "2026-10-05"
   },
-  "total_pnl": -29.82552017994759,
-  "total_trades": 28
+  "total_pnl": 2.5270150342356743,
+  "total_trades": 29
 }
