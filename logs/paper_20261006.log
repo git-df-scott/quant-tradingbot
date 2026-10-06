@@ -1,0 +1,65 @@
+2026-10-06 19:00:51,562 INFO === Run: today=2026-10-06  signal_date=2026-10-05 ===
+2026-10-06 19:00:51,562 INFO Fetching historical price data...
+2026-10-06 19:00:54,840 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: CCRN"}}}
+2026-10-06 19:00:54,996 ERROR $CCRN: possibly delisted; no timezone found
+2026-10-06 19:00:55,171 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: CCRN"}}}
+2026-10-06 19:00:55,358 ERROR $CCRN: possibly delisted; no timezone found
+2026-10-06 19:00:55,358 ERROR 
+1 Failed download:
+2026-10-06 19:00:55,358 ERROR ['CCRN']: possibly delisted; no timezone found
+2026-10-06 19:00:58,347 INFO Using signal bar: 2026-10-05
+2026-10-06 19:00:58,347 INFO Fetching today's opens for 34 tickers...
+2026-10-06 19:00:59,399 INFO Got opens for 34 tickers.
+2026-10-06 19:00:59,399 INFO --- Processing 0 pending entries ---
+2026-10-06 19:00:59,399 INFO --- Checking exits for 3 open positions ---
+2026-10-06 19:00:59,399 WARNING No H/L for CCRN on 2026-10-05 — skipping exit check
+2026-10-06 19:00:59,399 INFO HOLD    TTGT: close=3.65  entry=3.74  peak=3.82  stop=3.52  tp=4.30
+2026-10-06 19:00:59,399 INFO HOLD    AGEN: close=8.73  entry=8.36  peak=8.76  stop=7.86  tp=9.61
+2026-10-06 19:00:59,399 INFO --- Generating signals for 2026-10-05 ---
+2026-10-06 19:01:00,269 INFO --- Signal evaluation: 34 candidates ---
+2026-10-06 19:01:00,269 INFO EVAL-FAIL MYGN: rank=1.000  reason=[above_5ma=+0.054]
+2026-10-06 19:01:00,269 INFO EVAL-FAIL SJT: rank=0.971  reason=[vol_ratio=0.92<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL ANGI: rank=0.941  reason=[above_5ma=+0.029 | vol_ratio=0.93<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL NVAX: rank=0.912  reason=[above_5ma=+0.137]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL EGHT: rank=0.882  reason=[vol_ratio=0.56<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL POWI: rank=0.853  reason=[above_5ma=+0.033 | vol_ratio=0.90<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL AGEN: rank=0.824  reason=[vol_ratio=0.82<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL YEXT: rank=0.794  reason=[above_5ma=+0.012 | vol_ratio=0.79<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL HLIO: rank=0.765  reason=[above_5ma=+0.019 | vol_ratio=0.51<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL FATE: rank=0.735  reason=[above_5ma=+0.030]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL INVA: rank=0.706  reason=[vol_ratio=0.93<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL SM: rank=0.676  reason=[momentum_rank=0.676<0.7 | above_5ma=+0.018 | vol_ratio=0.59<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL DIN: rank=0.647  reason=[momentum_rank=0.647<0.7 | above_5ma=+0.036]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL KELYA: rank=0.618  reason=[momentum_rank=0.618<0.7 | vol_ratio=0.77<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL WHD: rank=0.588  reason=[momentum_rank=0.588<0.7 | above_5ma=+0.024 | vol_ratio=0.72<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL VET: rank=0.559  reason=[momentum_rank=0.559<0.7 | above_5ma=+0.017 | vol_ratio=0.67<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL CATO: rank=0.529  reason=[momentum_rank=0.529<0.7 | vol_ratio=0.67<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL AMPY: rank=0.500  reason=[momentum_rank=0.500<0.7 | above_5ma=+0.029 | vol_ratio=0.97<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL TBI: rank=0.471  reason=[momentum_rank=0.471<0.7 | vol_ratio=0.57<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL TTGT: rank=0.441  reason=[momentum_rank=0.441<0.7]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL REI: rank=0.412  reason=[momentum_rank=0.412<0.7 | above_5ma=+0.020 | vol_ratio=0.47<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL GPOR: rank=0.382  reason=[momentum_rank=0.382<0.7 | above_5ma=+0.027 | vol_ratio=1.11<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL BMBL: rank=0.353  reason=[momentum_rank=0.353<0.7 | vol_ratio=0.80<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL DRVN: rank=0.324  reason=[momentum_rank=0.324<0.7 | vol_ratio=0.70<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL IRWD: rank=0.294  reason=[momentum_rank=0.294<0.7 | vol_ratio=1.01<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL RMNI: rank=0.265  reason=[momentum_rank=0.265<0.7 | vol_ratio=0.83<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL NCNO: rank=0.235  reason=[momentum_rank=0.235<0.7 | above_5ma=+0.032 | vol_ratio=0.72<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL PRAX: rank=0.206  reason=[momentum_rank=0.206<0.7 | vol_ratio=1.08<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL PTLO: rank=0.176  reason=[momentum_rank=0.176<0.7 | above_5ma=+0.004 | vol_ratio=0.72<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL PLAY: rank=0.147  reason=[momentum_rank=0.147<0.7 | above_5ma=+0.030 | vol_ratio=0.76<1.2]
+2026-10-06 19:01:00,270 INFO EVAL-FAIL JACK: rank=0.118  reason=[momentum_rank=0.118<0.7 | vol_ratio=0.67<1.2]
+2026-10-06 19:01:00,271 INFO EVAL-FAIL ACAD: rank=0.088  reason=[momentum_rank=0.088<0.7 | above_5ma=+0.002]
+2026-10-06 19:01:00,271 INFO EVAL-FAIL GSHD: rank=0.059  reason=[momentum_rank=0.059<0.7 | above_5ma=+0.012 | vol_ratio=0.74<1.2]
+2026-10-06 19:01:00,271 INFO EVAL-FAIL LESL: rank=0.029  reason=[momentum_rank=0.029<0.7]
+2026-10-06 19:01:00,271 INFO --- 0 signals fired ---
+2026-10-06 19:01:00,271 INFO 
+--------------------------------------------------------------
+  DATE         : 2026-10-06
+  CASH         : $    7,163.10
+  POSITION VAL : $    1,799.21
+  EQUITY       : $    8,962.31
+  OPEN POS     : 3 held  |  0 pending
+  DAILY P&L    : $       +0.00
+  TOTAL P&L    : $       +2.53  (-10.38%)
+  TRADES TODAY : 0
+--------------------------------------------------------------
