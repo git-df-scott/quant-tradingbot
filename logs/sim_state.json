@@ -1,5 +1,5 @@
 {
-  "cash": 7950.541600018721,
+  "cash": 6182.2792096679395,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -13,21 +13,22 @@
       "shares": 22.29367648248732,
       "entry_price": 39.629698472976685,
       "entry_date": "2026-10-29",
-      "peak_price": 39.629698472976685
+      "peak_price": 39.75
+    },
+    "NCNO": {
+      "shares": 39.3134065803395,
+      "entry_price": 22.466838263511658,
+      "entry_date": "2026-10-30",
+      "peak_price": 22.466838263511658
+    },
+    "YEXT": {
+      "shares": 120.90218967974083,
+      "entry_price": 7.305475190877915,
+      "entry_date": "2026-10-30",
+      "peak_price": 7.305475190877915
     }
   },
-  "pending_entries": [
-    {
-      "ticker": "NCNO",
-      "dollar_size": 883.2479472281625,
-      "atr_abs": 0.907
-    },
-    {
-      "ticker": "YEXT",
-      "dollar_size": 883.2479472281625,
-      "atr_abs": 0.239
-    }
-  ],
+  "pending_entries": [],
   "cooldown_until": {
     "PLAY": "2026-07-04",
     "TBI": "2026-07-04",
