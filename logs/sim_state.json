@@ -13,10 +13,16 @@
       "shares": 39.3134065803395,
       "entry_price": 22.466838263511658,
       "entry_date": "2026-10-30",
-      "peak_price": 23.760000228881836
+      "peak_price": 23.780000686645508
     }
   },
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "ticker": "DIN",
+      "dollar_size": 885.5891230555321,
+      "atr_abs": 1.859
+    }
+  ],
   "cooldown_until": {
     "PLAY": "2026-07-04",
     "TBI": "2026-07-04",
