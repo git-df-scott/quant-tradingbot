@@ -1,5 +1,5 @@
 {
-  "cash": 7943.427099818138,
+  "cash": 7056.952387639551,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -14,13 +14,19 @@
       "entry_price": 22.466838263511658,
       "entry_date": "2026-10-30",
       "peak_price": 23.780000686645508
+    },
+    "DIN": {
+      "shares": 24.492814913441613,
+      "entry_price": 36.157098568916325,
+      "entry_date": "2026-11-09",
+      "peak_price": 36.157098568916325
     }
   },
   "pending_entries": [
     {
-      "ticker": "DIN",
-      "dollar_size": 885.5891230555321,
-      "atr_abs": 1.859
+      "ticker": "PLAY",
+      "dollar_size": 882.6254695089034,
+      "atr_abs": 0.603
     }
   ],
   "cooldown_until": {
