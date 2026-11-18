@@ -1,5 +1,5 @@
 {
-  "cash": 7001.660937353121,
+  "cash": 5238.719004168041,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -20,20 +20,21 @@
       "entry_price": 36.157098568916325,
       "entry_date": "2026-11-09",
       "peak_price": 37.7599983215332
+    },
+    "RMNI": {
+      "shares": 162.0498077739818,
+      "entry_price": 5.4340723282098775,
+      "entry_date": "2026-11-18",
+      "peak_price": 5.4340723282098775
+    },
+    "PRAX": {
+      "shares": 2.8910844747828177,
+      "entry_price": 304.58825534057615,
+      "entry_date": "2026-11-18",
+      "peak_price": 304.58825534057615
     }
   },
-  "pending_entries": [
-    {
-      "ticker": "RMNI",
-      "dollar_size": 880.5903762163243,
-      "atr_abs": 0.2777
-    },
-    {
-      "ticker": "PRAX",
-      "dollar_size": 880.5903762163243,
-      "atr_abs": 17.8213
-    }
-  ],
+  "pending_entries": [],
   "cooldown_until": {
     "PLAY": "2026-11-27",
     "TBI": "2026-07-04",
