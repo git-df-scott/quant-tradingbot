@@ -1,5 +1,5 @@
 {
-  "cash": 5238.719004168041,
+  "cash": 6169.382730682535,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -15,23 +15,17 @@
       "entry_date": "2026-10-30",
       "peak_price": 23.780000686645508
     },
-    "DIN": {
-      "shares": 24.492814913441613,
-      "entry_price": 36.157098568916325,
-      "entry_date": "2026-11-09",
-      "peak_price": 37.7599983215332
-    },
     "RMNI": {
       "shares": 162.0498077739818,
       "entry_price": 5.4340723282098775,
       "entry_date": "2026-11-18",
-      "peak_price": 5.4340723282098775
+      "peak_price": 5.510000228881836
     },
     "PRAX": {
       "shares": 2.8910844747828177,
       "entry_price": 304.58825534057615,
       "entry_date": "2026-11-18",
-      "peak_price": 304.58825534057615
+      "peak_price": 314.7149963378906
     }
   },
   "pending_entries": [],
@@ -50,6 +44,6 @@
     "BMBL": "2026-10-05",
     "AGEN": "2026-10-18"
   },
-  "total_pnl": -163.03603978717973,
-  "total_trades": 34
+  "total_pnl": -117.02984100638113,
+  "total_trades": 35
 }
