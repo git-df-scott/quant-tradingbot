@@ -1,5 +1,5 @@
 {
-  "cash": 6169.382730682535,
+  "cash": 6998.18348089362,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -8,12 +8,6 @@
       "entry_price": 13.119832156419754,
       "entry_date": "2026-05-20",
       "peak_price": 13.270000457763672
-    },
-    "NCNO": {
-      "shares": 39.3134065803395,
-      "entry_price": 22.466838263511658,
-      "entry_date": "2026-10-30",
-      "peak_price": 23.780000686645508
     },
     "RMNI": {
       "shares": 162.0498077739818,
@@ -25,10 +19,26 @@
       "shares": 2.8910844747828177,
       "entry_price": 304.58825534057615,
       "entry_date": "2026-11-18",
-      "peak_price": 314.7149963378906
+      "peak_price": 326.8380126953125
     }
   },
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "ticker": "IRWD",
+      "dollar_size": 874.6162582103225,
+      "atr_abs": 0.228
+    },
+    {
+      "ticker": "JACK",
+      "dollar_size": 874.6162582103225,
+      "atr_abs": 0.9065
+    },
+    {
+      "ticker": "YEXT",
+      "dollar_size": 874.6162582103225,
+      "atr_abs": 0.2972
+    }
+  ],
   "cooldown_until": {
     "PLAY": "2026-11-27",
     "TBI": "2026-07-04",
@@ -42,8 +52,9 @@
     "REI": "2026-10-03",
     "SM": "2026-11-15",
     "BMBL": "2026-10-05",
-    "AGEN": "2026-10-18"
+    "AGEN": "2026-10-18",
+    "NCNO": "2026-12-01"
   },
-  "total_pnl": -117.02984100638113,
-  "total_trades": 35
+  "total_pnl": -170.64740764286677,
+  "total_trades": 36
 }

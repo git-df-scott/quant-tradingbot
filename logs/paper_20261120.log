@@ -1,0 +1,75 @@
+2026-11-20 21:28:10,921 INFO === Run: today=2026-11-20  signal_date=2026-11-19 ===
+2026-11-20 21:28:10,922 INFO Fetching historical price data...
+2026-11-20 21:28:14,410 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: CCRN"}}}
+2026-11-20 21:28:14,519 ERROR $CCRN: possibly delisted; no timezone found
+2026-11-20 21:28:14,718 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: CCRN"}}}
+2026-11-20 21:28:14,789 ERROR $CCRN: possibly delisted; no timezone found
+2026-11-20 21:28:14,790 ERROR 
+1 Failed download:
+2026-11-20 21:28:14,790 ERROR ['CCRN']: possibly delisted; no timezone found
+2026-11-20 21:28:16,162 ERROR $DOMO: possibly delisted; no price data found  (1d 2025-11-20 -> 2026-11-20)
+2026-11-20 21:28:16,164 ERROR $DOMO: possibly delisted; no price data found  (1d 2025-11-20 -> 2026-11-20)
+2026-11-20 21:28:16,164 ERROR 
+1 Failed download:
+2026-11-20 21:28:16,164 ERROR ['DOMO']: possibly delisted; no price data found  (1d 2025-11-20 -> 2026-11-20)
+2026-11-20 21:28:17,914 INFO Using signal bar: 2026-11-19
+2026-11-20 21:28:17,914 INFO Fetching today's opens for 32 tickers...
+2026-11-20 21:28:18,681 INFO Got opens for 32 tickers.
+2026-11-20 21:28:18,681 INFO --- Processing 0 pending entries ---
+2026-11-20 21:28:18,681 INFO --- Checking exits for 4 open positions ---
+2026-11-20 21:28:18,681 WARNING No H/L for CCRN on 2026-11-19 — skipping exit check
+2026-11-20 21:28:18,681 INFO STOP    NCNO: low=20.51 <= stop=21.12
+2026-11-20 21:28:18,681 INFO HOLD    RMNI: close=5.24  entry=5.43  peak=5.51  stop=5.11  tp=6.25
+2026-11-20 21:28:18,681 INFO HOLD    PRAX: close=310.90  entry=304.59  peak=326.84  stop=286.31  tp=350.28
+2026-11-20 21:28:18,681 INFO CLOSED  NCNO   [stop_loss]: 39.3134 sh @ $21.10  P&L=$-53.62 (-6.07%)  entry=$22.47
+2026-11-20 21:28:18,681 INFO --- Generating signals for 2026-11-19 ---
+2026-11-20 21:28:20,164 INFO --- Signal evaluation: 32 candidates ---
+2026-11-20 21:28:20,164 INFO EVAL-FAIL SJT: rank=1.000  reason=[above_5ma=+0.045]
+2026-11-20 21:28:20,164 INFO EVAL-FAIL PTLO: rank=0.969  reason=[vol_ratio=0.69<1.2]
+2026-11-20 21:28:20,164 INFO EVAL-PASS IRWD: rank=0.938  vol_ratio=1.23  pct_from_5ma=-0.020
+2026-11-20 21:28:20,164 INFO EVAL-FAIL TBI: rank=0.906  reason=[vol_ratio=0.84<1.2]
+2026-11-20 21:28:20,164 INFO EVAL-PASS RMNI: rank=0.875  vol_ratio=1.57  pct_from_5ma=-0.033
+2026-11-20 21:28:20,164 INFO EVAL-PASS JACK: rank=0.844  vol_ratio=1.21  pct_from_5ma=-0.037
+2026-11-20 21:28:20,164 INFO EVAL-PASS PRAX: rank=0.812  vol_ratio=1.30  pct_from_5ma=-0.003
+2026-11-20 21:28:20,164 INFO EVAL-FAIL DIN: rank=0.781  reason=[vol_ratio=0.53<1.2]
+2026-11-20 21:28:20,165 INFO EVAL-FAIL WHD: rank=0.750  reason=[vol_ratio=0.94<1.2]
+2026-11-20 21:28:20,165 INFO EVAL-PASS YEXT: rank=0.719  vol_ratio=1.22  pct_from_5ma=-0.044
+2026-11-20 21:28:20,165 INFO EVAL-FAIL GPOR: rank=0.688  reason=[momentum_rank=0.688<0.7 | vol_ratio=0.61<1.2]
+2026-11-20 21:28:20,165 INFO EVAL-FAIL MYGN: rank=0.656  reason=[momentum_rank=0.656<0.7 | vol_ratio=0.67<1.2]
+2026-11-20 21:28:20,165 INFO EVAL-FAIL AGEN: rank=0.625  reason=[momentum_rank=0.625<0.7 | vol_ratio=1.16<1.2]
+2026-11-20 21:28:20,165 INFO EVAL-FAIL EGHT: rank=0.594  reason=[momentum_rank=0.594<0.7 | vol_ratio=0.68<1.2]
+2026-11-20 21:28:20,165 INFO EVAL-FAIL GSHD: rank=0.562  reason=[momentum_rank=0.562<0.7]
+2026-11-20 21:28:20,165 INFO EVAL-FAIL DRVN: rank=0.531  reason=[momentum_rank=0.531<0.7 | vol_ratio=0.88<1.2]
+2026-11-20 21:28:20,165 INFO EVAL-FAIL PLAY: rank=0.500  reason=[momentum_rank=0.500<0.7 | vol_ratio=0.60<1.2]
+2026-11-20 21:28:20,165 INFO EVAL-FAIL AMPY: rank=0.469  reason=[momentum_rank=0.469<0.7 | above_5ma=+0.003 | vol_ratio=0.90<1.2]
+2026-11-20 21:28:20,165 INFO EVAL-FAIL POWI: rank=0.438  reason=[momentum_rank=0.438<0.7 | vol_ratio=0.55<1.2]
+2026-11-20 21:28:20,165 INFO EVAL-FAIL NCNO: rank=0.406  reason=[momentum_rank=0.406<0.7 | vol_ratio=0.75<1.2]
+2026-11-20 21:28:20,165 INFO EVAL-FAIL INVA: rank=0.375  reason=[momentum_rank=0.375<0.7 | vol_ratio=0.88<1.2]
+2026-11-20 21:28:20,166 INFO EVAL-FAIL ACAD: rank=0.344  reason=[momentum_rank=0.344<0.7 | vol_ratio=0.52<1.2]
+2026-11-20 21:28:20,166 INFO EVAL-FAIL CATO: rank=0.312  reason=[momentum_rank=0.312<0.7]
+2026-11-20 21:28:20,166 INFO EVAL-FAIL REI: rank=0.281  reason=[momentum_rank=0.281<0.7 | vol_ratio=0.63<1.2]
+2026-11-20 21:28:20,166 INFO EVAL-FAIL NVAX: rank=0.250  reason=[momentum_rank=0.250<0.7 | vol_ratio=0.78<1.2]
+2026-11-20 21:28:20,166 INFO EVAL-FAIL KELYA: rank=0.219  reason=[momentum_rank=0.219<0.7]
+2026-11-20 21:28:20,166 INFO EVAL-FAIL VET: rank=0.188  reason=[momentum_rank=0.188<0.7]
+2026-11-20 21:28:20,166 INFO EVAL-FAIL SM: rank=0.156  reason=[momentum_rank=0.156<0.7 | vol_ratio=1.03<1.2]
+2026-11-20 21:28:20,166 INFO EVAL-FAIL ANGI: rank=0.125  reason=[momentum_rank=0.125<0.7 | vol_ratio=0.80<1.2]
+2026-11-20 21:28:20,166 INFO EVAL-FAIL TTGT: rank=0.094  reason=[momentum_rank=0.094<0.7]
+2026-11-20 21:28:20,166 INFO EVAL-FAIL HLIO: rank=0.062  reason=[momentum_rank=0.062<0.7 | vol_ratio=0.84<1.2]
+2026-11-20 21:28:20,166 INFO EVAL-FAIL FATE: rank=0.031  reason=[momentum_rank=0.031<0.7 | vol_ratio=1.00<1.2]
+2026-11-20 21:28:20,167 INFO --- 5 signals fired ---
+2026-11-20 21:28:20,167 INFO QUEUED  IRWD: rank=0.938  size=$874.62 → fill tomorrow at open
+2026-11-20 21:28:20,167 INFO SKIP-SIG RMNI: already in position
+2026-11-20 21:28:20,167 INFO QUEUED  JACK: rank=0.844  size=$874.62 → fill tomorrow at open
+2026-11-20 21:28:20,168 INFO SKIP-SIG PRAX: already in position
+2026-11-20 21:28:20,168 INFO QUEUED  YEXT: rank=0.719  size=$874.62 → fill tomorrow at open
+2026-11-20 21:28:20,170 INFO 
+--------------------------------------------------------------
+  DATE         : 2026-11-20
+  CASH         : $    6,998.18
+  POSITION VAL : $    1,747.98
+  EQUITY       : $    8,746.16
+  OPEN POS     : 3 held  |  3 pending
+  DAILY P&L    : $      -53.62
+  TOTAL P&L    : $     -170.65  (-12.54%)
+  TRADES TODAY : 1
+--------------------------------------------------------------
