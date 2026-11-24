@@ -1,5 +1,5 @@
 {
-  "cash": 7824.4904841843045,
+  "cash": 5198.017860778707,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -14,25 +14,27 @@
       "entry_price": 304.58825534057615,
       "entry_date": "2026-11-18",
       "peak_price": 326.8380126953125
+    },
+    "IRWD": {
+      "shares": 176.55774167582314,
+      "entry_price": 4.953712309122086,
+      "entry_date": "2026-11-24",
+      "peak_price": 4.953712309122086
+    },
+    "JACK": {
+      "shares": 66.00912407310402,
+      "entry_price": 13.249929770946503,
+      "entry_date": "2026-11-24",
+      "peak_price": 13.249929770946503
+    },
+    "YEXT": {
+      "shares": 119.23066803767883,
+      "entry_price": 7.335497423648834,
+      "entry_date": "2026-11-24",
+      "peak_price": 7.335497423648834
     }
   },
-  "pending_entries": [
-    {
-      "ticker": "IRWD",
-      "dollar_size": 874.6162582103225,
-      "atr_abs": 0.228
-    },
-    {
-      "ticker": "JACK",
-      "dollar_size": 874.6162582103225,
-      "atr_abs": 0.9065
-    },
-    {
-      "ticker": "YEXT",
-      "dollar_size": 874.6162582103225,
-      "atr_abs": 0.2972
-    }
-  ],
+  "pending_entries": [],
   "cooldown_until": {
     "PLAY": "2026-11-27",
     "TBI": "2026-07-04",

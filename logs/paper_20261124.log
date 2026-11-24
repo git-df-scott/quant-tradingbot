@@ -103,3 +103,78 @@
   TOTAL P&L    : $     -224.10  (-13.07%)
   TRADES TODAY : 1
 --------------------------------------------------------------
+2026-11-24 23:13:27,980 INFO === Run: today=2026-11-24  signal_date=2026-11-23 ===
+2026-11-24 23:13:27,980 INFO Fetching historical price data...
+2026-11-24 23:13:31,127 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: CCRN"}}}
+2026-11-24 23:13:31,268 ERROR $CCRN: possibly delisted; no timezone found
+2026-11-24 23:13:31,443 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: CCRN"}}}
+2026-11-24 23:13:31,497 ERROR $CCRN: possibly delisted; no timezone found
+2026-11-24 23:13:31,497 ERROR 
+1 Failed download:
+2026-11-24 23:13:31,497 ERROR ['CCRN']: possibly delisted; no timezone found
+2026-11-24 23:13:32,902 ERROR $DOMO: possibly delisted; no price data found  (1d 2025-11-24 -> 2026-11-24)
+2026-11-24 23:13:32,903 ERROR $DOMO: possibly delisted; no price data found  (1d 2025-11-24 -> 2026-11-24)
+2026-11-24 23:13:32,903 ERROR 
+1 Failed download:
+2026-11-24 23:13:32,903 ERROR ['DOMO']: possibly delisted; no price data found  (1d 2025-11-24 -> 2026-11-24)
+2026-11-24 23:13:34,308 INFO Using signal bar: 2026-11-23
+2026-11-24 23:13:34,308 INFO Fetching today's opens for 33 tickers...
+2026-11-24 23:13:34,975 INFO Got opens for 33 tickers.
+2026-11-24 23:13:34,975 INFO --- Processing 3 pending entries ---
+2026-11-24 23:13:34,975 INFO FILLED  IRWD  : 176.5577 sh @ $4.95  cost=$875.49  slip=$0.66
+2026-11-24 23:13:34,975 INFO FILLED  JACK  : 66.0091 sh @ $13.25  cost=$875.49  slip=$0.66
+2026-11-24 23:13:34,975 INFO FILLED  YEXT  : 119.2307 sh @ $7.34  cost=$875.49  slip=$0.66
+2026-11-24 23:13:34,975 INFO --- Checking exits for 5 open positions ---
+2026-11-24 23:13:34,975 WARNING No H/L for CCRN on 2026-11-23 — skipping exit check
+2026-11-24 23:13:34,975 INFO HOLD    PRAX: close=307.00  entry=304.59  peak=326.84  stop=286.31  tp=350.28
+2026-11-24 23:13:34,975 INFO HOLD    IRWD: just entered today
+2026-11-24 23:13:34,976 INFO HOLD    JACK: just entered today
+2026-11-24 23:13:34,976 INFO HOLD    YEXT: just entered today
+2026-11-24 23:13:34,976 INFO --- Generating signals for 2026-11-23 ---
+2026-11-24 23:13:36,848 INFO --- Signal evaluation: 33 candidates ---
+2026-11-24 23:13:36,849 INFO EVAL-FAIL IRWD: rank=1.000  reason=[above_5ma=+0.031]
+2026-11-24 23:13:36,849 INFO EVAL-FAIL PTLO: rank=0.970  reason=[vol_ratio=0.91<1.2]
+2026-11-24 23:13:36,849 INFO EVAL-FAIL SJT: rank=0.939  reason=[vol_ratio=1.09<1.2]
+2026-11-24 23:13:36,849 INFO EVAL-PASS RMNI: rank=0.909  vol_ratio=1.22  pct_from_5ma=-0.044
+2026-11-24 23:13:36,849 INFO EVAL-FAIL JACK: rank=0.879  reason=[vol_ratio=0.98<1.2]
+2026-11-24 23:13:36,849 INFO EVAL-FAIL TBI: rank=0.849  reason=[above_5ma=+0.013 | vol_ratio=0.68<1.2]
+2026-11-24 23:13:36,849 INFO EVAL-FAIL DIN: rank=0.818  reason=[vol_ratio=0.50<1.2]
+2026-11-24 23:13:36,849 INFO EVAL-FAIL PRAX: rank=0.788  reason=[above_5ma=+0.004]
+2026-11-24 23:13:36,849 INFO EVAL-FAIL BMBL: rank=0.758  reason=[vol_ratio=0.93<1.2]
+2026-11-24 23:13:36,850 INFO EVAL-FAIL YEXT: rank=0.727  reason=[above_5ma=+0.013 | vol_ratio=0.81<1.2]
+2026-11-24 23:13:36,850 INFO EVAL-FAIL AGEN: rank=0.697  reason=[momentum_rank=0.697<0.7 | vol_ratio=1.01<1.2]
+2026-11-24 23:13:36,850 INFO EVAL-FAIL MYGN: rank=0.667  reason=[momentum_rank=0.667<0.7 | above_5ma=+0.018 | vol_ratio=0.48<1.2]
+2026-11-24 23:13:36,850 INFO EVAL-FAIL POWI: rank=0.636  reason=[momentum_rank=0.636<0.7 | above_5ma=+0.035 | vol_ratio=0.79<1.2]
+2026-11-24 23:13:36,850 INFO EVAL-FAIL DRVN: rank=0.606  reason=[momentum_rank=0.606<0.7 | vol_ratio=0.80<1.2]
+2026-11-24 23:13:36,850 INFO EVAL-FAIL GSHD: rank=0.576  reason=[momentum_rank=0.576<0.7 | vol_ratio=0.67<1.2]
+2026-11-24 23:13:36,850 INFO EVAL-FAIL EGHT: rank=0.545  reason=[momentum_rank=0.545<0.7 | vol_ratio=0.69<1.2]
+2026-11-24 23:13:36,850 INFO EVAL-FAIL WHD: rank=0.515  reason=[momentum_rank=0.515<0.7 | vol_ratio=0.84<1.2]
+2026-11-24 23:13:36,850 INFO EVAL-FAIL GPOR: rank=0.485  reason=[momentum_rank=0.485<0.7 | vol_ratio=0.85<1.2]
+2026-11-24 23:13:36,850 INFO EVAL-FAIL INVA: rank=0.455  reason=[momentum_rank=0.455<0.7 | above_5ma=+0.020 | vol_ratio=0.90<1.2]
+2026-11-24 23:13:36,850 INFO EVAL-FAIL ACAD: rank=0.424  reason=[momentum_rank=0.424<0.7 | vol_ratio=0.47<1.2]
+2026-11-24 23:13:36,851 INFO EVAL-FAIL NCNO: rank=0.394  reason=[momentum_rank=0.394<0.7 | vol_ratio=1.13<1.2]
+2026-11-24 23:13:36,851 INFO EVAL-FAIL PLAY: rank=0.364  reason=[momentum_rank=0.364<0.7 | vol_ratio=0.66<1.2]
+2026-11-24 23:13:36,851 INFO EVAL-FAIL NVAX: rank=0.333  reason=[momentum_rank=0.333<0.7 | above_5ma=+0.004 | vol_ratio=0.59<1.2]
+2026-11-24 23:13:36,851 INFO EVAL-FAIL KELYA: rank=0.303  reason=[momentum_rank=0.303<0.7 | vol_ratio=1.06<1.2]
+2026-11-24 23:13:36,851 INFO EVAL-FAIL AMPY: rank=0.273  reason=[momentum_rank=0.273<0.7]
+2026-11-24 23:13:36,851 INFO EVAL-FAIL CATO: rank=0.242  reason=[momentum_rank=0.242<0.7]
+2026-11-24 23:13:36,851 INFO EVAL-FAIL ANGI: rank=0.212  reason=[momentum_rank=0.212<0.7 | vol_ratio=0.64<1.2]
+2026-11-24 23:13:36,851 INFO EVAL-FAIL REI: rank=0.182  reason=[momentum_rank=0.182<0.7 | vol_ratio=0.94<1.2]
+2026-11-24 23:13:36,851 INFO EVAL-FAIL VET: rank=0.151  reason=[momentum_rank=0.151<0.7 | vol_ratio=0.73<1.2]
+2026-11-24 23:13:36,851 INFO EVAL-FAIL SM: rank=0.121  reason=[momentum_rank=0.121<0.7 | vol_ratio=0.97<1.2]
+2026-11-24 23:13:36,851 INFO EVAL-FAIL HLIO: rank=0.091  reason=[momentum_rank=0.091<0.7 | above_5ma=+0.035 | vol_ratio=1.07<1.2]
+2026-11-24 23:13:36,852 INFO EVAL-FAIL TTGT: rank=0.061  reason=[momentum_rank=0.061<0.7]
+2026-11-24 23:13:36,852 INFO EVAL-FAIL FATE: rank=0.030  reason=[momentum_rank=0.030<0.7 | vol_ratio=1.10<1.2]
+2026-11-24 23:13:36,852 INFO --- 1 signals fired ---
+2026-11-24 23:13:36,852 INFO SKIP-SIG RMNI: cooldown until 2026-12-05
+2026-11-24 23:13:36,853 INFO 
+--------------------------------------------------------------
+  DATE         : 2026-11-24
+  CASH         : $    5,198.02
+  POSITION VAL : $    3,531.53
+  EQUITY       : $    8,729.54
+  OPEN POS     : 5 held  |  0 pending
+  DAILY P&L    : $       +0.00
+  TOTAL P&L    : $     -224.10  (-12.70%)
+  TRADES TODAY : 3
+--------------------------------------------------------------
