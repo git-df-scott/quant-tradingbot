@@ -1,0 +1,105 @@
+2026-11-24 01:09:38,622 INFO === Run: today=2026-11-24  signal_date=2026-11-23 ===
+2026-11-24 01:09:38,622 INFO Fetching historical price data...
+2026-11-24 01:09:41,785 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: CCRN"}}}
+2026-11-24 01:09:41,880 ERROR $CCRN: possibly delisted; no timezone found
+2026-11-24 01:09:42,040 ERROR HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: CCRN"}}}
+2026-11-24 01:09:42,095 ERROR $CCRN: possibly delisted; no timezone found
+2026-11-24 01:09:42,095 ERROR 
+1 Failed download:
+2026-11-24 01:09:42,095 ERROR ['CCRN']: possibly delisted; no timezone found
+2026-11-24 01:09:44,649 INFO Using signal bar: 2026-11-20
+2026-11-24 01:09:44,650 INFO Fetching today's opens for 32 tickers...
+2026-11-24 01:09:44,823 ERROR $YEXT: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:44,825 ERROR $GSHD: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:44,828 ERROR $WHD: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:44,871 ERROR $SJT: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:44,970 ERROR $RMNI: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:44,972 ERROR $NVAX: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:44,977 ERROR $AMPY: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,014 ERROR $GPOR: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,125 ERROR $PRAX: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,128 ERROR $TTGT: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,129 ERROR $EGHT: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,133 ERROR $PTLO: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,274 ERROR $ANGI: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,279 ERROR $KELYA: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,280 ERROR $ACAD: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,312 ERROR $REI: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,431 ERROR $INVA: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,433 ERROR $POWI: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,435 ERROR $JACK: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,440 ERROR $PLAY: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,583 ERROR $CATO: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,585 ERROR $DRVN: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,586 ERROR $NCNO: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,587 ERROR $FATE: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,744 ERROR $VET: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,746 ERROR $TBI: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,749 ERROR $AGEN: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,750 ERROR $DIN: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,901 ERROR $MYGN: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,904 ERROR $IRWD: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,914 ERROR $SM: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,953 ERROR $HLIO: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,954 ERROR 
+32 Failed downloads:
+2026-11-24 01:09:45,955 ERROR ['YEXT', 'GSHD', 'WHD', 'SJT', 'RMNI', 'NVAX', 'AMPY', 'GPOR', 'PRAX', 'TTGT', 'EGHT', 'PTLO', 'ANGI', 'KELYA', 'ACAD', 'REI', 'INVA', 'POWI', 'JACK', 'PLAY', 'CATO', 'DRVN', 'NCNO', 'FATE', 'VET', 'TBI', 'AGEN', 'DIN', 'MYGN', 'IRWD', 'SM', 'HLIO']: Data doesn't exist for startDate = 1795496400, endDate = 1795582800
+2026-11-24 01:09:45,961 INFO Got opens for 0 tickers.
+2026-11-24 01:09:45,961 INFO --- Processing 3 pending entries ---
+2026-11-24 01:09:45,961 WARNING SKIP-FILL IRWD: no open price — carrying forward
+2026-11-24 01:09:45,961 WARNING SKIP-FILL JACK: no open price — carrying forward
+2026-11-24 01:09:45,961 WARNING SKIP-FILL YEXT: no open price — carrying forward
+2026-11-24 01:09:45,961 INFO --- Checking exits for 3 open positions ---
+2026-11-24 01:09:45,961 WARNING No H/L for CCRN on 2026-11-20 — skipping exit check
+2026-11-24 01:09:45,961 INFO STOP    RMNI: low=4.73 <= stop=5.11
+2026-11-24 01:09:45,961 INFO HOLD    PRAX: close=300.43  entry=304.59  peak=326.84  stop=286.31  tp=350.28
+2026-11-24 01:09:45,961 INFO CLOSED  RMNI   [stop_loss]: 162.0498 sh @ $5.10  P&L=$-53.46 (-6.07%)  entry=$5.43
+2026-11-24 01:09:45,961 INFO --- Generating signals for 2026-11-20 ---
+2026-11-24 01:09:47,770 INFO --- Signal evaluation: 32 candidates ---
+2026-11-24 01:09:47,770 INFO EVAL-FAIL PTLO: rank=1.000  reason=[vol_ratio=0.60<1.2]
+2026-11-24 01:09:47,770 INFO EVAL-FAIL IRWD: rank=0.969  reason=[vol_ratio=1.09<1.2]
+2026-11-24 01:09:47,771 INFO EVAL-FAIL SJT: rank=0.938  reason=[vol_ratio=1.05<1.2]
+2026-11-24 01:09:47,771 INFO EVAL-PASS JACK: rank=0.906  vol_ratio=2.06  pct_from_5ma=-0.058
+2026-11-24 01:09:47,771 INFO EVAL-FAIL TBI: rank=0.875  reason=[vol_ratio=1.06<1.2]
+2026-11-24 01:09:47,771 INFO EVAL-PASS PRAX: rank=0.844  vol_ratio=1.58  pct_from_5ma=-0.019
+2026-11-24 01:09:47,771 INFO EVAL-PASS RMNI: rank=0.812  vol_ratio=2.26  pct_from_5ma=-0.098
+2026-11-24 01:09:47,771 INFO EVAL-FAIL DIN: rank=0.781  reason=[vol_ratio=0.77<1.2]
+2026-11-24 01:09:47,771 INFO EVAL-FAIL YEXT: rank=0.750  reason=[vol_ratio=1.05<1.2]
+2026-11-24 01:09:47,771 INFO EVAL-FAIL GSHD: rank=0.719  reason=[vol_ratio=0.76<1.2]
+2026-11-24 01:09:47,771 INFO EVAL-FAIL AGEN: rank=0.688  reason=[momentum_rank=0.688<0.7 | vol_ratio=1.00<1.2]
+2026-11-24 01:09:47,771 INFO EVAL-FAIL MYGN: rank=0.656  reason=[momentum_rank=0.656<0.7 | vol_ratio=0.73<1.2]
+2026-11-24 01:09:47,772 INFO EVAL-FAIL EGHT: rank=0.625  reason=[momentum_rank=0.625<0.7 | vol_ratio=0.95<1.2]
+2026-11-24 01:09:47,772 INFO EVAL-FAIL GPOR: rank=0.594  reason=[momentum_rank=0.594<0.7 | vol_ratio=0.63<1.2]
+2026-11-24 01:09:47,772 INFO EVAL-FAIL DRVN: rank=0.562  reason=[momentum_rank=0.562<0.7 | vol_ratio=0.65<1.2]
+2026-11-24 01:09:47,772 INFO EVAL-FAIL WHD: rank=0.531  reason=[momentum_rank=0.531<0.7 | vol_ratio=0.62<1.2]
+2026-11-24 01:09:47,772 INFO EVAL-FAIL PLAY: rank=0.500  reason=[momentum_rank=0.500<0.7 | vol_ratio=0.71<1.2]
+2026-11-24 01:09:47,772 INFO EVAL-FAIL INVA: rank=0.469  reason=[momentum_rank=0.469<0.7 | above_5ma=+0.000 | vol_ratio=1.19<1.2]
+2026-11-24 01:09:47,772 INFO EVAL-FAIL NCNO: rank=0.438  reason=[momentum_rank=0.438<0.7]
+2026-11-24 01:09:47,772 INFO EVAL-FAIL ACAD: rank=0.406  reason=[momentum_rank=0.406<0.7 | vol_ratio=0.68<1.2]
+2026-11-24 01:09:47,772 INFO EVAL-FAIL POWI: rank=0.375  reason=[momentum_rank=0.375<0.7 | vol_ratio=1.19<1.2]
+2026-11-24 01:09:47,772 INFO EVAL-FAIL AMPY: rank=0.344  reason=[momentum_rank=0.344<0.7]
+2026-11-24 01:09:47,772 INFO EVAL-FAIL CATO: rank=0.312  reason=[momentum_rank=0.312<0.7]
+2026-11-24 01:09:47,773 INFO EVAL-FAIL NVAX: rank=0.281  reason=[momentum_rank=0.281<0.7 | vol_ratio=0.85<1.2]
+2026-11-24 01:09:47,773 INFO EVAL-FAIL KELYA: rank=0.250  reason=[momentum_rank=0.250<0.7]
+2026-11-24 01:09:47,773 INFO EVAL-FAIL VET: rank=0.219  reason=[momentum_rank=0.219<0.7 | vol_ratio=0.93<1.2]
+2026-11-24 01:09:47,773 INFO EVAL-FAIL REI: rank=0.188  reason=[momentum_rank=0.188<0.7]
+2026-11-24 01:09:47,773 INFO EVAL-FAIL SM: rank=0.156  reason=[momentum_rank=0.156<0.7 | vol_ratio=0.76<1.2]
+2026-11-24 01:09:47,773 INFO EVAL-FAIL ANGI: rank=0.125  reason=[momentum_rank=0.125<0.7 | vol_ratio=0.86<1.2]
+2026-11-24 01:09:47,773 INFO EVAL-FAIL TTGT: rank=0.094  reason=[momentum_rank=0.094<0.7]
+2026-11-24 01:09:47,773 INFO EVAL-FAIL HLIO: rank=0.062  reason=[momentum_rank=0.062<0.7 | vol_ratio=0.84<1.2]
+2026-11-24 01:09:47,773 INFO EVAL-FAIL FATE: rank=0.031  reason=[momentum_rank=0.031<0.7]
+2026-11-24 01:09:47,774 INFO --- 3 signals fired ---
+2026-11-24 01:09:47,774 INFO SKIP-SIG JACK: already pending
+2026-11-24 01:09:47,774 INFO SKIP-SIG PRAX: already in position
+2026-11-24 01:09:47,774 INFO SKIP-SIG RMNI: cooldown until 2026-12-05
+2026-11-24 01:09:47,775 INFO 
+--------------------------------------------------------------
+  DATE         : 2026-11-24
+  CASH         : $    7,824.49
+  POSITION VAL : $      868.57
+  EQUITY       : $    8,693.06
+  OPEN POS     : 2 held  |  3 pending
+  DAILY P&L    : $      -53.46
+  TOTAL P&L    : $     -224.10  (-13.07%)
+  TRADES TODAY : 1
+--------------------------------------------------------------
