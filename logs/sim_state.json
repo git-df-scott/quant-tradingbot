@@ -1,5 +1,5 @@
 {
-  "cash": 5198.017860778707,
+  "cash": 6155.754062703905,
   "initial_capital": 10000.0,
   "start_date": "2026-05-19",
   "open_positions": {
@@ -9,32 +9,32 @@
       "entry_date": "2026-05-20",
       "peak_price": 13.270000457763672
     },
-    "PRAX": {
-      "shares": 2.8910844747828177,
-      "entry_price": 304.58825534057615,
-      "entry_date": "2026-11-18",
-      "peak_price": 326.8380126953125
-    },
     "IRWD": {
       "shares": 176.55774167582314,
       "entry_price": 4.953712309122086,
       "entry_date": "2026-11-24",
-      "peak_price": 4.953712309122086
+      "peak_price": 5.110000133514404
     },
     "JACK": {
       "shares": 66.00912407310402,
       "entry_price": 13.249929770946503,
       "entry_date": "2026-11-24",
-      "peak_price": 13.249929770946503
+      "peak_price": 14.15999984741211
     },
     "YEXT": {
       "shares": 119.23066803767883,
       "entry_price": 7.335497423648834,
       "entry_date": "2026-11-24",
-      "peak_price": 7.335497423648834
+      "peak_price": 7.605000019073486
     }
   },
-  "pending_entries": [],
+  "pending_entries": [
+    {
+      "ticker": "BMBL",
+      "dollar_size": 887.8199345698148,
+      "atr_abs": 0.0258
+    }
+  ],
   "cooldown_until": {
     "PLAY": "2026-11-27",
     "TBI": "2026-07-04",
@@ -52,6 +52,6 @@
     "NCNO": "2026-12-01",
     "RMNI": "2026-12-05"
   },
-  "total_pnl": -224.10364643107877,
-  "total_trades": 37
+  "total_pnl": -145.99912582538235,
+  "total_trades": 38
 }
